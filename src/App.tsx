@@ -76,7 +76,7 @@ function AppInner() {
 
   async function handleShare() {
     const code = encodeShareCode(S)
-    const url = `${location.origin}${location.pathname}?s=${code}`
+    const url = `${location.origin}${location.pathname}?s=${encodeURIComponent(code)}`
     try {
       await navigator.clipboard.writeText(url)
       alert('Share link copied! Send it to your friend — they just open it and the save loads automatically.')
