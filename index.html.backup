@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:system-ui,sans-serif;color:#1a1a1a;font-size:14px;padding:1rem;background:#f5f5f0;}
+.tabs{display:flex;gap:4px;padding-bottom:1rem;border-bottom:1px solid #ddd;margin-bottom:1.5rem;flex-wrap:wrap;}
+.tab{padding:6px 14px;border-radius:8px;border:1px solid #ddd;font-size:13px;cursor:pointer;background:transparent;color:#666;}
+.tab.on{background:#fff;color:#1a1a1a;border-color:#999;font-weight:500;}
+.pnl{display:none;}.pnl.on{display:block;}
+.card{background:#fff;border:1px solid #e5e5e0;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1rem;}
+.metric{background:#f5f5f0;border-radius:8px;padding:.85rem 1rem;}
+.metric .lbl{font-size:11px;color:#666;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em;}
+.metric .val{font-size:20px;font-weight:500;}
+.metric .sub{font-size:11px;color:#999;margin-top:2px;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th{font-weight:500;font-size:11px;color:#666;text-align:left;padding:6px 8px;border-bottom:1px solid #eee;white-space:nowrap;}
+td{padding:7px 8px;border-bottom:1px solid #eee;vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:#fafaf8;}
+select,input[type=text],input[type=number]{background:#fff;border:1px solid #ddd;border-radius:6px;padding:5px 8px;font-size:13px;color:#1a1a1a;font-family:inherit;}
+button.btn{background:transparent;border:1px solid #ddd;border-radius:6px;padding:6px 14px;font-size:13px;cursor:pointer;color:#1a1a1a;transition:all .15s;}
+button.btn:hover{background:#f5f5f0;}
+button.btn.pri{background:#1a1a1a;color:#fff;border-color:#1a1a1a;}
+button.btn.sm{padding:3px 9px;font-size:12px;}
+button.btn.danger{border-color:#c00;color:#c00;}
+button.btn.warn{border-color:#854F0B;color:#854F0B;}
+button.btn.success{background:#27500A;color:#fff;border-color:#27500A;}
+.badge{display:inline-block;font-size:11px;padding:2px 7px;border-radius:999px;font-weight:500;}
+.bg{background:#EAF3DE;color:#27500A;}.br{background:#FCEBEB;color:#791F1F;}.ba{background:#F1EFE8;color:#444;}.bb{background:#E6F1FB;color:#0C447C;}.bo{background:#FAECE7;color:#712B13;}
+.bar-bg{background:#eee;border-radius:4px;height:7px;overflow:hidden;}
+.bar{height:7px;border-radius:4px;}
+.form-dot{display:inline-block;width:15px;height:15px;border-radius:3px;font-size:9px;font-weight:500;color:#fff;line-height:15px;text-align:center;margin-right:1px;}
+.riv-pill{background:#FAECE7;color:#993C1D;border-radius:999px;font-size:10px;padding:1px 7px;font-weight:500;display:inline-block;}
+.row{display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap;}
+.sl{font-size:12px;color:#666;min-width:110px;}
+.notice{padding:8px 12px;border-radius:6px;font-size:12px;margin-bottom:8px;}
+.notice.warn{background:#FAEEDA;color:#633806;}.notice.good{background:#EAF3DE;color:#27500A;}.notice.bad{background:#FCEBEB;color:#791F1F;}.notice.info{background:#E6F1FB;color:#0C447C;}
+.stand-card{border:1px solid #eee;border-radius:10px;padding:1rem;margin-bottom:10px;}
+.upgrade-item{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #eee;font-size:12px;}
+.upgrade-item:last-child{border-bottom:none;}
+input[type=text].inline{border:1px solid transparent;background:transparent;padding:2px 4px;font-size:inherit;font-weight:inherit;border-radius:4px;cursor:text;}
+input[type=text].inline:hover,input[type=text].inline:focus{border-color:#ddd;background:#fff;outline:none;}
+.modal-bg{background:rgba(0,0,0,.4);border-radius:12px;padding:2rem;margin-bottom:1rem;display:flex;align-items:flex-start;justify-content:center;}
+.modal{background:#fff;border:1px solid #ccc;border-radius:12px;padding:1.5rem;width:100%;max-width:560px;}
+.option-card{border:1px solid #eee;border-radius:10px;padding:1rem;margin-bottom:10px;cursor:pointer;}
+.option-card:hover{border-color:#999;}
+.option-card.selected{border:2px solid #185FA5;background:#E6F1FB;}
+.season-end{background:linear-gradient(135deg,#1a1a2e,#0f3460);border-radius:12px;padding:2rem;color:#fff;text-align:center;margin-bottom:1rem;}
+.fx-row{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid #eee;flex-wrap:wrap;}
+.fx-row:last-child{border-bottom:none;}
+.fx-num{font-size:12px;color:#999;min-width:22px;}
+.fx-sep{font-size:16px;color:#999;flex-shrink:0;}
+.fx-sel{flex:1;min-width:120px;}
+.sc{width:52px;font-size:18px;font-weight:500;text-align:center;padding:6px 4px;border:1.5px solid #ddd;border-radius:6px;background:#fff;}
+.sc:focus{border-color:#185FA5;outline:none;}
+.sc:disabled{opacity:.5;}
+.bud-inp{width:68px;font-size:12px;padding:3px 6px;text-align:right;border:1px solid #ddd;border-radius:5px;}
+</style>
+</head>
+<body>
+<div style="max-width:1100px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.25rem;">
+  <div>
+    <div style="font-size:11px;color:#999;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px;">Season <span id="slabel">2024/25</span></div>
+    <div style="font-size:20px;font-weight:500;">Elite Football League</div>
+  </div>
+  <div style="text-align:right;">
+    <div style="display:flex;justify-content:flex-end;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap;">
+      <button class="btn sm" onclick="saveState()">Save now</button>
+      <button class="btn sm" onclick="exportState()">Export</button>
+      <button class="btn sm" onclick="importState()">Import</button>
+    </div>
+    <div style="font-size:13px;font-weight:500;">Matchday <span id="mdnum">0</span></div>
+    <div style="font-size:11px;color:#999;">of 22 played</div>
+    <div id="save-status" style="font-size:11px;color:#999;margin-top:6px;"></div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab on" onclick="go('table')">League table</button>
+  <button class="tab" onclick="go('results')">Enter results</button>
+  <button class="tab" onclick="go('revenue')">Revenue &amp; budgets</button>
+  <button class="tab" onclick="go('fans')">Fans &amp; mood</button>
+  <button class="tab" onclick="go('stadiums')">Stadiums</button>
+  <button class="tab" onclick="go('sponsors')">Sponsorships</button>
+  <button class="tab" onclick="go('rivals')">Rivalries</button>
+</div>
+
+<div class="pnl on" id="pnl-table">
+  <div class="metrics" id="lg-metrics"></div>
+  <div class="card" style="overflow-x:auto;">
+    <table><thead><tr><th>#</th><th>Club</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th><th>Form</th><th>Mood</th><th>Prize</th></tr></thead>
+    <tbody id="tbl-body"></tbody></table>
+  </div>
+  <div id="next-season-area"></div>
+</div>
+
+<div class="pnl" id="pnl-results">
+  <div class="card">
+    <div style="font-size:15px;font-weight:500;margin-bottom:4px;">Matchday results</div>
+    <div style="font-size:12px;color:#666;margin-bottom:14px;">Pick who plays who, enter scores, save.</div>
+    <div class="row"><span class="sl">Matchday</span><select id="md-sel" style="width:80px;" onchange="onMdChange()"></select><span id="md-badge"></span></div>
+    <div id="fx-builder"></div>
+    <div style="margin-top:14px;display:flex;gap:8px;">
+      <button class="btn pri" onclick="submitResults()">Save matchday</button>
+      <button class="btn" onclick="clearScores()">Clear scores</button>
+    </div>
+  </div>
+  <div class="card">
+    <div style="font-size:13px;font-weight:500;margin-bottom:10px;">Result log</div>
+    <div id="result-log" style="font-size:12px;color:#666;line-height:2;max-height:280px;overflow-y:auto;"></div>
+  </div>
+</div>
+
+<div class="pnl" id="pnl-revenue">
+  <div class="metrics" id="rev-metrics"></div>
+  <div class="card" style="overflow-x:auto;">
+    <div style="font-size:13px;font-weight:500;margin-bottom:2px;">Revenue &amp; budgets</div>
+    <div style="font-size:12px;color:#666;margin-bottom:12px;">Edit wage bill and transfer budget inline — balance updates instantly.</div>
+    <table>
+      <thead><tr>
+        <th>Club</th><th>Pos</th><th>Matchday</th><th>TV base</th><th>TV adj</th><th>TV net</th><th>Commercial</th><th>Sponsorship</th><th>Prize</th><th>Total</th><th>Debt</th>
+        <th style="border-left:1px solid #eee;">Wages £m</th><th>Transfer £m</th><th>Balance</th>
+      </tr></thead>
+      <tbody id="rev-body"></tbody>
+    </table>
+    <div style="margin-top:10px;font-size:11px;color:#999;">TV solidarity: bottom 6 get +£1.5m per place below 6th, deducted equally from top 6. Prize: £2m base + £2.5m per place in top 6. Balance = total − debt − wages − transfer budget.</div>
+  </div>
+</div>
+
+<div class="pnl" id="pnl-fans">
+  <div class="row" style="margin-bottom:1rem;"><span class="sl">Club</span><select id="fan-sel" onchange="renderFans()"></select></div>
+  <div id="fan-content"></div>
+</div>
+
+<div class="pnl" id="pnl-stadiums">
+  <div class="row" style="margin-bottom:1rem;"><span class="sl">Club</span><select id="stad-sel" onchange="rStadium()"></select></div>
+  <div id="stad-content"></div>
+</div>
+
+<div class="pnl" id="pnl-sponsors">
+  <div class="row" style="margin-bottom:1rem;"><span class="sl">Club</span><select id="spon-sel" onchange="renderSponsors()"></select></div>
+  <div id="spon-content"></div>
+</div>
+
+<div class="pnl" id="pnl-rivals">
+  <div class="card">
+    <div style="font-size:13px;font-weight:500;margin-bottom:4px;">Rivalries</div>
+    <div style="font-size:12px;color:#666;margin-bottom:12px;">Edit intensity (1–100) inline.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 110px 90px 90px 80px;gap:8px;padding-bottom:6px;border-bottom:1px solid #eee;font-size:11px;color:#666;">
+      <span>Club A</span><span>Club B</span><span>Type</span><span>Intensity</span><span>H2H</span><span></span>
+    </div>
+    <div id="riv-rows"></div>
+  </div>
+  <div class="card">
+    <div style="font-size:13px;font-weight:500;margin-bottom:10px;">Add rivalry</div>
+    <div class="row"><span class="sl">Club A</span><select id="riv-a"></select></div>
+    <div class="row"><span class="sl">Club B</span><select id="riv-b"></select></div>
+    <div class="row"><span class="sl">Type</span><select id="riv-type"><option>Local Derby</option><option>Historical Rivals</option><option>Title Rivals</option><option>Promotion Battle</option></select></div>
+    <div class="row"><span class="sl">Starting intensity</span><input type="number" id="riv-int" min="1" max="100" value="60" style="width:80px;"></div>
+    <button class="btn pri" onclick="addRivalry()">Add rivalry</button>
+  </div>
+</div>
+</div>
+
+<script>
+const TEAMS=[
+  {id:0,name:"Portmere Wanderers",stadiumName:"Wanderers Park",stands:[{name:"Portmere End",type:"Home End",cap:7200,tp:38},{name:"Riverview Terrace",type:"Away End",cap:2800,tp:28},{name:"Family Enclosure",type:"Family",cap:5500,tp:32},{name:"Directors Lounge",type:"VIP",cap:1800,tp:95}]},
+  {id:1,name:"Rivergate City",stadiumName:"The Riverside",stands:[{name:"City End",type:"Home End",cap:8100,tp:42},{name:"Away Stand",type:"Away End",cap:3100,tp:30},{name:"Lakeview Family Stand",type:"Family",cap:6200,tp:35},{name:"Chairman's Suite",type:"VIP",cap:2100,tp:110}]},
+  {id:2,name:"Oldminster",stadiumName:"Minster Ground",stands:[{name:"The Kop",type:"Home End",cap:9000,tp:36},{name:"Visitors End",type:"Away End",cap:3400,tp:26},{name:"Junior Stand",type:"Family",cap:5800,tp:30},{name:"Heritage Box",type:"VIP",cap:1600,tp:85}]},
+  {id:3,name:"Niners",stadiumName:"The Nine Stadium",stands:[{name:"Nine End",type:"Home End",cap:6800,tp:40},{name:"Away Terrace",type:"Away End",cap:2600,tp:28},{name:"Family Zone",type:"Family",cap:4900,tp:33},{name:"Executive Level",type:"VIP",cap:1500,tp:100}]},
+  {id:4,name:"Eighters",stadiumName:"Eight Park",stands:[{name:"Eighters End",type:"Home End",cap:7500,tp:38},{name:"Opposition Stand",type:"Away End",cap:2900,tp:27},{name:"Community Stand",type:"Family",cap:5600,tp:31},{name:"Boardroom Terrace",type:"VIP",cap:1700,tp:90}]},
+  {id:5,name:"Lanxdon",stadiumName:"Lanxdon Arena",stands:[{name:"Lanxdon Curve",type:"Home End",cap:8500,tp:44},{name:"Away Section",type:"Away End",cap:3300,tp:30},{name:"Families First Stand",type:"Family",cap:6800,tp:36},{name:"Skybox Lounge",type:"VIP",cap:2400,tp:120}]},
+  {id:6,name:"Bluewitch",stadiumName:"The Cauldron",stands:[{name:"Witch's End",type:"Home End",cap:7900,tp:41},{name:"Guest Stand",type:"Away End",cap:3000,tp:28},{name:"Youth Wing",type:"Family",cap:5200,tp:32},{name:"Blue Suite",type:"VIP",cap:1900,tp:105}]},
+  {id:7,name:"Oakridge United",stadiumName:"United Ground",stands:[{name:"United Terrace",type:"Home End",cap:8800,tp:40},{name:"Visitors Pen",type:"Away End",cap:3200,tp:27},{name:"Oak Family Stand",type:"Family",cap:6500,tp:33},{name:"Prestige Box",type:"VIP",cap:2200,tp:115}]},
+  {id:8,name:"Foxborough",stadiumName:"Fox Den",stands:[{name:"Fox Corner",type:"Home End",cap:6500,tp:37},{name:"Away Cage",type:"Away End",cap:2500,tp:26},{name:"Den Family Section",type:"Family",cap:4600,tp:30},{name:"Directors End",type:"VIP",cap:1400,tp:88}]},
+  {id:9,name:"Norbridge Town",stadiumName:"Norbridge Bowl",stands:[{name:"Town End",type:"Home End",cap:7100,tp:39},{name:"Visitor Terrace",type:"Away End",cap:2700,tp:28},{name:"Community End",type:"Family",cap:5300,tp:32},{name:"Corporate Lounge",type:"VIP",cap:1600,tp:95}]},
+  {id:10,name:"Oakridge",stadiumName:"The Oak",stands:[{name:"Oakridge Bank",type:"Home End",cap:7600,tp:38},{name:"Away Paddock",type:"Away End",cap:2900,tp:27},{name:"Family Terrace",type:"Family",cap:5700,tp:31},{name:"Founders Suite",type:"VIP",cap:1800,tp:98}]},
+  {id:11,name:"Eversley",stadiumName:"Eversley Park",stands:[{name:"Eversley End",type:"Home End",cap:8300,tp:43},{name:"Away Wing",type:"Away End",cap:3100,tp:29},{name:"Junior Block",type:"Family",cap:6100,tp:34},{name:"Platinum Box",type:"VIP",cap:2000,tp:108}]}
+];
+const UPG={
+  "Home End":[{id:"safe_standing",name:"Safe standing",cost:250000,effect:"atmosphere",val:12,desc:"+12% atm"},{id:"big_screen",name:"Big screen",cost:180000,effect:"atmosphere",val:8,desc:"+8% atm"},{id:"ultras_section",name:"Ultras section",cost:80000,effect:"atmosphere",val:15,desc:"+15% atm"},{id:"covered_roof",name:"Covered roof",cost:400000,effect:"occupancy",val:8,desc:"+8% occ"},{id:"singing_section",name:"Singing section",cost:50000,effect:"atmosphere",val:10,desc:"+10% atm"}],
+  "Away End":[{id:"away_roof",name:"Covered section",cost:200000,effect:"occupancy",val:6,desc:"+6% occ"},{id:"away_screen",name:"Away screen",cost:100000,effect:"atmosphere",val:5,desc:"+5% atm"},{id:"away_catering",name:"Dedicated catering",cost:120000,effect:"revenue",val:8,desc:"+8% concessions"}],
+  "Family":[{id:"play_area",name:"Play area",cost:150000,effect:"occupancy",val:10,desc:"+10% occ"},{id:"family_catering",name:"Meal deals",cost:90000,effect:"revenue",val:6,desc:"+6% concessions"},{id:"sensory_room",name:"Sensory room",cost:120000,effect:"mood",val:5,desc:"+5% mood"},{id:"viewing_ramp",name:"Accessible ramp",cost:200000,effect:"occupancy",val:7,desc:"+7% occ"}],
+  "VIP":[{id:"padded_seats",name:"Premium seats",cost:300000,effect:"revenue",val:15,desc:"+15% VIP rev"},{id:"hospitality",name:"Full hospitality",cost:500000,effect:"revenue",val:25,desc:"+25% VIP rev"},{id:"private_bar",name:"Private bar",cost:200000,effect:"revenue",val:12,desc:"+12% VIP rev"},{id:"tunnel_access",name:"Tunnel access",cost:350000,effect:"mood",val:8,desc:"+8% mood"}]
+};
+const TIERS=[
+  {id:"community",name:"Community Stadium",capacity:25000,cm:0.8,desc:"Modern 25,000-seat ground.",stands:[{name:"North Stand",type:"Home End",cap:9000,tp:42,occ:0.82,atm:68},{name:"South Stand",type:"Away End",cap:4000,tp:32,occ:0.75,atm:60},{name:"East Family Stand",type:"Family",cap:8000,tp:36,occ:0.78,atm:62},{name:"West Paddock",type:"VIP",cap:4000,tp:110,occ:0.88,atm:55}],features:["Modern concourses","LED floodlights","Accessible facilities","Club shop"]},
+  {id:"elite",name:"Elite Arena",capacity:38000,cm:1.2,desc:"38,000-seat elite arena.",stands:[{name:"North Terrace",type:"Home End",cap:14000,tp:48,occ:0.85,atm:78},{name:"South End",type:"Away End",cap:5500,tp:36,occ:0.8,atm:70},{name:"Family Quarter",type:"Family",cap:11000,tp:40,occ:0.82,atm:72},{name:"Premium Lounge",type:"VIP",cap:7500,tp:135,occ:0.92,atm:65}],features:["Retractable roof","Wi-Fi","Luxury hospitality","Megastore"]},
+  {id:"iconic",name:"Iconic Fortress",capacity:55000,cm:1.8,desc:"World-class 55,000-capacity fortress.",stands:[{name:"The Cathedral End",type:"Home End",cap:22000,tp:55,occ:0.9,atm:92},{name:"Away Sector",type:"Away End",cap:7000,tp:40,occ:0.85,atm:80},{name:"Family Pavilion",type:"Family",cap:14000,tp:45,occ:0.86,atm:82},{name:"Platinum Terrace",type:"VIP",cap:12000,tp:160,occ:0.95,atm:75}],features:["Retractable roof","Heated pitch","360° LED ribbon","Fan tunnel","Rooftop bar","Conference centre"]}
+];
+const TSENS={"Home End":{t:5},"Away End":{t:3},"Family":{t:4},"VIP":{t:15}};
+const TV=100e6,SOL=1.5e6,PB=2e6,PS=2.5e6,SC=3200,NFX=6;
+function tva(p){if(p>=7)return(p-6)*SOL;return-([7,8,9,10,11,12].reduce((s,x)=>s+(x-6)*SOL,0)/6);}
+function tvn(p){return TV+tva(p);}
+function prz(p){return PB+(p<=6?(7-p)*PS:0);}
+function fm(n){return'£'+Math.round(n).toLocaleString();}
+function fmm(n){return'£'+(n/1e6).toFixed(2)+'m';}
+function fms(n){return'£'+(n/1e6).toFixed(1)+'m';}
+function at(t){return Math.round(t.stands.reduce((s,st)=>s+st.tp,0)/t.stands.length);}
+function rev(t,p){const sp=t.sponsors.filter(s=>s.active).reduce((x,s)=>x+s.value,0);return t.matchday_rev+tvn(p)+t.commercial_rev+sp+prz(p);}
+function sl(){return S.season+'/'+(S.season+1).toString().slice(2);}
+function sorted(){return[...S.teams].sort((a,b)=>b.pts-a.pts||(b.gf-b.ga)-(a.gf-a.ga)||b.gf-a.gf);}
+function posOf(id){return sorted().findIndex(t=>t.id===id)+1;}
+function ml(m){if(m>=80)return['Ecstatic','bg'];if(m>=65)return['Positive','bb'];if(m>=50)return['Neutral','ba'];if(m>=35)return['Frustrated','bo'];return['Furious','br'];}
+function fd(f){return f.slice(-6).map(x=>`<span class="form-dot" style="background:${x==='W'?'#3B6D11':x==='D'?'#888780':'#A32D2D'};">${x}</span>`).join('');}
+function mfp(pos,form){let b=Math.max(10,Math.min(95,100-(pos-1)*7));let f=form.slice(-5).reduce((s,x)=>s+(x==='W'?3:x==='D'?0:-3),0);return Math.max(5,Math.min(99,Math.round(b+f)));}
+function topts(sel){return TEAMS.map(t=>`<option value="${t.id}"${t.id===sel?' selected':''}>${t.name}</option>`).join('');}
+
+function mkTeams(){
+  return TEAMS.map((td,i)=>({
+    ...td,p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0,form:[],
+    fanbase:18000+i*6500+Math.floor(Math.random()*4000),
+    mood:60,attp:0.76+Math.random()*0.14,
+    capacity:td.stands.reduce((s,st)=>s+st.cap,0),
+    stands:td.stands.map(st=>({...st,occ:0.75+Math.random()*0.15,atm:60+Math.floor(Math.random()*20),upgrades:[],baseTP:st.tp})),
+    commercial_rev:8e6+i*0.6e6,matchday_rev:0,stadium_debt:0,
+    wage_bill:(35+i*4)*1e6,
+    transfer_budget:(20+i*2.5)*1e6,
+    sponsors:[
+      {slot:"Shirt Front",name:"SportsBet Elite",value:12e6+i*0.5e6,active:true},
+      {slot:"Sleeve",name:"LocalBank FC",value:4.5e6+i*0.2e6,active:true},
+      {slot:"Training Kit",name:"KitCo",value:3e6+i*0.15e6,active:true},
+      {slot:"Stadium Name",name:"Arena Corp",value:6e6+i*0.3e6,active:false}
+    ]
+  }));
+}
+
+let S={season:2024,matchday:0,cMDs:new Set(),mdFx:Array.from({length:22},()=>Array.from({length:NFX},()=>({hi:0,ai:1,hg:'',ag:''}))),results:[],notices:[],teams:mkTeams(),rivalries:[{a:7,b:10,type:"Local Derby",intensity:95,h2h:[0,0,0],last:null},{a:0,b:2,type:"Historical Rivals",intensity:78,h2h:[0,0,0],last:null},{a:1,b:8,type:"Title Rivals",intensity:70,h2h:[0,0,0],last:null}]};
+let rModal={open:false,ti:0,sel:null};
+
+// --- persistence (localStorage) ---
+const STORAGE_KEY='efl-project:v1';
+let _saveTimer=null;
+
+function _setSaveStatus(msg){
+  const el=document.getElementById('save-status');
+  if(el) el.textContent=msg||'';
+}
+
+function serializeState(){
+  // Keep it JSON-safe (Set -> Array). Avoid persisting transient modal UI state.
+  return {
+    S: {
+      ...S,
+      cMDs: Array.from(S.cMDs||[]),
+    }
+  };
+}
+
+function hydrateState(raw){
+  if(!raw || typeof raw!=='object' || !raw.S) return false;
+  const ns=raw.S;
+  if(!ns.teams || !Array.isArray(ns.teams) || ns.teams.length!==TEAMS.length) return false;
+  if(!ns.mdFx || !Array.isArray(ns.mdFx) || ns.mdFx.length!==22) return false;
+  S = {
+    ...ns,
+    cMDs: new Set(Array.isArray(ns.cMDs)?ns.cMDs:[]),
+  };
+  // Ensure any missing nested fields exist (for forward compat).
+  S.teams.forEach((t,i)=>{
+    t.id = (typeof t.id==='number') ? t.id : i;
+    t.stands = (t.stands||[]).map(st=>({
+      upgrades: [],
+      baseTP: st.tp,
+      ...st,
+      upgrades: Array.isArray(st.upgrades)?st.upgrades:[],
+      baseTP: (typeof st.baseTP==='number') ? st.baseTP : st.tp
+    }));
+    t.sponsors = Array.isArray(t.sponsors)?t.sponsors:[];
+    t.form = Array.isArray(t.form)?t.form:[];
+  });
+  return true;
+}
+
+function saveState(){
+  try{
+    const payload=serializeState();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    _setSaveStatus('Saved to this browser.');
+    return true;
+  }catch(e){
+    console.error(e);
+    _setSaveStatus('Save failed (storage blocked/full).');
+    return false;
+  }
+}
+
+function scheduleSave(){
+  if(_saveTimer) clearTimeout(_saveTimer);
+  _setSaveStatus('Saving…');
+  _saveTimer=setTimeout(()=>{_saveTimer=null;saveState();}, 250);
+}
+
+function loadState(){
+  try{
+    const rawStr=localStorage.getItem(STORAGE_KEY);
+    if(!rawStr) return false;
+    const raw=JSON.parse(rawStr);
+    const ok=hydrateState(raw);
+    if(ok) _setSaveStatus('Loaded saved game.');
+    return ok;
+  }catch(e){
+    console.error(e);
+    _setSaveStatus('Load failed (bad saved data).');
+    return false;
+  }
+}
+
+function exportState(){
+  const payload=serializeState();
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`efl-save-${sl().replace('/','-')}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(a.href);
+}
+
+function importState(){
+  const inp=document.createElement('input');
+  inp.type='file';
+  inp.accept='application/json';
+  inp.onchange=async()=>{
+    const f=inp.files&&inp.files[0];
+    if(!f) return;
+    try{
+      const txt=await f.text();
+      const raw=JSON.parse(txt);
+      if(!hydrateState(raw)){alert('Invalid save file.');return;}
+      saveState();
+      // Refresh whichever panel is active
+      const onTab=document.querySelector('.tab.on');
+      const idx=[...document.querySelectorAll('.tab')].indexOf(onTab);
+      go(TABS[Math.max(0,idx)]||'table');
+      rLog();
+    }catch(e){
+      console.error(e);
+      alert('Could not import save file.');
+    }
+  };
+  inp.click();
+}
+// --- end persistence ---
+
+const TABS=['table','results','revenue','fans','stadiums','sponsors','rivals'];
+function go(id){
+  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('on',TABS[i]===id));
+  document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));
+  document.getElementById('pnl-'+id).classList.add('on');
+  if(id==='table')rTable();
+  if(id==='results')rResults();
+  if(id==='revenue')rRevenue();
+  if(id==='fans')rFans();
+  if(id==='stadiums')rStadium();
+  if(id==='sponsors')rSponsors();
+  if(id==='rivals')rRivals();
+}
+
+function rTable(){
+  const rows=sorted();
+  const totFans=S.teams.reduce((s,t)=>s+t.fanbase,0);
+  const totRev=rows.reduce((s,t,i)=>s+rev(t,i+1),0);
+  const avgMood=Math.round(S.teams.reduce((s,t)=>s+t.mood,0)/12);
+  document.getElementById('mdnum').textContent=S.matchday;
+  document.getElementById('slabel').textContent=sl();
+  document.getElementById('lg-metrics').innerHTML=`
+    <div class="metric"><div class="lbl">Matchday</div><div class="val">${S.matchday}/22</div></div>
+    <div class="metric"><div class="lbl">Total fans</div><div class="val">${(totFans/1000).toFixed(0)}k</div></div>
+    <div class="metric"><div class="lbl">League revenue</div><div class="val">£${(totRev/1e9).toFixed(2)}bn</div></div>
+    <div class="metric"><div class="lbl">Avg mood</div><div class="val">${avgMood}%</div><div class="sub">${avgMood>=60?'Positive':'Concerning'}</div></div>`;
+  document.getElementById('tbl-body').innerHTML=rows.map((t,i)=>{
+    const pos=i+1,gd=t.gf-t.ga;
+    const[mlt,mc]=ml(t.mood);
+    const isRiv=S.rivalries.some(r=>r.a===t.id||r.b===t.id);
+    return`<tr><td style="color:#999;font-weight:500;">${pos}</td>
+      <td style="font-weight:500;">${t.name}${isRiv?` <span class="riv-pill">derby</span>`:''}</td>
+      <td>${t.p}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td><td>${t.gf}</td><td>${t.ga}</td>
+      <td style="font-weight:500;">${gd>=0?'+':''}${gd}</td><td style="font-weight:500;">${t.pts}</td>
+      <td>${fd(t.form)||'<span style="font-size:11px;color:#999;">—</span>'}</td>
+      <td><span class="badge ${mc}">${mlt}</span></td>
+      <td style="font-size:12px;">${fmm(prz(pos))}</td></tr>`;
+  }).join('');
+  const area=document.getElementById('next-season-area');
+  if(S.matchday===22){
+    const ch=rows[0];
+    area.innerHTML=`<div class="season-end">
+      <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.7;margin-bottom:8px;">Season ${sl()} complete</div>
+      <div style="font-size:28px;font-weight:500;margin-bottom:4px;">🏆 ${ch.name}</div>
+      <div style="font-size:14px;opacity:.85;margin-bottom:20px;">Champions · ${ch.pts} pts · ${ch.gf} goals</div>
+      <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:20px;font-size:13px;">
+        ${rows.slice(0,3).map((t,i)=>['🥇','🥈','🥉'][i]+' '+t.name+' — '+t.pts+'pts').join('<span style="opacity:.4;margin:0 6px;">·</span>')}
+      </div>
+      <button class="btn success" style="font-size:14px;padding:10px 28px;" onclick="nextSeason()">Start season ${S.season+1}/${(S.season+2).toString().slice(2)} →</button>
+    </div>`;
+  }else{area.innerHTML='';}
+}
+
+function nextSeason(){
+  S.season++;S.matchday=0;S.cMDs=new Set();S.results=[];S.notices=[];
+  S.mdFx=Array.from({length:22},()=>Array.from({length:NFX},()=>({hi:0,ai:1,hg:'',ag:''})));
+  S.teams.forEach(t=>{t.p=0;t.w=0;t.d=0;t.l=0;t.gf=0;t.ga=0;t.pts=0;t.form=[];t.matchday_rev=0;t.stadium_debt=0;t.fanbase=Math.max(5000,Math.min(2e6,t.fanbase+Math.round((t.mood-50)*80)));t.mood=Math.max(45,Math.min(75,t.mood));t.attp=Math.max(0.55,Math.min(0.96,t.attp));});
+  rModal={open:false,ti:0,sel:null};rTable();rLog();
+  scheduleSave();
+}
+
+function rResults(){
+  const sel=document.getElementById('md-sel');
+  if(!sel.options.length)sel.innerHTML=Array.from({length:22},(_,i)=>`<option value="${i}">${i+1}</option>`).join('');
+  sel.value=Math.min(S.matchday,21);onMdChange();rLog();
+}
+function onMdChange(){
+  const md=parseInt(document.getElementById('md-sel').value),done=S.cMDs.has(md);
+  document.getElementById('md-badge').innerHTML=done?'<span class="badge bg">✓ saved</span>':'<span class="badge ba">pending</span>';
+  buildFx(md,done);
+}
+function buildFx(md,done){
+  const c=document.getElementById('fx-builder');c.innerHTML='';
+  if(done){
+    const d=document.createElement('div');d.style.cssText='font-size:12px;color:#666;margin-bottom:8px;';d.textContent='Results locked.';c.appendChild(d);
+    S.mdFx[md].forEach((f,fi)=>{
+      if(!f.saved)return;
+      const row=document.createElement('div');row.className='fx-row';
+      const riv=S.rivalries.find(r=>(r.a===f.hi&&r.b===f.ai)||(r.b===f.hi&&r.a===f.ai));
+      row.innerHTML=`<span class="fx-num">${fi+1}</span><span style="flex:1;font-weight:500;text-align:right;">${TEAMS[f.hi].name}${riv?` <span class="riv-pill">${riv.type}</span>`:''}</span><span style="font-size:18px;font-weight:500;padding:0 10px;">${f.hg} – ${f.ag}</span><span style="flex:1;font-weight:500;">${TEAMS[f.ai].name}</span>`;
+      c.appendChild(row);
+    });return;
+  }
+  S.mdFx[md].forEach((f,fi)=>{
+    const row=document.createElement('div');row.className='fx-row';
+    const num=document.createElement('span');num.className='fx-num';num.textContent=(fi+1)+'.';
+    const hS=document.createElement('select');hS.className='fx-sel';hS.innerHTML=topts(f.hi);hS.addEventListener('change',()=>{S.mdFx[md][fi].hi=+hS.value;});
+    const sep=document.createElement('span');sep.className='fx-sep';sep.textContent='vs';
+    const aS=document.createElement('select');aS.className='fx-sel';aS.innerHTML=topts(f.ai);aS.addEventListener('change',()=>{S.mdFx[md][fi].ai=+aS.value;});
+    const sw=document.createElement('div');sw.style.cssText='display:flex;align-items:center;gap:6px;flex-shrink:0;margin-left:8px;';
+    const hI=document.createElement('input');hI.type='number';hI.min=0;hI.max=20;hI.className='sc';hI.placeholder='0';hI.value=f.hg;hI.addEventListener('input',()=>{S.mdFx[md][fi].hg=hI.value;});
+    const ss=document.createElement('span');ss.className='fx-sep';ss.textContent='–';
+    const aI=document.createElement('input');aI.type='number';aI.min=0;aI.max=20;aI.className='sc';aI.placeholder='0';aI.value=f.ag;aI.addEventListener('input',()=>{S.mdFx[md][fi].ag=aI.value;});
+    sw.append(hI,ss,aI);row.append(num,hS,sep,aS,sw);c.appendChild(row);
+  });
+}
+function submitResults(){
+  const md=parseInt(document.getElementById('md-sel').value);
+  if(S.cMDs.has(md)){alert('Already saved.');return;}
+  const fx=S.mdFx[md];const used=new Set();let ok=true;
+  fx.forEach((f,fi)=>{
+    if(f.hg===''||f.ag==='')ok=false;
+    if(f.hi===f.ai){ok=false;alert('Match '+(fi+1)+': same team both sides.');}
+    if(used.has(f.hi)||used.has(f.ai)){ok=false;alert('A team appears more than once this matchday.');}
+    used.add(f.hi);used.add(f.ai);
+  });
+  if(!ok)return;
+  fx.forEach((f,fi)=>{
+    const hg=parseInt(f.hg),ag=parseInt(f.ag),h=S.teams[f.hi],a=S.teams[f.ai];
+    h.p++;a.p++;h.gf+=hg;h.ga+=ag;a.gf+=ag;a.ga+=hg;
+    const riv=S.rivalries.find(r=>(r.a===f.hi&&r.b===f.ai)||(r.b===f.hi&&r.a===f.ai)),rm=riv?1.6:1;
+    if(hg>ag){h.w++;h.pts+=3;h.form.push('W');a.l++;a.form.push('L');h.fanbase=Math.min(h.fanbase+Math.round(400*rm),2e6);a.fanbase=Math.max(a.fanbase-100,1000);if(riv){riv.h2h[0]++;riv.last=h.name+' '+hg+'–'+ag+' '+a.name;riv.intensity=Math.min(100,riv.intensity+2);}}
+    else if(hg<ag){a.w++;a.pts+=3;a.form.push('W');h.l++;h.form.push('L');a.fanbase=Math.min(a.fanbase+Math.round(400*rm),2e6);h.fanbase=Math.max(h.fanbase-100,1000);if(riv){riv.h2h[2]++;riv.last=a.name+' '+ag+'–'+hg+' '+h.name;riv.intensity=Math.min(100,riv.intensity+2);}}
+    else{h.d++;a.d++;h.pts++;a.pts++;h.form.push('D');a.form.push('D');if(riv){riv.h2h[1]++;riv.last='Draw '+hg+'–'+ag;riv.intensity=Math.min(100,riv.intensity+1);}}
+    const att=Math.floor(h.capacity*h.attp*(0.88+Math.random()*.12)*(riv?1.08:1));
+    h.matchday_rev+=att*at(h)+att*6.5;h.attp=Math.min(0.98,Math.max(0.4,h.attp+(hg>ag?.008:-.006)));
+    S.mdFx[md][fi].saved=true;S.results.unshift({hn:h.name,an:a.name,hg,ag,riv:!!riv,md:md+1});
+  });
+  S.cMDs.add(md);S.matchday=S.cMDs.size;sorted().forEach((t,i)=>{t.mood=mfp(i+1,t.form);});
+  rLog();onMdChange();rTable();
+  scheduleSave();
+}
+function clearScores(){const md=parseInt(document.getElementById('md-sel').value);if(S.cMDs.has(md))return;S.mdFx[md].forEach(f=>{f.hg='';f.ag='';});buildFx(md,false);}
+function rLog(){
+  const el=document.getElementById('result-log');if(!el)return;
+  if(!S.results.length){el.innerHTML='<span style="color:#999;">No results yet.</span>';return;}
+  el.innerHTML=S.results.slice(0,60).map(r=>{const col=r.hg>r.ag?'#3B6D11':r.hg<r.ag?'#A32D2D':'#888780';return`<div style="display:flex;gap:8px;align-items:center;padding:2px 0;">${r.riv?'<span class="riv-pill">derby</span>':''}<span style="color:#999;">MD${r.md}</span><span style="font-weight:500;">${r.hn}</span><span style="font-weight:500;color:${col};">${r.hg}–${r.ag}</span><span style="font-weight:500;">${r.an}</span></div>`;}).join('');
+}
+
+function rRevenue(){
+  const rows=sorted();
+  const totSol=[7,8,9,10,11,12].reduce((s,p)=>s+(p-6)*SOL,0),ded=totSol/6;
+  const totAll=rows.reduce((s,t,i)=>s+rev(t,i+1),0);
+  const totW=S.teams.reduce((s,t)=>s+t.wage_bill,0);
+  const totT=S.teams.reduce((s,t)=>s+t.transfer_budget,0);
+  document.getElementById('rev-metrics').innerHTML=`
+    <div class="metric"><div class="lbl">TV base/club</div><div class="val">£100m</div></div>
+    <div class="metric"><div class="lbl">Solidarity pot</div><div class="val">${fms(totSol)}</div></div>
+    <div class="metric"><div class="lbl">Top 6 deduction</div><div class="val">${fms(ded)}</div><div class="sub">each</div></div>
+    <div class="metric"><div class="lbl">League total</div><div class="val">£${(totAll/1e9).toFixed(2)}bn</div></div>
+    <div class="metric"><div class="lbl">Total wage bills</div><div class="val" style="font-size:16px;" id="total-wages">${fms(totW)}</div></div>
+    <div class="metric"><div class="lbl">Total transfer pots</div><div class="val" style="font-size:16px;" id="total-transfer">${fms(totT)}</div></div>`;
+  document.getElementById('rev-body').innerHTML=rows.map((t,i)=>{
+    const pos=i+1,adj=tva(pos),net=tvn(pos),pm=prz(pos);
+    const sp=t.sponsors.filter(s=>s.active).reduce((x,s)=>x+s.value,0);
+    const tot=rev(t,pos);
+    const bal=tot-t.stadium_debt-t.wage_bill-t.transfer_budget;
+    const adjStr=adj>=0?`<span style="color:#3B6D11;font-weight:500;">+${fms(adj)}</span>`:`<span style="color:#A32D2D;font-weight:500;">${fms(adj)}</span>`;
+    const debtStr=t.stadium_debt>0?`<span style="color:#A32D2D;">${fmm(t.stadium_debt)}</span>`:`<span style="color:#999;">—</span>`;
+    const bc=bal>=0?'#3B6D11':'#A32D2D';
+    const ti=S.teams.indexOf(t);
+    return`<tr>
+      <td style="font-weight:500;">${t.name}</td><td>${pos}</td>
+      <td>${fmm(t.matchday_rev)}</td>
+      <td style="color:#666;">£100.00m</td>
+      <td>${adjStr}</td>
+      <td style="font-weight:500;">${fmm(net)}</td>
+      <td>${fmm(t.commercial_rev)}</td>
+      <td>${fmm(sp)}</td>
+      <td style="color:${pos<=6?'#3B6D11':'inherit'};font-weight:500;">${fmm(pm)}</td>
+      <td style="font-weight:500;">${fmm(tot)}</td>
+      <td>${debtStr}</td>
+      <td style="border-left:1px solid #eee;">
+        <input type="number" class="bud-inp" min="0" step="0.5" value="${+(t.wage_bill/1e6).toFixed(1)}" data-ti="${ti}" oninput="S.teams[+this.dataset.ti].wage_bill=(parseFloat(this.value)||0)*1e6;updateBal(+this.dataset.ti);">
+      </td>
+      <td>
+        <input type="number" class="bud-inp" min="0" step="0.5" value="${+(t.transfer_budget/1e6).toFixed(1)}" data-ti="${ti}" oninput="S.teams[+this.dataset.ti].transfer_budget=(parseFloat(this.value)||0)*1e6;updateBal(+this.dataset.ti);">
+      </td>
+      <td id="bal-${ti}" style="font-weight:500;color:${bc};">${fmm(bal)}</td>
+    </tr>`;
+  }).join('');
+}
+
+function rFans(){
+  const ti=parseInt(document.getElementById('fan-sel').value)||0;
+  const t=S.teams[ti],pos=posOf(ti);
+  const[mlt,mc]=ml(t.mood);
+  const riv=S.rivalries.find(r=>r.a===ti||r.b===ti);
+  document.getElementById('fan-content').innerHTML=`
+    <div class="metrics">
+      <div class="metric"><div class="lbl">Fan base</div><div class="val">${t.fanbase.toLocaleString()}</div></div>
+      <div class="metric"><div class="lbl">Fan mood</div><div class="val">${t.mood}%</div><div class="sub"><span class="badge ${mc}">${mlt}</span></div></div>
+      <div class="metric"><div class="lbl">Position</div><div class="val">${pos}${pos===1?'st':pos===2?'nd':pos===3?'rd':'th'}</div></div>
+      <div class="metric"><div class="lbl">Avg attendance</div><div class="val">${Math.round(t.attp*100)}%</div><div class="sub">${Math.round(t.capacity*t.attp).toLocaleString()} / game</div></div>
+    </div>
+    <div class="card">
+      ${[['Position effect',Math.max(10,Math.min(95,100-(pos-1)*7)),'#185FA5'],['Recent form bonus',Math.max(0,t.form.slice(-5).reduce((s,f)=>s+(f==='W'?3:f==='D'?0:-3),0)),'#3B6D11'],['Overall mood',t.mood,'#533AB7']].map(([lbl,v,c])=>`<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;"><span style="color:#666;">${lbl}</span><span style="font-weight:500;">${v}%</span></div><div class="bar-bg"><div class="bar" style="width:${Math.min(100,Math.max(0,v))}%;background:${c};"></div></div></div>`).join('')}
+      <div id="fn-${ti}"></div>
+    </div>
+    ${riv?`<div class="card"><div style="font-size:13px;font-weight:500;margin-bottom:8px;">Derby effect — ${S.teams[riv.a===ti?riv.b:riv.a].name}</div><div class="bar-bg"><div class="bar" style="width:${riv.intensity}%;background:#993C1D;"></div></div><div style="font-size:11px;color:#999;margin-top:4px;">Intensity: ${riv.intensity}% · H2H: ${riv.h2h[0]}W ${riv.h2h[1]}D ${riv.h2h[2]}L</div></div>`:''}`;
+  const notices=S.notices.filter(n=>n.tid===ti);
+  const el=document.getElementById('fn-'+ti);
+  if(el&&notices.length)el.innerHTML=`<div style="font-size:13px;font-weight:500;margin:10px 0 8px;">Fan reactions</div>`+notices.map(n=>`<div class="notice ${n.type}">${n.msg}</div>`).join('');
+}
+
+
+
+function rStadium(){
+  const ti=parseInt(document.getElementById('stad-sel').value)||0;
+  const t=S.teams[ti],pos=posOf(ti),pr=rev(t,pos);
+  document.getElementById('stad-content').innerHTML=`
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+        <div><div style="font-size:11px;color:#999;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;">Stadium</div>
+        <input type="text" class="inline" style="font-size:18px;font-weight:500;" value="${t.stadiumName}" onchange="S.teams[${ti}].stadiumName=this.value;scheduleSave();"></div>
+        <div style="text-align:right;font-size:12px;"><div>Capacity: <b>${t.capacity.toLocaleString()}</b></div><div>Season revenue: <b>${fmm(pr)}</b></div></div>
+      </div>
+      <div class="metrics" style="margin-bottom:0;">
+        <div class="metric"><div class="lbl">Avg ticket</div><div class="val">£${at(t)}</div></div>
+        <div class="metric"><div class="lbl">Fan mood</div><div class="val">${t.mood}%</div><div class="sub">${ml(t.mood)[0]}</div></div>
+        ${t.stadium_debt>0?`<div class="metric"><div class="lbl">Stadium debt</div><div class="val" style="color:#A32D2D;">${fmm(t.stadium_debt)}</div></div>`:''}
+      </div>
+    </div>
+    ${t.stands.map((st,si)=>sCard(ti,si,st)).join('')}
+    <div class="card" style="border-color:#854F0B;">
+      <div style="font-size:13px;font-weight:500;margin-bottom:4px;">Rebuild stadium</div>
+      <div style="font-size:12px;color:#666;margin-bottom:12px;">Cost = season revenue × multiplier (currently <b>${fmm(pr)}</b>).</div>
+      <button class="btn warn" onclick="openRebuild(${ti})">Choose new stadium</button>
+    </div>
+    ${rModal.open&&rModal.ti===ti?rebuildHtml(ti,pr):''}`;
+}
+function sCard(ti,si,st){
+  const t=S.teams[ti],upgList=UPG[st.type]||[],inst=st.upgrades.map(u=>u.id),avail=upgList.filter(u=>!inst.includes(u.id));
+  const atm=Math.min(99,Math.max(20,Math.round(st.atm*(t.mood/65)))),occ=Math.round(st.occ*100);
+  const aC=atm>=70?'#3B6D11':atm>=50?'#185FA5':'#A32D2D',oC=occ>=75?'#3B6D11':occ>=55?'#185FA5':'#A32D2D';
+  const sens=TSENS[st.type],pct=st.baseTP>0?Math.round(((st.tp-st.baseTP)/st.baseTP)*100):0;
+  return`<div class="stand-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
+      <div><input type="text" class="inline" style="font-size:15px;font-weight:500;" value="${st.name}" onchange="S.teams[${ti}].stands[${si}].name=this.value;scheduleSave();">
+      <div style="font-size:11px;color:#999;margin-top:2px;">${st.type} · ${st.cap.toLocaleString()} seats</div></div>
+      <div style="display:flex;gap:6px;"><span class="badge ba" style="font-size:10px;">${st.type}</span>${st.upgrades.length?`<span class="badge bb" style="font-size:10px;">${st.upgrades.length} upgrade${st.upgrades.length>1?'s':''}</span>`:''}</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+      <div><div style="font-size:11px;color:#666;margin-bottom:3px;">Occupancy</div><div class="bar-bg"><div class="bar" style="width:${occ}%;background:${oC};"></div></div><div style="font-size:11px;margin-top:2px;">${occ}%</div></div>
+      <div><div style="font-size:11px;color:#666;margin-bottom:3px;">Atmosphere</div><div class="bar-bg"><div class="bar" style="width:${atm}%;background:${aC};"></div></div><div style="font-size:11px;margin-top:2px;">${atm}%</div></div>
+    </div>
+    <div style="margin-bottom:12px;">
+      <div style="font-size:11px;color:#666;margin-bottom:4px;">Ticket price</div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;"><span>£</span><input type="number" min="5" max="500" value="${st.tp}" style="width:70px;" id="tp-${ti}-${si}"><button class="btn sm" onclick="changeTP(${ti},${si})">Update</button>${pct!==0?`<span style="font-size:11px;color:${pct>10?'#A32D2D':pct<-5?'#3B6D11':'inherit'};font-weight:500;">${pct>0?'+':''}${pct}% from base</span>`:''}</div>
+      <div style="font-size:11px;color:#999;margin-top:3px;">Base: £${st.baseTP} · Tolerance: ±${sens.t}%</div>
+    </div>
+    <div style="height:1px;background:#eee;margin:.75rem 0;"></div>
+    <div style="margin-bottom:12px;">
+      <div style="font-size:11px;color:#666;margin-bottom:6px;">Add seats</div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;"><input type="number" min="100" max="20000" step="500" value="2000" style="width:90px;" id="seats-${ti}-${si}"><button class="btn sm" onclick="addSeats(${ti},${si})">Add seats</button><span style="font-size:11px;color:#999;" id="sc-${ti}-${si}">Est: ${fm(2000*SC)}</span></div>
+      <div style="font-size:11px;color:#999;margin-top:3px;">£${SC.toLocaleString()} per seat</div>
+    </div>
+    ${st.upgrades.length?`<div style="margin-bottom:10px;"><div style="font-size:11px;color:#666;margin-bottom:6px;">Installed</div>${st.upgrades.map((u,ui)=>`<div class="upgrade-item"><span>${u.name}</span><div style="display:flex;gap:6px;align-items:center;"><span class="badge bg" style="font-size:10px;">${u.desc}</span><button class="btn sm danger" onclick="remUpg(${ti},${si},${ui})">Remove</button></div></div>`).join('')}</div>`:''}
+    ${avail.length?`<div><div style="font-size:11px;color:#666;margin-bottom:6px;">Available upgrades</div>${avail.map(u=>`<div class="upgrade-item"><div><div style="font-weight:500;">${u.name}</div><div style="font-size:11px;color:#999;">${u.desc} · ${fm(u.cost)}</div></div><button class="btn sm pri" onclick="addUpg(${ti},${si},'${u.id}')">Install</button></div>`).join('')}</div>`:'<div style="font-size:12px;color:#999;">All upgrades installed.</div>'}
+  </div>`;
+}
+document.addEventListener('input',e=>{if(e.target&&e.target.id&&e.target.id.startsWith('seats-')){const[,ti,si]=e.target.id.split('-'),n=+e.target.value||0,el=document.getElementById('sc-'+ti+'-'+si);if(el)el.textContent='Est: '+fm(n*SC);}});
+function addSeats(ti,si){const t=S.teams[ti],st=t.stands[si],n=+document.getElementById('seats-'+ti+'-'+si).value||0;if(n<100){alert('Min 100.');return;}st.cap+=n;t.capacity=t.stands.reduce((s,x)=>s+x.cap,0);t.stadium_debt+=n*SC;S.notices.unshift({tid:ti,type:'info',msg:`${n.toLocaleString()} seats added to ${st.name}. Cost: ${fm(n*SC)}.`});rStadium();scheduleSave();}
+function changeTP(ti,si){const t=S.teams[ti],st=t.stands[si],ntp=+document.getElementById('tp-'+ti+'-'+si).value;if(isNaN(ntp)||ntp<5||ntp>500)return;const s=TSENS[st.type],tol=Math.round(st.baseTP*s.t/100),diff=ntp-st.baseTP,old=st.tp;st.tp=ntp;let notice=null;if(diff>tol*2){const h=Math.round(Math.min(20,(diff-tol)*.8));t.mood=Math.max(5,t.mood-h);notice={tid:ti,type:'bad',msg:`Ticket hike in ${st.name} (£${old}→£${ntp}). Mood –${h}%.`};}else if(diff>tol){const h=Math.round(Math.min(8,(diff-tol)*.4));t.mood=Math.max(5,t.mood-h);notice={tid:ti,type:'warn',msg:`${st.name} rise above tolerance. Mood –${h}%.`};}else if(diff<-tol){const b=Math.round(Math.min(10,Math.abs(diff)*.3));t.mood=Math.min(99,t.mood+b);notice={tid:ti,type:'good',msg:`Price cut in ${st.name} well received. Mood +${b}%.`};}if(notice){S.notices=S.notices.filter(n=>!(n.tid===ti&&n.msg.includes(st.name)));S.notices.unshift(notice);}rStadium();scheduleSave();}
+function addUpg(ti,si,uid){const t=S.teams[ti],st=t.stands[si],upg=(UPG[st.type]||[]).find(u=>u.id===uid);if(!upg)return;st.upgrades.push({...upg});if(upg.effect==='atmosphere')st.atm=Math.min(99,st.atm+upg.val);if(upg.effect==='occupancy')st.occ=Math.min(0.98,st.occ+upg.val/100);if(upg.effect==='mood')t.mood=Math.min(99,t.mood+upg.val);S.notices.unshift({tid:ti,type:'good',msg:`${upg.name} installed in ${st.name}.`});rStadium();scheduleSave();}
+function remUpg(ti,si,ui){const t=S.teams[ti],st=t.stands[si],upg=st.upgrades[ui];if(upg.effect==='atmosphere')st.atm=Math.max(10,st.atm-upg.val);if(upg.effect==='occupancy')st.occ=Math.max(0.3,st.occ-upg.val/100);if(upg.effect==='mood')t.mood=Math.max(5,t.mood-upg.val);st.upgrades.splice(ui,1);rStadium();scheduleSave();}
+function rebuildHtml(ti,pr){return`<div class="modal-bg"><div class="modal"><div style="font-size:15px;font-weight:500;margin-bottom:4px;">Choose new stadium</div><div style="font-size:12px;color:#666;margin-bottom:16px;">Season revenue: <b>${fmm(pr)}</b></div>${TIERS.map(tier=>{const cost=Math.round(pr*tier.cm),sel=rModal.sel===tier.id;return`<div class="option-card ${sel?'selected':''}" onclick="rModal.sel='${tier.id}';rStadium();"><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><div><div style="font-weight:500;">${tier.name}</div><div style="font-size:11px;color:#666;">${tier.capacity.toLocaleString()} cap · ${tier.desc}</div></div><div style="text-align:right;"><div style="font-weight:500;color:#A32D2D;">${fmm(cost)}</div><div style="font-size:10px;color:#999;">${tier.cm}× revenue</div></div></div><div style="font-size:11px;color:#999;">Includes: ${tier.features.join(', ')}</div></div>`;}).join('')}<div style="display:flex;gap:8px;margin-top:12px;"><button class="btn pri" onclick="confirmRebuild(${ti},${pr})" ${rModal.sel?'':'disabled'}>Confirm rebuild</button><button class="btn" onclick="rModal={open:false,ti:0,sel:null};rStadium();">Cancel</button></div></div></div>`;}
+function openRebuild(ti){rModal={open:true,ti,sel:null};rStadium();}
+function confirmRebuild(ti,pr){const tier=TIERS.find(t=>t.id===rModal.sel);if(!tier)return;const t=S.teams[ti],cost=Math.round(pr*tier.cm);t.stadiumName=tier.name+' ('+t.name+')';t.stands=tier.stands.map(st=>({...st,upgrades:[],baseTP:st.tp}));t.capacity=tier.capacity;t.attp=tier.stands[0].occ;t.stadium_debt+=cost;t.mood=Math.min(99,t.mood+12);S.notices.unshift({tid:ti,type:'info',msg:`New ${tier.name} opens! Mood +12%. Debt: ${fmm(cost)}.`});rModal={open:false,ti:0,sel:null};rStadium();scheduleSave();}
+
+function rSponsors(){
+  const ti=parseInt(document.getElementById('spon-sel').value)||0,t=S.teams[ti];
+  const active=t.sponsors.filter(s=>s.active).reduce((x,s)=>x+s.value,0);
+  let html=`<div class="metrics"><div class="metric"><div class="lbl">Active value</div><div class="val">${fmm(active)}</div><div class="sub">per season</div></div><div class="metric"><div class="lbl">Deals</div><div class="val">${t.sponsors.filter(s=>s.active).length} active / ${t.sponsors.length} total</div></div></div><div class="card"><div style="font-size:13px;font-weight:500;margin-bottom:4px;">Current deals</div><div style="font-size:12px;color:#666;margin-bottom:12px;">Edit name and value inline. Pause/resume or remove permanently.</div>`;
+  t.sponsors.forEach((s,si)=>{html+=`<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #eee;flex-wrap:wrap;"><span class="badge ba" style="font-size:10px;flex-shrink:0;">${s.slot}</span><input type="text" value="${s.name}" style="flex:1;min-width:120px;" data-ti="${ti}" data-si="${si}" onchange="S.teams[+this.dataset.ti].sponsors[+this.dataset.si].name=this.value;scheduleSave();"><div style="display:flex;align-items:center;gap:4px;flex-shrink:0;"><span>£</span><input type="number" min="0" value="${s.value}" style="width:100px;" data-ti="${ti}" data-si="${si}" onchange="S.teams[+this.dataset.ti].sponsors[+this.dataset.si].value=parseInt(this.value)||0;rSponsors();scheduleSave();"></div><span class="badge ${s.active?'bg':'br'}" style="flex-shrink:0;">${s.active?'Active':'Paused'}</span><button class="btn sm" data-ti="${ti}" data-si="${si}" onclick="S.teams[+this.dataset.ti].sponsors[+this.dataset.si].active=!S.teams[+this.dataset.ti].sponsors[+this.dataset.si].active;rSponsors();scheduleSave();">${s.active?'Pause':'Resume'}</button><button class="btn sm danger" data-ti="${ti}" data-si="${si}" onclick="delSpon(+this.dataset.ti,+this.dataset.si)">Remove</button></div>`;});
+  html+=`</div><div class="card"><div style="font-size:13px;font-weight:500;margin-bottom:10px;">Add new deal</div><div class="row"><span class="sl">Slot</span><select id="ns-slot"><option>Shirt Front</option><option>Sleeve</option><option>Training Kit</option><option>Stadium Name</option><option>Match Ball</option><option>Digital / Social</option></select></div><div class="row"><span class="sl">Sponsor name</span><input type="text" id="ns-name" placeholder="e.g. MegaBank" style="width:180px;"></div><div class="row"><span class="sl">Season value £</span><input type="number" id="ns-val" value="2000000" style="width:130px;"></div><button class="btn pri" data-ti="${ti}" onclick="addSpon(+this.dataset.ti)">Add deal</button></div>`;
+  document.getElementById('spon-content').innerHTML=html;
+}
+function delSpon(ti,si){S.teams[ti].sponsors.splice(si,1);rSponsors();scheduleSave();}
+function addSpon(ti){S.teams[ti].sponsors.push({slot:document.getElementById('ns-slot').value,name:document.getElementById('ns-name').value||'New Sponsor',value:parseInt(document.getElementById('ns-val').value)||2e6,active:true});rSponsors();scheduleSave();}
+
+function rRivals(){
+  ['riv-a','riv-b'].forEach(id=>{document.getElementById(id).innerHTML=TEAMS.map((t,i)=>`<option value="${i}">${t.name}</option>`).join('');});
+  document.getElementById('riv-rows').innerHTML=S.rivalries.map((r,ri)=>`<div style="display:grid;grid-template-columns:1fr 1fr 110px 90px 90px 80px;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid #eee;"><span style="font-weight:500;">${S.teams[r.a].name}</span><span style="font-weight:500;">${S.teams[r.b].name}</span><span><span class="riv-pill">${r.type}</span></span><div style="display:flex;align-items:center;gap:4px;"><input type="number" min="1" max="100" value="${r.intensity}" style="width:55px;" data-ri="${ri}" onchange="S.rivalries[+this.dataset.ri].intensity=Math.max(1,Math.min(100,+this.value||1));scheduleSave();"><span style="font-size:11px;color:#999;">/100</span></div><span style="font-size:12px;">${r.h2h[0]}W–${r.h2h[1]}D–${r.h2h[2]}L</span><button class="btn sm danger" data-ri="${ri}" onclick="S.rivalries.splice(+this.dataset.ri,1);rRivals();scheduleSave();">Remove</button></div>`).join('');
+}
+function addRivalry(){const a=+document.getElementById('riv-a').value,b=+document.getElementById('riv-b').value;if(a===b){alert('Pick two different clubs');return;}if(S.rivalries.find(r=>(r.a===a&&r.b===b)||(r.b===a&&r.a===b))){alert('Already registered');return;}S.rivalries.push({a,b,type:document.getElementById('riv-type').value,intensity:Math.max(1,Math.min(100,+document.getElementById('riv-int').value||60)),h2h:[0,0,0],last:null});rRivals();scheduleSave();}
+
+
+function updateBal(ti){
+  const t=S.teams[ti];
+  const rows=sorted();
+  const pos=rows.findIndex(x=>x.id===ti)+1;
+  const tot=rev(t,pos);
+  const bal=tot-t.stadium_debt-t.wage_bill-t.transfer_budget;
+  const cell=document.getElementById('bal-'+ti);
+  if(cell){cell.textContent=fmm(bal);cell.style.color=bal>=0?'#3B6D11':'#A32D2D';}
+  // update summary metrics too
+  const totW=S.teams.reduce((s,x)=>s+x.wage_bill,0);
+  const totT=S.teams.reduce((s,x)=>s+x.transfer_budget,0);
+  const wEl=document.getElementById('total-wages');
+  const tEl=document.getElementById('total-transfer');
+  if(wEl)wEl.textContent=fms(totW);
+  if(tEl)tEl.textContent=fms(totT);
+  scheduleSave();
+}
+function popSels(){['fan-sel','stad-sel','spon-sel'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=TEAMS.map((t,i)=>`<option value="${i}">${t.name}</option>`).join('');});}
+loadState();
+popSels();rTable();
+</script>
+</body>
+</html>
