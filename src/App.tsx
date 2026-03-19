@@ -19,7 +19,7 @@ function RoomGate({ children }: { children: (roomCode: string) => React.ReactNod
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const { setS, scheduleSave } = useGame()
+  const { S, setS, scheduleSave } = useGame()
 
   // On mount, if we have a saved room code, load its state
   useEffect(() => {
@@ -32,7 +32,6 @@ function RoomGate({ children }: { children: (roomCode: string) => React.ReactNod
   async function handleCreate() {
     setLoading(true)
     const code = generateRoomCode()
-    const { S } = useGameRef.current!
     await saveRoom(code, S)
     localStorage.setItem(ROOM_KEY, code)
     setRoomCode(code)
@@ -104,16 +103,10 @@ function RoomGate({ children }: { children: (roomCode: string) => React.ReactNod
   return <>{children(roomCode)}<RoomSync roomCode={roomCode} onLeave={handleLeave} /></>
 }
 
-// Hack: expose setS/S outside of hook for handleCreate
-const useGameRef = { current: null as ReturnType<typeof useGame> | null }
-
 function RoomSync({ roomCode, onLeave }: { roomCode: string; onLeave: () => void }) {
   const { S, setS } = useGame()
   const syncTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const isRemote = useRef(false)
-
-  // Keep ref up to date so handleCreate can access S
-  useGameRef.current = useGame()
 
   // Push local changes to Supabase
   useEffect(() => {
