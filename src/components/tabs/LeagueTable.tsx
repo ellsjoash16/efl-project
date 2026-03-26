@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { sorted, fmm, prz, moodLabel, seasonLabel } from '@/lib/gameLogic'
+import { sorted, fmm, prz, tvn, moodLabel, seasonLabel } from '@/lib/gameLogic'
 import { NFX } from '@/data'
 
 function FormDot({ result }: { result: string }) {
@@ -37,7 +37,7 @@ export function LeagueTable() {
   const totRev = rows.reduce((s, t, i) => {
     const sp = t.sponsors.filter(x => x.active).reduce((a, x) => a + x.value, 0)
     const pos = i + 1
-    return s + t.matchday_rev + (100e6 + (pos >= 7 ? (pos - 6) * 1.5e6 : -([7,8,9,10,11,12].reduce((a,x)=>a+(x-6)*1.5e6,0)/6))) + t.commercial_rev + sp + prz(pos)
+    return s + t.matchday_rev + tvn(pos) + t.commercial_rev + sp + prz(pos)
   }, 0)
   const avgMood = Math.round(S.teams.reduce((s, t) => s + t.mood, 0) / 12)
 
@@ -50,7 +50,7 @@ export function LeagueTable() {
         cMDs: new Set<number>(),
         results: [],
         notices: [],
-        mdFx: Array.from({length:22}, () => Array.from({length:NFX}, () => ({hi:0,ai:1,hg:'',ag:''}))),
+        mdFx: Array.from({length:22}, () => Array.from({length:NFX}, () => ({hi:0,ai:1,hg:0,ag:0}))),
         teams: prev.teams.map(t => ({
           ...t,
           p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0, form:[] as ('W'|'D'|'L')[],
@@ -103,7 +103,13 @@ export function LeagueTable() {
                 const isRiv = S.rivalries.some(r => r.a === t.id || r.b === t.id)
                 return (
                   <TableRow key={t.id}>
-                    <TableCell className="text-muted-foreground font-medium">{pos}</TableCell>
+                    <TableCell className="text-muted-foreground font-medium">
+                      <div className="flex items-center gap-1.5">
+                        {pos <= 4 && <span className="inline-block w-0.5 h-4 rounded-full bg-blue-500" />}
+                        {pos >= 7 && <span className="inline-block w-0.5 h-4 rounded-full bg-red-500" />}
+                        {pos}
+                      </div>
+                    </TableCell>
                     <TableCell className="font-medium">
                       {t.name}
                       {isRiv && <Badge variant="rival" className="ml-1.5 text-[10px]">derby</Badge>}

@@ -1,11 +1,8 @@
 import type { Team, GameState } from '../types'
-import { TEAM_DEFS, TV, SOL, PB, PS, NFX } from '../data'
+import { TEAM_DEFS, TV, PB, PS, NFX } from '../data'
 import LZString from 'lz-string'
 
-export function tva(p: number): number {
-  if (p >= 7) return (p - 6) * SOL
-  return -([7,8,9,10,11,12].reduce((s, x) => s + (x - 6) * SOL, 0) / 6)
-}
+export function tva(p: number): number { return p > 6 ? -(p - 6) * 2e6 : 0 }
 
 export function tvn(p: number): number { return TV + tva(p) }
 
@@ -94,7 +91,7 @@ export function makeInitialState(): GameState {
     matchday: 0,
     cMDs: new Set<number>(),
     mdFx: Array.from({length: 22}, () =>
-      Array.from({length: NFX}, () => ({hi: 0, ai: 1, hg: '', ag: ''}))
+      Array.from({length: NFX}, () => ({hi: 0, ai: 1, hg: 0, ag: 0}))
     ),
     results: [],
     notices: [],
@@ -183,8 +180,8 @@ export function decodeShareCode(code: string): GameState | null {
           return {
             hi: f.hi ?? 0,
             ai: f.ai ?? 1,
-            hg: f.hg ?? '',
-            ag: f.ag ?? '',
+            hg: f.hg != null && f.hg !== '' ? f.hg : 0,
+            ag: f.ag != null && f.ag !== '' ? f.ag : 0,
             saved: f.saved ?? (cMDs.has(mi) ? true : undefined),
           }
         })

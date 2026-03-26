@@ -152,7 +152,7 @@ export function Revenue() {
             </TableBody>
           </Table>
           <p className="text-[11px] text-muted-foreground p-4 border-t">
-            TV solidarity: bottom 6 get +£1.5m per place below 6th, deducted equally from top 6. Prize: £2m base + £2.5m per place in top 6. Balance = total − debt − budget − trans. in + trans. out.
+            TV: £100m base, −£2m per place below 6th (7th = −£2m, 12th = −£12m). Prize: £2m base + £2.5m per place in top 6. Balance = total − debt − budget − trans. in + trans. out.
           </p>
         </CardContent>
       </Card>

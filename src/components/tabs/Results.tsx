@@ -27,11 +27,51 @@ export function Results() {
     })
   }
 
+  function unlockMatchday() {
+    if (!done) return
+    setS(prev => {
+      const newTeams = prev.teams.map(t => ({ ...t }))
+      const newRivals = prev.rivalries.map(r => ({ ...r, h2h: [...r.h2h] as [number,number,number] }))
+      prev.mdFx[mdIndex].filter(f => f.saved).forEach(f => {
+        const hg = parseInt(String(f.hg)), ag = parseInt(String(f.ag))
+        const h = newTeams[f.hi], a = newTeams[f.ai]
+        const riv = newRivals.find(r => (r.a === f.hi && r.b === f.ai) || (r.b === f.hi && r.a === f.ai))
+        h.p--; a.p--; h.gf -= hg; h.ga -= ag; a.gf -= ag; a.ga -= hg
+        if (hg > ag) {
+          h.w--; h.pts -= 3; a.l--
+          h.fanbase = Math.max(h.fanbase - Math.round(400 * (riv ? 1.6 : 1)), 1000)
+          a.fanbase = Math.min(a.fanbase + 100, 2e6)
+          if (riv) { riv.h2h[0]--; riv.intensity = Math.max(0, riv.intensity - 2) }
+        } else if (hg < ag) {
+          a.w--; a.pts -= 3; h.l--
+          a.fanbase = Math.max(a.fanbase - Math.round(400 * (riv ? 1.6 : 1)), 1000)
+          h.fanbase = Math.min(h.fanbase + 100, 2e6)
+          if (riv) { riv.h2h[2]--; riv.intensity = Math.max(0, riv.intensity - 2) }
+        } else {
+          h.d--; a.d--; h.pts--; a.pts--
+          if (riv) { riv.h2h[1]--; riv.intensity = Math.max(0, riv.intensity - 1) }
+        }
+        h.form = h.form.slice(0, -1); a.form = a.form.slice(0, -1)
+      })
+      const newCMDs = new Set(prev.cMDs)
+      newCMDs.delete(mdIndex)
+      const newFx = prev.mdFx.map((mdfx, mi) =>
+        mi === mdIndex ? mdfx.map(f => ({ ...f, saved: false })) : mdfx
+      )
+      const newResults = prev.results.filter(r => r.md !== mdIndex + 1)
+      const sortedTeams = [...newTeams].sort((a, b) => b.pts - a.pts || (b.gf - b.ga) - (a.gf - a.ga) || b.gf - a.gf)
+      sortedTeams.forEach((t, i) => { t.mood = moodFromPos(i + 1, t.form) })
+      const next = { ...prev, teams: newTeams, rivalries: newRivals, mdFx: newFx, cMDs: newCMDs, matchday: newCMDs.size, results: newResults }
+      scheduleSave(next)
+      return next
+    })
+  }
+
   function clearScores() {
     if (done) return
     setS(prev => {
       const newFx = prev.mdFx.map((mdfx, mi) =>
-        mi === mdIndex ? mdfx.map(f => ({ ...f, hg: '', ag: '' })) : mdfx
+        mi === mdIndex ? mdfx.map(f => ({ ...f, hg: 0, ag: 0 })) : mdfx
       )
       return { ...prev, mdFx: newFx }
     })
@@ -42,7 +82,7 @@ export function Results() {
     const used = new Set<number>()
     for (let fi = 0; fi < fx.length; fi++) {
       const f = fx[fi]
-      if (f.hg === '' || f.ag === '') { alert('Fill in all scores.'); return }
+      if (f.hg === '' || f.ag === '' || isNaN(Number(f.hg)) || isNaN(Number(f.ag))) { alert('Fill in all scores.'); return }
       if (f.hi === f.ai) { alert(`Match ${fi + 1}: same team both sides.`); return }
       if (used.has(f.hi) || used.has(f.ai)) { alert('A team appears more than once.'); return }
       used.add(f.hi); used.add(f.ai)
@@ -127,7 +167,10 @@ export function Results() {
           {/* Fixtures */}
           {done ? (
             <div className="space-y-1">
-              <p className="text-xs text-muted-foreground mb-3">Results locked.</p>
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-xs text-muted-foreground">Results locked.</p>
+                <Button size="sm" variant="outline" onClick={unlockMatchday}>Unlock</Button>
+              </div>
               {fx.filter(f => f.saved).map((f, fi) => {
                 const riv = S.rivalries.find(r => (r.a === f.hi && r.b === f.ai) || (r.b === f.hi && r.a === f.ai))
                 return (
