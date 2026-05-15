@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
-  loadDyn, saveDyn, effectivePlayers, generateContractsForPlayers, setContract, releaseContract, randomWage,
+  loadDyn, effectivePlayers, generateContractsForPlayers, setContract, releaseContract, randomWage,
   type PlayerDyn, type Contract,
 } from '@/lib/playerState'
 import type { Player } from '@/types'

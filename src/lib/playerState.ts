@@ -121,7 +121,7 @@ const LAST  = ['Wilson','Smith','Taylor','Brown','Davies','Evans','White','Clark
 const NATS  = ['ENG','ENG','ENG','ENG','ENG','ENG','WAL','SCO','IRL','NGA','GHA','FRA','BRA']
 const POSITIONS = ['GK','CB','LB','RB','CDM','CM','CAM','LW','RW','ST'] as const
 
-function rnd<T>(arr: T[]): T { return arr[Math.floor(Math.random() * arr.length)] }
+function rnd<T>(arr: readonly T[]): T { return arr[Math.floor(Math.random() * arr.length)] }
 function randomName() { return `${rnd(FIRST)[0]}. ${rnd(LAST).toUpperCase()}` }
 
 // ─── Season-end processing ───────────────────────────────────────────────────
