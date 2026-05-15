@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useGame } from '@/store/gameContext'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -196,18 +196,16 @@ export function Contracts() {
     setDyn(releaseContract(id, dyn))
   }
 
-  function offerContract(p: Player) {
-    setDyn(setContract(p.id, randomWage(p.importance), 3, dyn))
-  }
 
-  function generateAllMissing() {
-    const missing = teamPlayers.filter(p => !dyn.contracts[p.id])
+  // ── Auto-generate missing contracts whenever the active team changes ──────
+  useEffect(() => {
+    if (!activeTeam) return
+    const allPlayers = effectivePlayers(dyn).filter(p => p.team === activeTeam.name)
+    const missing = allPlayers.filter(p => !dyn.contracts[p.id])
     if (missing.length === 0) return
-    setDyn(generateContractsForPlayers(missing, dyn))
-  }
-
-  const noContract  = teamPlayers.filter(p => !dyn.contracts[p.id])
-  const withContract = teamPlayers.filter(p => !!dyn.contracts[p.id])
+    setDyn(prev => generateContractsForPlayers(missing, prev))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTeam?.id])
 
   // ── Received offer handlers ───────────────────────────────────────────────
   function rejectOffer(id: string) {
@@ -396,9 +394,10 @@ export function Contracts() {
                         </tr>
                       </thead>
                       <tbody className="divide-y">
-                        {withContract.map(p => {
-                          const c = dyn.contracts[p.id]!
+                        {teamPlayers.map(p => {
+                          const c = dyn.contracts[p.id]
                           const r = resigning[p.id]
+                          if (!c) return null
                           return (
                             <tr key={p.id} className={`hover:bg-muted/40 transition-colors ${c.yearsLeft === 0 ? 'opacity-60' : ''}`}>
                               <td className="pl-4 py-2 font-medium">{p.name}</td>
@@ -432,33 +431,6 @@ export function Contracts() {
                             </tr>
                           )
                         })}
-
-                        {noContract.length > 0 && (
-                          <>
-                            <tr>
-                              <td colSpan={6} className="pl-4 pr-4 py-2 bg-muted/20">
-                                <div className="flex items-center justify-between">
-                                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Without contract</span>
-                                  <button className="text-xs text-blue-600 hover:underline" onClick={generateAllMissing}>Generate all</button>
-                                </div>
-                              </td>
-                            </tr>
-                            {noContract.map(p => (
-                              <tr key={p.id} className="hover:bg-muted/40 transition-colors">
-                                <td className="pl-4 py-2 font-medium">{p.name}</td>
-                                <td className="py-2 text-xs text-muted-foreground">{p.pos}</td>
-                                <td className="py-2"><Stars value={p.importance} /></td>
-                                <td className="py-2 text-xs text-muted-foreground">—</td>
-                                <td className="py-2">
-                                  <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400">Free</span>
-                                </td>
-                                <td className="py-2 pr-4">
-                                  <button className="text-xs text-blue-600 hover:underline" onClick={() => offerContract(p)}>Offer contract</button>
-                                </td>
-                              </tr>
-                            ))}
-                          </>
-                        )}
 
                         {teamPlayers.length === 0 && (
                           <tr>
