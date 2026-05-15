@@ -551,7 +551,7 @@ function AppInner({ roomCode }: { roomCode: string }) {
         <header className="sticky top-0 z-30 border-b bg-background/95 backdrop-blur px-4 py-3 flex items-center justify-between gap-2">
           <div className="flex items-center gap-3 min-w-0">
             {/* Mobile logo */}
-            <img src="/nexa-logo.png" alt="Nexa" className="w-7 h-7 object-contain lg:hidden shrink-0" />
+            <img src={activePage === 'cup' ? '/cup-logo.png' : '/nexa-logo.png'} alt="Logo" className="w-7 h-7 object-contain lg:hidden shrink-0" />
             <div className="min-w-0">
               <h1 className="text-sm font-semibold leading-none truncate">{currentNav?.label ?? 'Nexa Leading Division'}</h1>
               <p className="text-[11px] text-muted-foreground mt-0.5">
