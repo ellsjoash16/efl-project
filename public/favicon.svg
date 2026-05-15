@@ -1,12 +1,58 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <clipPath id="inner">
+      <path d="M7,6 L25,6 L25,20 Q25,27.5 16,29.5 Q7,27.5 7,20 Z"/>
+    </clipPath>
+  </defs>
+
   <!-- Background -->
   <rect width="32" height="32" rx="6" fill="#0e2318"/>
   <!-- Gold outer shield -->
   <path d="M5,4 L27,4 L27,20 Q27,29 16,31.5 Q5,29 5,20 Z" fill="#c9a227"/>
-  <!-- Dark inner shield (creates gold border effect) -->
+  <!-- Dark inner shield (creates gold border) -->
   <path d="M7,6 L25,6 L25,20 Q25,27.5 16,29.5 Q7,27.5 7,20 Z" fill="#0e2318"/>
-  <!-- EFL lettering in gold -->
-  <text x="16" y="21" text-anchor="middle"
+
+  <!-- Lion clipped to inner shield, slightly darker gold -->
+  <g clip-path="url(#inner)" fill="none" stroke="#a68520" stroke-linejoin="round">
+
+    <!-- Outer mane: 9 spikes alternating with valley dips (scaled up, centre 16,14.5) -->
+    <path stroke-width="0.75"
+      d="M13.1,7.4
+         L16,9.1    L18.9,7.4
+         L20.8,8.8  L22.7,10.1
+         L23.5,12.4 L24,14.5
+         L22.9,17.4 L21.8,19.3
+         L19.5,20.7 L16,22
+         L12.5,20.7 L10.2,19.3
+         L9.1,17.4  L8,14.5
+         L8.6,12.4  L9.3,10.1
+         L12.2,8.8  Z"/>
+
+    <!-- Face oval -->
+    <ellipse stroke-width="0.65" cx="16" cy="14.5" rx="5.2" ry="4.6"/>
+
+    <!-- Crown (3-point, between ear spikes) -->
+    <path stroke-width="0.6"
+      d="M14.6,11.6 L14.6,10.7 L15.3,10.1 L16,9.4 L16.7,10.1 L17.4,10.7 L17.4,11.6"/>
+
+    <!-- Eyes -->
+    <ellipse stroke-width="0.6" cx="13.9" cy="12.8" rx="1.15" ry="0.95"/>
+    <ellipse stroke-width="0.6" cx="18.1" cy="12.8" rx="1.15" ry="0.95"/>
+
+    <!-- Nose (inverted V) -->
+    <path stroke-width="0.6" d="M14.3,14.7 L16,15.8 L17.7,14.7"/>
+
+    <!-- Muzzle cheek circles -->
+    <circle stroke-width="0.55" cx="13.7" cy="16.9" r="1.35"/>
+    <circle stroke-width="0.55" cx="18.3" cy="16.9" r="1.35"/>
+
+    <!-- Open mouth -->
+    <path stroke-width="0.7" d="M13.5,17.8 Q16,19.5 18.5,17.8"/>
+
+  </g>
+
+  <!-- EFL text: small, at bottom of shield -->
+  <text x="16" y="27.2" text-anchor="middle"
         font-family="'Arial Black', Impact, sans-serif"
-        font-weight="900" font-size="10" letter-spacing="0.5" fill="#c9a227">EFL</text>
+        font-weight="900" font-size="6.5" letter-spacing="0" fill="#c9a227">EFL</text>
 </svg>
