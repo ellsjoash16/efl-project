@@ -120,7 +120,7 @@ export function Trophies() {
       {/* Header */}
       <div
         className="rounded-2xl overflow-hidden px-6 py-5 flex items-center gap-4"
-        style={{ background: `linear-gradient(135deg, ${NEXA_DARK} 0%, #1c3540 100%)` }}
+        style={{ background: `linear-gradient(135deg, #0a1820 0%, ${NEXA_DARK} 100%)` }}
       >
         <span className="text-4xl">🏆</span>
         <div className="flex-1 min-w-0">
@@ -171,7 +171,7 @@ export function Trophies() {
           {/* Team name bar */}
           <div
             className="px-5 py-3 flex items-center justify-between"
-            style={{ background: `linear-gradient(135deg, ${NEXA_DARK} 0%, #1c3540 100%)` }}
+            style={{ background: `linear-gradient(135deg, #0a1820 0%, ${NEXA_DARK} 100%)` }}
           >
             <div className="flex items-center gap-2">
               <p className={`font-bold text-sm text-white`}>{activeTeam.name}</p>

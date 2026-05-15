@@ -181,7 +181,7 @@ export function LeagueTable() {
       {/* Header banner */}
       <div
         className="rounded-2xl overflow-hidden px-6 py-5 flex items-center gap-4"
-        style={{ background: `linear-gradient(135deg, ${NEXA_DARK} 0%, #1c3540 100%)` }}
+        style={{ background: `linear-gradient(135deg, #0a1820 0%, ${NEXA_DARK} 100%)` }}
       >
         <img src="/nexa-logo.png" alt="Nexa" className="w-12 h-12 object-contain shrink-0 opacity-95" />
         <div className="flex-1 min-w-0">
