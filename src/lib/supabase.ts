@@ -33,6 +33,9 @@ export function deserializeState(raw: Record<string, unknown>): GameState | null
       results: Array.isArray(raw.results) ? raw.results : [],
       notices: Array.isArray(raw.notices) ? raw.notices : [],
       rivalries: Array.isArray(raw.rivalries) ? raw.rivalries : [],
+      seasonHistory: Array.isArray(raw.seasonHistory) ? raw.seasonHistory : [],
+      transferLog: Array.isArray(raw.transferLog) ? raw.transferLog : [],
+      cup: (raw.cup && typeof raw.cup === 'object') ? raw.cup as import('../types').CupState : null,
       mdFx: (mdFx as unknown[][]).map((mdfx, mi) =>
         Array.from({ length: 6 }, (_, fi) => {
           const f = (mdfx?.[fi] ?? { hi: 0, ai: 1 }) as Record<string, unknown>
@@ -101,7 +104,9 @@ export async function loadRoom(code: string): Promise<GameState | null> {
 }
 
 function isBlankState(S: GameState): boolean {
-  return S.cMDs.size === 0 && S.teams.every(t => t.pts === 0 && t.p === 0)
+  return S.cMDs.size === 0
+    && S.teams.every(t => t.pts === 0 && t.p === 0)
+    && (S.seasonHistory ?? []).length === 0
 }
 
 export async function saveRoom(code: string, S: GameState): Promise<void> {

@@ -1,598 +1,703 @@
-import { useMemo, useState } from 'react'
+import { useState, useMemo } from 'react'
+import { useGame } from '@/store/gameContext'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { loadDyn, setContract as persistContract, effectivePlayers, type PlayerDyn } from '@/lib/playerState'
+import type { Player, TransferLogEntry } from '@/types'
+import playerDB from '@/playerDB.json'
 
-type Position = 'GK' | 'DEF' | 'MID' | 'ATT'
-type Contribution = 'key' | 'regular' | 'rotation' | 'squad'
+const ALL_PLAYERS = playerDB as Player[]
+type Position = Player['pos']
+const POSITIONS: Position[] = ['GK','CB','LB','RB','CDM','CM','CAM','LW','RW','ST']
 
-type TeamOffer = {
-  name: string
-  budget: number
-  willingToPay: number | null
+// ─── Hidden valuation engine ──────────────────────────────────────────────────
+
+const BASE_VAL: Record<number, number> = { 5: 65, 4: 28, 3: 10, 2: 3, 1: 0.8 }
+
+function ageMult(age: number) {
+  if (age < 18) return 1.4
+  if (age < 21) return 1.6
+  if (age < 24) return 1.5
+  if (age < 27) return 1.2
+  if (age < 30) return 0.9
+  if (age < 33) return 0.6
+  return 0.3
 }
 
-type Valuation = {
-  playerName: string
-  currentClub: string
-  age: number
-  position: Position
-  contribution: Contribution
-  rating: number
-  yourValuation: number | null
-  askingPrice: number | null
-  snapUpAbove: number | null
-  minAcceptable: number | null
+function posMult(pos: Position) {
+  if (pos === 'ST') return 1.15
+  if (pos === 'LW' || pos === 'RW') return 1.1
+  if (pos === 'CAM') return 1.05
+  if (pos === 'GK') return 0.85
+  return 1.0
 }
 
-type Outcome =
-  | { type: 'accepted'; fee: number; message: string }
-  | { type: 'counter'; fee: number; message: string }
-  | { type: 'rejected'; message: string }
-  | { type: 'error'; message: string }
-
-type TransferLogItem = {
-  season: string
-  player: string
-  sellingClub: string
-  buyingClub: string
-  fee: number
+function marketVal(imp: number, age: number, pos: Position) {
+  return (BASE_VAL[imp] ?? 2) * ageMult(age) * posMult(pos)
 }
 
-const TEAM_KEY = 'efl-transfer-interested-teams-v1'
-const LOG_KEY = 'efl-transfer-log-v1'
+function r1(n: number) { return Math.round(n * 10) / 10 }
+function rnd(lo: number, hi: number) { return lo + Math.random() * (hi - lo) }
 
-function round1(n: number) {
-  return Math.round(n * 10) / 10
+// ─── Availability ─────────────────────────────────────────────────────────────
+
+type Availability = 'locked' | 'reluctant' | 'open'
+
+function getAvailability(imp: number, age: number, club: string): Availability {
+  if (imp === 5 && age < 24) return 'locked'
+  const squad = ALL_PLAYERS.filter(p => p.team === club)
+  const stars = squad.filter(p => p.importance >= 4).length
+  if (imp === 5 && stars <= 2) return 'locked'
+  if (imp >= 4 && stars <= 1) return 'locked'
+  if (imp === 5) return 'reluctant'
+  if (imp >= 4 && age < 27) return 'reluctant'
+  return 'open'
 }
 
-function randFloat(min: number, max: number) {
-  return Math.random() * (max - min) + min
-}
+// ─── Transfer fee simulation ──────────────────────────────────────────────────
 
-function clamp(n: number, min: number, max: number) {
-  return Math.max(min, Math.min(max, n))
-}
+type SaleOutcome =
+  | { kind: 'accepted'; fee: number; msg: string }
+  | { kind: 'counter';  fee: number; msg: string }
+  | { kind: 'rejected'; msg: string }
 
-function currencyM(n: number | null | undefined) {
-  if (n == null || Number.isNaN(n)) return '—'
-  return `£${round1(n).toFixed(1)}M`
-}
+function simulateSale(bid: number, imp: number, age: number, pos: Position, name: string, club: string): SaleOutcome {
+  const mv      = marketVal(imp, age, pos)
+  const asking  = r1(mv * rnd(1.0, 1.25))
+  const snap    = r1(asking * rnd(1.3, 1.6))
+  const minAcc  = r1(asking * rnd(0.72, 0.88))
+  const avail   = getAvailability(imp, age, club)
+  const c = club || 'The selling club'
+  const p = name || 'this player'
 
-function baseFeeFromRating(rating: number) {
-  if (rating >= 90) return 120
-  if (rating >= 87) return 80
-  if (rating >= 85) return 55
-  if (rating >= 83) return 38
-  if (rating >= 81) return 25
-  if (rating >= 79) return 16
-  if (rating >= 77) return 10
-  return 6
-}
-
-function ageFactor(age: number) {
-  if (age <= 21) return 1.5
-  if (age <= 24) return 1.3
-  if (age <= 27) return 1.1
-  if (age <= 30) return 0.95
-  if (age <= 33) return 0.75
-  return 0.5
-}
-
-function contributionFactor(contribution: Contribution) {
-  if (contribution === 'key') return 1.3
-  if (contribution === 'regular') return 1.0
-  if (contribution === 'rotation') return 0.75
-  return 0.5
-}
-
-function positionFactor(position: Position) {
-  if (position === 'ATT') return 1.1
-  if (position === 'MID') return 1.0
-  if (position === 'DEF') return 0.95
-  return 0.85
-}
-
-function rejectionLine(sellingClub: string, playerName: string) {
-  const club = sellingClub || 'The selling club'
-  const player = playerName || 'the player'
-  const lines = [
-    `${club}: "${player} is not leaving at that price."`,
-    `${club}: "Rejected. We need a serious offer for ${player}."`,
-    `${club}: "No deal. Keep negotiating or move on."`,
-    `${club}: "The board has turned this bid down."`,
-    `${club}: "Talks ended. ${player} stays unless terms improve."`,
-  ]
-  return lines[Math.floor(Math.random() * lines.length)]
-}
-
-function loadJSON<T>(key: string, fallback: T): T {
-  try {
-    const raw = localStorage.getItem(key)
-    if (!raw) return fallback
-    return JSON.parse(raw) as T
-  } catch {
-    return fallback
+  if (avail === 'locked') {
+    if (bid >= snap * 1.15) return { kind: 'accepted', fee: r1(bid), msg: `After lengthy deliberation, ${c} reluctantly agree to part with ${p}. An extraordinary offer they simply couldn't ignore.` }
+    if (bid >= snap) {
+      const fee = r1(snap * rnd(1.05, 1.2))
+      return { kind: 'counter', fee, msg: `${c} insist ${p} is not for sale, but acknowledge the scale of this bid. They would need £${fee.toFixed(1)}M to even open discussions.` }
+    }
+    return { kind: 'rejected', msg: `${c}: "${p} is the cornerstone of our project. We will not be accepting bids at this time."` }
   }
+
+  if (avail === 'reluctant') {
+    if (bid >= snap) return { kind: 'accepted', fee: r1(bid), msg: `${c} accept. A difficult decision, but the fee for ${p} was impossible to decline.` }
+    if (bid >= asking * 0.92) {
+      const fee = r1(asking * rnd(1.0, 1.08))
+      return { kind: 'counter', fee, msg: `${c} won't sell ${p} for less than £${fee.toFixed(1)}M. That is their firm valuation.` }
+    }
+    return { kind: 'rejected', msg: `${c}: "We value ${p} far higher than that. Please do not return with a similar offer."` }
+  }
+
+  if (bid >= snap) return { kind: 'accepted', fee: r1(bid), msg: `${c} snap up the offer immediately. ${p} is on his way.` }
+
+  if (bid >= asking) {
+    if (Math.random() < 0.85) return { kind: 'accepted', fee: r1(bid), msg: `${c} accept £${bid.toFixed(1)}M for ${p}. Terms agreed.` }
+    const fee = r1(asking * rnd(1.0, 1.06))
+    return { kind: 'counter', fee, msg: `Almost there — ${c} want £${fee.toFixed(1)}M to finalise the deal.` }
+  }
+
+  if (bid >= minAcc) {
+    const roll = Math.random()
+    if (roll < 0.35) return { kind: 'accepted', fee: r1(bid), msg: `${c} accept. A deal below expectations, but the funds are needed.` }
+    if (roll < 0.70) {
+      const fee = r1(asking * rnd(0.92, 1.03))
+      return { kind: 'counter', fee, msg: `${c} are willing to sell ${p} but want £${fee.toFixed(1)}M. Meet them there and it's done.` }
+    }
+    return { kind: 'rejected', msg: `${c}: "That doesn't meet our valuation for ${p}. We need a better offer."` }
+  }
+
+  if (bid > mv * 0.5 && Math.random() < 0.18) {
+    const fee = r1(asking)
+    return { kind: 'counter', fee, msg: `${c} are surprised by the low offer but respond with a counter of £${fee.toFixed(1)}M.` }
+  }
+
+  return { kind: 'rejected', msg: `${c}: "Rejected. Come back with a serious offer for ${p}."` }
 }
 
-function saveJSON(key: string, value: unknown) {
-  localStorage.setItem(key, JSON.stringify(value))
+// ─── Contract simulation ──────────────────────────────────────────────────────
+
+const BASE_WAGE: Record<number, number> = { 5: 72000, 4: 30000, 3: 11000, 2: 3500, 1: 1000 }
+
+type ContractOutcome =
+  | { kind: 'accepted'; msg: string }
+  | { kind: 'counter'; wage: number; years: number; msg: string }
+  | { kind: 'rejected'; msg: string }
+
+function preferredYears(age: number): { min: number; max: number } {
+  if (age < 22) return { min: 3, max: 5 }
+  if (age < 26) return { min: 3, max: 4 }
+  if (age < 30) return { min: 2, max: 4 }
+  if (age < 33) return { min: 1, max: 3 }
+  return { min: 1, max: 2 }
 }
+
+function simulateContract(wage: number, years: number, player: Player, teamRank: number): ContractOutcome {
+  // Bottom-half teams need to pay more to attract/retain; top teams get a discount
+  const rankMult = 1 + (teamRank - 6) * 0.035
+  const expectation = Math.round((BASE_WAGE[player.importance] ?? 3500) * rankMult * rnd(0.88, 1.12) / 100) * 100
+  const pref = preferredYears(player.age)
+  const yearOk = years >= pref.min && years <= pref.max
+  const prefYrs = Math.min(Math.max(years, pref.min), pref.max)
+  const n = player.name
+
+  if (wage >= expectation * 1.1 && yearOk)
+    return { kind: 'accepted', msg: `${n} is delighted to sign. Contract agreed.` }
+
+  if (wage >= expectation && yearOk) {
+    if (Math.random() < 0.8) return { kind: 'accepted', msg: `${n} is happy with the terms. Deal done.` }
+    const cw = Math.round(expectation * rnd(1.0, 1.08) / 100) * 100
+    return { kind: 'counter', wage: cw, years: prefYrs, msg: `${n}'s agent: Close, but we need £${(cw/1000).toFixed(0)}k/wk on a ${prefYrs}-year deal.` }
+  }
+
+  if (wage >= expectation && !yearOk)
+    return { kind: 'counter', wage, years: prefYrs, msg: `${n}'s agent: The wage works, but ${n} wants a ${prefYrs}-year contract.` }
+
+  if (wage >= expectation * 0.75) {
+    const cw = Math.round(expectation * rnd(0.97, 1.05) / 100) * 100
+    return { kind: 'counter', wage: cw, years: prefYrs, msg: `${n}'s agent: We're looking for £${(cw/1000).toFixed(0)}k/wk on a ${prefYrs}-year deal.` }
+  }
+
+  return { kind: 'rejected', msg: `${n} has declined. The terms don't reflect his ambitions.` }
+}
+
+// ─── Formatting ───────────────────────────────────────────────────────────────
+
+function fmtM(n: number) { return `£${r1(n).toFixed(1)}M` }
+function fmtW(n: number) {
+  if (n >= 1000) return `£${(n / 1000).toFixed(n % 1000 === 0 ? 0 : 1)}k`
+  return `£${n}`
+}
+
+function outcomeCls(k: string) {
+  if (k === 'accepted') return 'border-green-500 bg-green-50 dark:bg-green-950/30'
+  if (k === 'counter')  return 'border-amber-500 bg-amber-50 dark:bg-amber-950/30'
+  return 'border-red-400 bg-red-50 dark:bg-red-950/30'
+}
+
+function outcomeLabel(k: string) {
+  if (k === 'counter') return 'Counter Offer'
+  return k.charAt(0).toUpperCase() + k.slice(1)
+}
+
+// ─── Component ────────────────────────────────────────────────────────────────
 
 export function TransferMarket() {
-  const [valuation, setValuation] = useState<Valuation>({
-    playerName: '',
-    currentClub: '',
-    age: 24,
-    position: 'MID',
-    contribution: 'regular',
-    rating: 80,
-    yourValuation: null,
-    askingPrice: null,
-    snapUpAbove: null,
-    minAcceptable: null,
-  })
+  const { S, setS, scheduleSave } = useGame()
+  const [dyn, setDyn] = useState<PlayerDyn>(loadDyn)
 
-  const [interestedTeams, setInterestedTeams] = useState<TeamOffer[]>(
-    () => loadJSON<TeamOffer[]>(TEAM_KEY, [])
-  )
-  const [transferLog, setTransferLog] = useState<TransferLogItem[]>(
-    () => loadJSON<TransferLogItem[]>(LOG_KEY, [])
-  )
+  const userTeamIds: number[] = S.userTeamIds ?? []
+  const managedTeams = S.teams.filter(t => userTeamIds.includes(t.id))
 
-  const [teamName, setTeamName] = useState('')
-  const [teamBudget, setTeamBudget] = useState('')
+  const [tab, setTab] = useState<'sign' | 'contracts' | 'log'>('sign')
 
-  const [seasonLabel, setSeasonLabel] = useState('S1')
-  const [sellingClub, setSellingClub] = useState('')
-  const [buyingClub, setBuyingClub] = useState('')
+  // ── Sign a Player ──────────────────────────────────────────────────────────
+  const [source, setSource] = useState<'db' | 'ext'>('db')
+
+  // DB search
+  const [query, setQuery] = useState('')
+  const [suggestions, setSuggestions] = useState<Player[]>([])
+  const [selected, setSelected] = useState<Player | null>(null)
+
+  // External player form
+  const [ext, setExt] = useState({ name: '', club: '', pos: 'CM' as Position, age: '24', importance: 3 })
+
+  // Deal
+  const [buyerId, setBuyerId] = useState<number | null>(null)
   const [bid, setBid] = useState('')
-  const [reason, setReason] = useState('')
-  const [outcome, setOutcome] = useState<Outcome | null>(null)
+  const [saleOutcome, setSaleOutcome] = useState<SaleOutcome | null>(null)
 
-  const canGenerateOffers = valuation.askingPrice != null && valuation.yourValuation != null
+  // Personal terms (shown after fee accepted)
+  const [showPersonal, setShowPersonal] = useState(false)
+  const [pWage, setPWage] = useState('')
+  const [pYears, setPYears] = useState('3')
+  const [personalOutcome, setPersonalOutcome] = useState<ContractOutcome | null>(null)
 
-  const summary = useMemo(() => {
-    return `${interestedTeams.length} interested team${interestedTeams.length === 1 ? '' : 's'}`
-  }, [interestedTeams.length])
+  // ── Contract Talks ─────────────────────────────────────────────────────────
+  const [ctTeamId, setCtTeamId] = useState<number | null>(null)
+  const [ctPlayerId, setCtPlayerId] = useState<number | null>(null)
+  const [ctWage, setCtWage] = useState('')
+  const [ctYears, setCtYears] = useState('3')
+  const [ctOutcome, setCtOutcome] = useState<ContractOutcome | null>(null)
 
-  function rollValuation() {
-    const base =
-      baseFeeFromRating(valuation.rating) *
-      ageFactor(valuation.age) *
-      contributionFactor(valuation.contribution) *
-      positionFactor(valuation.position)
+  const activeCtTeam = S.teams.find(t => t.id === (ctTeamId ?? managedTeams[0]?.id)) ?? null
 
-    const yourValuation = round1(base * randFloat(0.88, 1.12))
-    const askingPrice = round1(base * randFloat(1.05, 1.4))
-    const snapUpAbove = round1(askingPrice * randFloat(1.18, 1.4))
-    const minAcceptable = round1(askingPrice * randFloat(0.76, 0.9))
+  const ctPlayers = useMemo(() => {
+    if (!activeCtTeam) return []
+    return effectivePlayers(dyn)
+      .filter(p => p.team === activeCtTeam.name)
+      .sort((a, b) => b.importance - a.importance)
+  }, [dyn, activeCtTeam])
 
-    setValuation(v => ({
-      ...v,
-      yourValuation,
-      askingPrice,
-      snapUpAbove,
-      minAcceptable,
-    }))
+  const ctPlayer = ctPlayers.find(p => p.id === ctPlayerId) ?? null
 
-    setSellingClub(prev => prev || valuation.currentClub)
-    setBid(String(askingPrice))
-    setOutcome(null)
+  // ── Helpers ────────────────────────────────────────────────────────────────
 
-    generateTeamOffers(askingPrice, yourValuation)
+  function teamRank(id: number): number {
+    const sorted = [...S.teams].sort((a, b) => b.pts - a.pts)
+    return (sorted.findIndex(t => t.id === id) + 1) || 6
   }
 
-  function generateTeamOffers(askingPrice?: number, yourValuation?: number) {
-    const ask = askingPrice ?? valuation.askingPrice
-    const yourVal = yourValuation ?? valuation.yourValuation
-    if (ask == null || yourVal == null) return
-
-    const contributionMult =
-      valuation.contribution === 'key'
-        ? 1.07
-        : valuation.contribution === 'regular'
-          ? 1.0
-          : valuation.contribution === 'rotation'
-            ? 0.94
-            : 0.88
-
-    const ageMult = valuation.age > 33 ? 0.92 : valuation.age <= 24 ? 1.04 : 1.0
-
-    const next = interestedTeams.map(team => {
-      const anchor = ask * 0.62 + yourVal * 0.38
-      const appetite = randFloat(0.9, 1.18) * contributionMult * ageMult
-      const budgetPressure = team.budget < ask ? randFloat(0.78, 0.96) : randFloat(0.92, 1.08)
-      const willing = round1(Math.min(team.budget, anchor * appetite * budgetPressure))
-      return { ...team, willingToPay: willing }
-    })
-
-    setInterestedTeams(next)
-    saveJSON(TEAM_KEY, next)
+  function handleSearch(v: string) {
+    setQuery(v)
+    setSuggestions(v.length < 2 ? [] :
+      ALL_PLAYERS.filter(p => p.name.toUpperCase().includes(v.toUpperCase())).slice(0, 8)
+    )
   }
 
-  function addTeam() {
-    const name = teamName.trim()
-    const budgetNum = Number(teamBudget)
-    if (!name || !Number.isFinite(budgetNum) || budgetNum <= 0) return
-
-    if (interestedTeams.some(t => t.name.toLowerCase() === name.toLowerCase())) return
-
-    const next = [...interestedTeams, { name, budget: round1(budgetNum), willingToPay: null }]
-    setInterestedTeams(next)
-    saveJSON(TEAM_KEY, next)
-    setTeamName('')
-    setTeamBudget('')
-  }
-
-  function removeTeam(idx: number) {
-    const next = interestedTeams.filter((_, i) => i !== idx)
-    setInterestedTeams(next)
-    saveJSON(TEAM_KEY, next)
-  }
-
-  function resetRun() {
-    setValuation(v => ({
-      ...v,
-      yourValuation: null,
-      askingPrice: null,
-      snapUpAbove: null,
-      minAcceptable: null,
-    }))
-    const cleared = interestedTeams.map(t => ({ ...t, willingToPay: null }))
-    setInterestedTeams(cleared)
-    saveJSON(TEAM_KEY, cleared)
+  function pickPlayer(p: Player) {
+    setSelected(p)
+    setQuery(p.name)
+    setSuggestions([])
+    setSaleOutcome(null)
+    setShowPersonal(false)
     setBid('')
-    setReason('')
-    setOutcome(null)
   }
 
-  function useOffer(team: TeamOffer) {
-    setBuyingClub(team.name)
-    if (team.willingToPay != null) setBid(String(team.willingToPay))
-    setOutcome(null)
+  function clearSign() {
+    setSelected(null)
+    setQuery('')
+    setSuggestions([])
+    setSaleOutcome(null)
+    setShowPersonal(false)
+    setBid('')
+    setPWage('')
+    setPersonalOutcome(null)
   }
 
-  function negotiate() {
-    if (
-      valuation.askingPrice == null ||
-      valuation.snapUpAbove == null ||
-      valuation.minAcceptable == null ||
-      valuation.yourValuation == null
-    ) {
-      setOutcome({ type: 'error', message: 'Roll valuation first.' })
-      return
+  function getPlayerInfo(): { name: string; club: string; pos: Position; age: number; imp: number } | null {
+    if (source === 'db') {
+      if (!selected) return null
+      return { name: selected.name, club: selected.team, pos: selected.pos, age: selected.age, imp: selected.importance }
     }
+    if (!ext.name.trim()) return null
+    return { name: ext.name.trim(), club: ext.club.trim(), pos: ext.pos, age: parseInt(ext.age) || 24, imp: ext.importance }
+  }
 
-    const bidValue = Number(bid)
-    if (!sellingClub.trim() || !buyingClub.trim() || !Number.isFinite(bidValue) || bidValue <= 0) {
-      setOutcome({ type: 'error', message: 'Enter selling club, buying club, and a valid bid.' })
-      return
-    }
+  function makeOffer() {
+    const info = getPlayerInfo()
+    const bidVal = parseFloat(bid)
+    if (!info || !bidVal || bidVal <= 0) return
 
-    const asking = valuation.askingPrice
-    const snapUp = valuation.snapUpAbove
-    const minAcceptable = valuation.minAcceptable
-    const yourVal = valuation.yourValuation
-    const reasonBoost = clamp(reason.trim().length / 600, 0, 0.12)
+    const outcome = simulateSale(bidVal, info.imp, info.age, info.pos, info.name, info.club)
+    setSaleOutcome(outcome)
 
-    if (bidValue >= snapUp) {
-      const accepted: Outcome = {
-        type: 'accepted',
-        fee: round1(bidValue),
-        message: 'Snap-up threshold reached.',
-      }
-      setOutcome(accepted)
-      appendLog(round1(bidValue))
-      return
-    }
-
-    if (bidValue >= asking) {
-      const acceptedChance = clamp(0.88 + reasonBoost, 0, 0.97)
-      if (Math.random() < acceptedChance) {
-        const accepted: Outcome = {
-          type: 'accepted',
-          fee: round1(bidValue),
-          message: 'Bid meets the asking price.',
+    if (outcome.kind === 'accepted') {
+      const buyer = S.teams.find(t => t.id === (buyerId ?? managedTeams[0]?.id))
+      if (buyer) {
+        const entry: TransferLogEntry = {
+          player: info.name,
+          sellerName: info.club || 'External',
+          buyerName: buyer.name,
+          buyerId: buyer.id,
+          fee: outcome.fee,
         }
-        setOutcome(accepted)
-        appendLog(round1(bidValue))
-      } else {
-        setOutcome({
-          type: 'counter',
-          fee: round1(asking * randFloat(0.9, 1.05)),
-          message: 'Selling club wants a better structure/fee.',
+        setS(prev => {
+          const n = {
+            ...prev,
+            transferLog: [entry, ...(prev.transferLog ?? [])],
+            teams: prev.teams.map(t =>
+              t.id === buyer.id ? { ...t, transfers_in: (t.transfers_in ?? 0) + outcome.fee * 1e6 } : t
+            ),
+          }
+          scheduleSave(n)
+          return n
         })
+        setShowPersonal(true)
+        setPWage('')
+        setPYears('3')
+        setPersonalOutcome(null)
       }
-      return
     }
-
-    if (bidValue >= minAcceptable) {
-      let accept = 0.42
-      let counter = 0.3
-      let reject = 0.28
-
-      const shift = Math.min(reasonBoost, reject)
-      reject -= shift
-      accept += shift * 0.6
-      counter += shift * 0.4
-
-      if (valuation.contribution === 'key' && bidValue < asking) {
-        const bump = Math.min(0.38, accept + counter)
-        const pullA = Math.min(accept, bump * 0.7)
-        accept -= pullA
-        const pullC = Math.min(counter, bump - pullA)
-        counter -= pullC
-        reject += pullA + pullC
-      }
-
-      if (valuation.age > 33 && bidValue > asking * 1.2) {
-        const bump = Math.min(0.28, accept + counter)
-        const pullA = Math.min(accept, bump * 0.7)
-        accept -= pullA
-        const pullC = Math.min(counter, bump - pullA)
-        counter -= pullC
-        reject += pullA + pullC
-      }
-
-      const roll = Math.random()
-      if (roll < accept) {
-        const accepted: Outcome = {
-          type: 'accepted',
-          fee: round1(bidValue),
-          message: 'Deal accepted from acceptable range.',
-        }
-        setOutcome(accepted)
-        appendLog(round1(bidValue))
-      } else if (roll < accept + counter) {
-        setOutcome({
-          type: 'counter',
-          fee: round1(asking * randFloat(0.9, 1.05)),
-          message: 'Counter from the selling club.',
-        })
-      } else {
-        setOutcome({
-          type: 'rejected',
-          message: rejectionLine(sellingClub, valuation.playerName),
-        })
-      }
-      return
-    }
-
-    if (bidValue >= yourVal) {
-      const counterChance = clamp(0.22 + reasonBoost * 0.8, 0, 0.4)
-      if (Math.random() < counterChance) {
-        setOutcome({
-          type: 'counter',
-          fee: round1(asking * randFloat(0.9, 1.05)),
-          message: 'Bid is low, but they still return with a counter.',
-        })
-      } else {
-        setOutcome({
-          type: 'rejected',
-          message: rejectionLine(sellingClub, valuation.playerName),
-        })
-      }
-      return
-    }
-
-    setOutcome({
-      type: 'rejected',
-      message: rejectionLine(sellingClub, valuation.playerName),
-    })
   }
 
-  function appendLog(fee: number) {
-    const item: TransferLogItem = {
-      season: seasonLabel.trim() || 'S1',
-      player: valuation.playerName || 'Player',
-      sellingClub: sellingClub.trim(),
-      buyingClub: buyingClub.trim(),
-      fee,
+  function offerPersonalTerms() {
+    const info = getPlayerInfo()
+    const buyer = S.teams.find(t => t.id === (buyerId ?? managedTeams[0]?.id))
+    if (!info || !buyer) return
+    const wage = parseInt(pWage)
+    const years = parseInt(pYears)
+    if (!wage || !years) return
+
+    const synth: Player = {
+      id: selected?.id ?? -1,
+      name: info.name,
+      teamId: buyer.id,
+      team: buyer.name,
+      pos: info.pos,
+      age: info.age,
+      importance: info.imp,
+      nat: selected?.nat ?? '???',
     }
-    const next = [item, ...transferLog]
-    setTransferLog(next)
-    saveJSON(LOG_KEY, next)
+    const outcome = simulateContract(wage, years, synth, teamRank(buyer.id))
+    setPersonalOutcome(outcome)
+
+    if (outcome.kind === 'accepted' && selected) {
+      setDyn(persistContract(selected.id, wage, years, dyn))
+    }
+  }
+
+  function submitCtTalk() {
+    if (!ctPlayer || !activeCtTeam) return
+    const wage = parseInt(ctWage)
+    const years = parseInt(ctYears)
+    if (!wage || !years) return
+    const outcome = simulateContract(wage, years, ctPlayer, teamRank(activeCtTeam.id))
+    setCtOutcome(outcome)
+    if (outcome.kind === 'accepted') {
+      setDyn(persistContract(ctPlayer.id, wage, years, dyn))
+    }
   }
 
   function clearLog() {
-    setTransferLog([])
-    saveJSON(LOG_KEY, [])
+    setS(prev => { const n = { ...prev, transferLog: [] }; scheduleSave(n); return n })
   }
+
+  const transferLog = S.transferLog ?? []
+  const info = getPlayerInfo()
+  const canBid = !!info && !!bid && parseFloat(bid) > 0 && managedTeams.length > 0
+
+  function tabStyle(t: string) {
+    return {
+      padding: '0.375rem 1rem',
+      fontSize: '0.875rem',
+      fontWeight: 500,
+      borderRadius: '0.375rem',
+      transition: 'all 0.15s',
+      background: tab === t ? '#9B6BB5' : 'transparent',
+      color: tab === t ? '#fff' : 'var(--muted-foreground)',
+    }
+  }
+
+  const selectCls = 'flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm'
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+
+      {/* Tabs */}
+      <div className="flex gap-1 p-1 bg-muted rounded-lg w-fit">
+        <button style={tabStyle('sign')} onClick={() => setTab('sign')}>Sign a Player</button>
+        <button style={tabStyle('contracts')} onClick={() => setTab('contracts')}>Contract Talks</button>
+        <button style={tabStyle('log')} onClick={() => setTab('log')}>
+          Transfer Log{transferLog.length > 0 && <span className="ml-1.5 opacity-60 text-xs">({transferLog.length})</span>}
+        </button>
+      </div>
+
+      {/* ── SIGN A PLAYER ───────────────────────────────────────────────────── */}
+      {tab === 'sign' && (
         <Card>
-          <CardHeader>
-            <CardTitle>Player valuation</CardTitle>
-            <CardDescription>
-              Roll to generate your valuation, asking price, snap-up threshold, and min acceptable.
-            </CardDescription>
+          <CardHeader className="pb-3">
+            <CardTitle>Sign a Player</CardTitle>
+            <CardDescription>Search any club's player or enter an external signing manually, then make an offer.</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label className="text-xs text-muted-foreground">Player name</label>
-                <Input value={valuation.playerName} onChange={e => setValuation(v => ({ ...v, playerName: e.target.value }))} />
-              </div>
-              <div>
-                <label className="text-xs text-muted-foreground">Current club</label>
-                <Input value={valuation.currentClub} onChange={e => setValuation(v => ({ ...v, currentClub: e.target.value }))} />
-              </div>
-              <div>
-                <label className="text-xs text-muted-foreground">Age</label>
-                <Input type="number" value={valuation.age} onChange={e => setValuation(v => ({ ...v, age: Number(e.target.value) || 0 }))} />
-              </div>
-              <div>
-                <label className="text-xs text-muted-foreground">PES rating (60-99)</label>
-                <Input type="number" min={60} max={99} value={valuation.rating} onChange={e => setValuation(v => ({ ...v, rating: clamp(Number(e.target.value) || 60, 60, 99) }))} />
-              </div>
-              <div>
-                <label className="text-xs text-muted-foreground">Position</label>
-                <select
-                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm"
-                  value={valuation.position}
-                  onChange={e => setValuation(v => ({ ...v, position: e.target.value as Position }))}
-                >
-                  <option value="GK">GK</option>
-                  <option value="DEF">DEF</option>
-                  <option value="MID">MID</option>
-                  <option value="ATT">ATT</option>
-                </select>
-              </div>
-              <div>
-                <label className="text-xs text-muted-foreground">Contribution</label>
-                <select
-                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm"
-                  value={valuation.contribution}
-                  onChange={e => setValuation(v => ({ ...v, contribution: e.target.value as Contribution }))}
-                >
-                  <option value="key">Key player</option>
-                  <option value="regular">Regular starter</option>
-                  <option value="rotation">Rotation</option>
-                  <option value="squad">Squad depth</option>
-                </select>
-              </div>
+          <CardContent className="space-y-4">
+
+            {/* Source toggle */}
+            <div className="flex rounded-md border overflow-hidden text-xs font-medium w-fit">
+              <button
+                className="px-4 py-1.5 transition-colors"
+                style={source === 'db' ? { background: 'linear-gradient(135deg, #2E4A52 0%, #1a3040 100%)', color: '#fff' } : { color: 'var(--muted-foreground)' }}
+                onClick={() => { setSource('db'); clearSign() }}
+              >
+                In database
+              </button>
+              <button
+                className="px-4 py-1.5 border-l transition-colors"
+                style={source === 'ext' ? { background: '#2E4A52', color: '#fff' } : { color: 'var(--muted-foreground)' }}
+                onClick={() => { setSource('ext'); clearSign() }}
+              >
+                External player
+              </button>
             </div>
 
-            <div className="flex gap-2">
-              <Button onClick={rollValuation}>Roll valuation</Button>
-              <Button variant="outline" onClick={resetRun}>Reset run</Button>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-              <div className="rounded-md border p-2"><span className="text-muted-foreground">Your valuation:</span> {currencyM(valuation.yourValuation)}</div>
-              <div className="rounded-md border p-2"><span className="text-muted-foreground">Asking price:</span> {currencyM(valuation.askingPrice)}</div>
-              <div className="rounded-md border p-2"><span className="text-muted-foreground">Snap up above:</span> {currencyM(valuation.snapUpAbove)}</div>
-              <div className="rounded-md border p-2"><span className="text-muted-foreground">Min acceptable:</span> {currencyM(valuation.minAcceptable)}</div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Negotiate transfer</CardTitle>
-            <CardDescription>Uses the latest valuation output and your bid.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {/* Database search */}
+            {source === 'db' && (
               <div>
-                <label className="text-xs text-muted-foreground">Selling club</label>
-                <Input value={sellingClub} onChange={e => setSellingClub(e.target.value)} />
+                <label className="text-xs text-muted-foreground">Search player</label>
+                <div className="relative mt-1">
+                  <Input
+                    className="text-sm"
+                    placeholder="Name..."
+                    value={query}
+                    onChange={e => handleSearch(e.target.value)}
+                    onBlur={() => setTimeout(() => setSuggestions([]), 150)}
+                  />
+                  {suggestions.length > 0 && (
+                    <div className="absolute z-50 left-0 right-0 top-full mt-1 rounded-md border bg-popover shadow-md overflow-hidden">
+                      {suggestions.map(p => (
+                        <button
+                          key={p.id}
+                          className="w-full flex items-center justify-between px-3 py-2 text-sm hover:bg-accent text-left"
+                          onMouseDown={() => pickPlayer(p)}
+                        >
+                          <span className="font-medium">{p.name}</span>
+                          <span className="text-xs text-muted-foreground ml-3">{p.team} · {p.pos} · {p.age}y</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                {selected && (
+                  <div className="mt-2 flex items-center gap-3 px-3 py-2.5 rounded-lg border bg-muted/30">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold">{selected.name}</p>
+                      <p className="text-xs text-muted-foreground">{selected.team} · {selected.pos} · Age {selected.age}</p>
+                    </div>
+                    <div className="flex gap-px shrink-0">
+                      {[1,2,3,4,5].map(n => (
+                        <span key={n} style={{ color: n <= selected.importance ? '#f59e0b' : '#d1d5db', fontSize: 12 }}>★</span>
+                      ))}
+                    </div>
+                    <button className="text-xs text-muted-foreground hover:text-foreground shrink-0" onClick={clearSign}>✕</button>
+                  </div>
+                )}
               </div>
+            )}
+
+            {/* External player form */}
+            {source === 'ext' && (
+              <div className="grid grid-cols-2 gap-3">
+                <div className="col-span-2">
+                  <label className="text-xs text-muted-foreground">Player name</label>
+                  <Input className="text-sm mt-1" placeholder="e.g. M. Rashford" value={ext.name}
+                    onChange={e => { setExt(x => ({ ...x, name: e.target.value })); setSaleOutcome(null) }} />
+                </div>
+                <div>
+                  <label className="text-xs text-muted-foreground">Current club</label>
+                  <Input className="text-sm mt-1" placeholder="e.g. Man United" value={ext.club}
+                    onChange={e => setExt(x => ({ ...x, club: e.target.value }))} />
+                </div>
+                <div>
+                  <label className="text-xs text-muted-foreground">Age</label>
+                  <Input type="number" className="text-sm mt-1" value={ext.age}
+                    onChange={e => setExt(x => ({ ...x, age: e.target.value }))} />
+                </div>
+                <div>
+                  <label className="text-xs text-muted-foreground">Position</label>
+                  <select className={`${selectCls} mt-1`} value={ext.pos}
+                    onChange={e => setExt(x => ({ ...x, pos: e.target.value as Position }))}>
+                    {POSITIONS.map(p => <option key={p} value={p}>{p}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="text-xs text-muted-foreground">Quality</label>
+                  <div className="flex gap-1 mt-2.5">
+                    {[1,2,3,4,5].map(n => (
+                      <button key={n} onClick={() => setExt(x => ({ ...x, importance: n }))}
+                        style={{ color: n <= ext.importance ? '#f59e0b' : '#d1d5db', fontSize: 20, lineHeight: 1 }}>★</button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Buyer + bid */}
+            <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="text-xs text-muted-foreground">Buying club</label>
-                <Input value={buyingClub} onChange={e => setBuyingClub(e.target.value)} />
+                {managedTeams.length === 0 ? (
+                  <p className="text-xs text-muted-foreground mt-2">No managed clubs — set them in Transfer Hub first.</p>
+                ) : (
+                  <select className={`${selectCls} mt-1`}
+                    value={buyerId ?? managedTeams[0].id}
+                    onChange={e => { setBuyerId(Number(e.target.value)); setSaleOutcome(null) }}>
+                    {managedTeams.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
+                  </select>
+                )}
               </div>
               <div>
                 <label className="text-xs text-muted-foreground">Bid (£M)</label>
-                <Input type="number" step="0.1" value={bid} onChange={e => setBid(e.target.value)} />
-              </div>
-              <div>
-                <label className="text-xs text-muted-foreground">Season label</label>
-                <Input value={seasonLabel} onChange={e => setSeasonLabel(e.target.value)} />
+                <Input type="number" step="0.5" className="text-sm mt-1" placeholder="e.g. 25"
+                  value={bid} onChange={e => { setBid(e.target.value); setSaleOutcome(null) }} />
               </div>
             </div>
-            <div>
-              <label className="text-xs text-muted-foreground">Reason (optional)</label>
-              <textarea
-                className="flex min-h-[88px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm"
-                value={reason}
-                onChange={e => setReason(e.target.value)}
-              />
-            </div>
-            <Button onClick={negotiate}>Submit bid</Button>
 
-            {outcome && (
-              <div className="rounded-md border p-3 text-sm">
-                <p className="font-medium capitalize">{outcome.type}</p>
-                {'fee' in outcome && <p className="text-muted-foreground">Figure: {currencyM(outcome.fee)}</p>}
-                <p className="text-muted-foreground">{outcome.message}</p>
+            <Button onClick={makeOffer} disabled={!canBid}>Make Offer</Button>
+
+            {/* Fee outcome */}
+            {saleOutcome && (
+              <div className={`rounded-md border p-3 text-sm space-y-1 ${outcomeCls(saleOutcome.kind)}`}>
+                <p className="font-semibold">{outcomeLabel(saleOutcome.kind)}</p>
+                {'fee' in saleOutcome && <p className="font-medium">{fmtM(saleOutcome.fee)}</p>}
+                <p className="text-muted-foreground">{saleOutcome.msg}</p>
+              </div>
+            )}
+
+            {/* Personal terms — shown after fee accepted */}
+            {showPersonal && saleOutcome?.kind === 'accepted' && (
+              <div className="rounded-lg border p-4 space-y-3 bg-muted/20">
+                <div>
+                  <p className="text-sm font-semibold">Agree personal terms</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Transfer fee agreed. Now negotiate the player's contract.</p>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-xs text-muted-foreground">Wage (£/wk)</label>
+                    <Input type="number" className="text-sm mt-1" placeholder="e.g. 25000"
+                      value={pWage} onChange={e => { setPWage(e.target.value); setPersonalOutcome(null) }} />
+                  </div>
+                  <div>
+                    <label className="text-xs text-muted-foreground">Contract length</label>
+                    <select className={`${selectCls} mt-1`} value={pYears}
+                      onChange={e => { setPYears(e.target.value); setPersonalOutcome(null) }}>
+                      {[1,2,3,4,5].map(y => <option key={y} value={y}>{y} year{y > 1 ? 's' : ''}</option>)}
+                    </select>
+                  </div>
+                </div>
+                <Button size="sm" onClick={offerPersonalTerms} disabled={!pWage}>Offer Terms</Button>
+                {personalOutcome && (
+                  <div className={`rounded-md border p-3 text-sm space-y-0.5 ${outcomeCls(personalOutcome.kind)}`}>
+                    <p className="font-semibold">{outcomeLabel(personalOutcome.kind)}</p>
+                    {'wage' in personalOutcome && (
+                      <p className="font-medium">{fmtW(personalOutcome.wage)}/wk · {personalOutcome.years}yr</p>
+                    )}
+                    <p className="text-muted-foreground">{personalOutcome.msg}</p>
+                  </div>
+                )}
+              </div>
+            )}
+
+          </CardContent>
+        </Card>
+      )}
+
+      {/* ── CONTRACT TALKS ──────────────────────────────────────────────────── */}
+      {tab === 'contracts' && (
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle>Contract Talks</CardTitle>
+            <CardDescription>
+              Re-sign players or offer new deals. Players at struggling clubs demand higher wages to stay.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {managedTeams.length === 0 ? (
+              <p className="text-sm text-muted-foreground">No managed clubs — set them in Transfer Hub first.</p>
+            ) : (
+              <>
+                {/* Team tabs */}
+                {managedTeams.length > 1 && (
+                  <div className="flex gap-1 flex-wrap">
+                    {managedTeams.map(t => (
+                      <button key={t.id}
+                        onClick={() => { setCtTeamId(t.id); setCtPlayerId(null); setCtOutcome(null) }}
+                        className="px-3 py-1.5 rounded-lg text-xs font-medium border transition-all"
+                        style={(ctTeamId ?? managedTeams[0].id) === t.id
+                          ? { background: '#9B6BB5', color: '#fff', borderColor: '#9B6BB5' }
+                          : { borderColor: 'var(--border)', color: 'var(--muted-foreground)' }}
+                      >{t.name}</button>
+                    ))}
+                  </div>
+                )}
+
+                {/* Player list */}
+                <div className="rounded-md border overflow-hidden divide-y max-h-72 overflow-y-auto">
+                  {ctPlayers.length === 0 && (
+                    <p className="text-sm text-muted-foreground px-3 py-4">No players found.</p>
+                  )}
+                  {ctPlayers.map(p => {
+                    const contract = dyn.contracts[p.id]
+                    const isSelected = ctPlayerId === p.id
+                    return (
+                      <button key={p.id}
+                        className="w-full flex items-center gap-3 px-3 py-2.5 text-left hover:bg-accent/50 transition-colors"
+                        style={isSelected ? { background: 'var(--accent)' } : {}}
+                        onClick={() => { setCtPlayerId(p.id); setCtOutcome(null); setCtWage(''); setCtYears('3') }}
+                      >
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium leading-tight">{p.name}</p>
+                          <p className="text-xs text-muted-foreground">{p.pos} · Age {p.age}</p>
+                        </div>
+                        <div className="text-right shrink-0 mr-1">
+                          {contract ? (
+                            <>
+                              <p className="text-xs font-medium">{fmtW(contract.wage)}/wk</p>
+                              <p className={`text-[10px] ${contract.yearsLeft <= 1 ? 'text-amber-600 font-medium' : 'text-muted-foreground'}`}>
+                                {contract.yearsLeft === 0 ? 'Expired' : `${contract.yearsLeft}yr left`}
+                              </p>
+                            </>
+                          ) : (
+                            <p className="text-[10px] text-muted-foreground">No contract</p>
+                          )}
+                        </div>
+                        <div className="flex gap-px shrink-0">
+                          {[1,2,3,4,5].map(n => (
+                            <span key={n} style={{ color: n <= p.importance ? '#f59e0b' : '#d1d5db', fontSize: 11 }}>★</span>
+                          ))}
+                        </div>
+                      </button>
+                    )
+                  })}
+                </div>
+
+                {/* Negotiation form */}
+                {ctPlayer && (
+                  <div className="rounded-lg border p-4 space-y-3 bg-muted/20">
+                    <p className="text-sm font-semibold">Negotiating with {ctPlayer.name}</p>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-xs text-muted-foreground">Wage offer (£/wk)</label>
+                        <Input type="number" className="text-sm mt-1" placeholder="e.g. 15000"
+                          value={ctWage} onChange={e => { setCtWage(e.target.value); setCtOutcome(null) }} />
+                      </div>
+                      <div>
+                        <label className="text-xs text-muted-foreground">Contract length</label>
+                        <select className={`${selectCls} mt-1`} value={ctYears}
+                          onChange={e => { setCtYears(e.target.value); setCtOutcome(null) }}>
+                          {[1,2,3,4,5].map(y => <option key={y} value={y}>{y} year{y > 1 ? 's' : ''}</option>)}
+                        </select>
+                      </div>
+                    </div>
+                    <Button size="sm" onClick={submitCtTalk} disabled={!ctWage}>Make Offer</Button>
+                    {ctOutcome && (
+                      <div className={`rounded-md border p-3 text-sm space-y-0.5 ${outcomeCls(ctOutcome.kind)}`}>
+                        <p className="font-semibold">{outcomeLabel(ctOutcome.kind)}</p>
+                        {'wage' in ctOutcome && (
+                          <p className="font-medium">{fmtW(ctOutcome.wage)}/wk · {ctOutcome.years}yr</p>
+                        )}
+                        <p className="text-muted-foreground">{ctOutcome.msg}</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
+      {/* ── TRANSFER LOG ────────────────────────────────────────────────────── */}
+      {tab === 'log' && (
+        <Card>
+          <CardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle>Transfer Log</CardTitle>
+                <CardDescription>All completed deals this save.</CardDescription>
+              </div>
+              {transferLog.length > 0 && <Button size="sm" variant="outline" onClick={clearLog}>Clear</Button>}
+            </div>
+          </CardHeader>
+          <CardContent>
+            {transferLog.length === 0 ? (
+              <p className="text-sm text-muted-foreground py-2">No deals logged yet.</p>
+            ) : (
+              <div className="space-y-2">
+                {transferLog.map((item, i) => (
+                  <div key={i} className="flex items-center justify-between gap-2 rounded-md border px-3 py-2.5">
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium">{item.player}</p>
+                      <p className="text-xs text-muted-foreground truncate">{item.sellerName} → {item.buyerName}</p>
+                    </div>
+                    <p className="text-sm font-semibold whitespace-nowrap shrink-0">{fmtM(item.fee)}</p>
+                  </div>
+                ))}
               </div>
             )}
           </CardContent>
         </Card>
-      </div>
+      )}
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Interested teams</CardTitle>
-          <CardDescription>{summary}. Add/remove teams, set budgets, then generate offers.</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <Input placeholder="Team name" value={teamName} onChange={e => setTeamName(e.target.value)} />
-            <Input placeholder="Budget (£M)" type="number" step="0.1" value={teamBudget} onChange={e => setTeamBudget(e.target.value)} />
-            <div className="flex gap-2">
-              <Button onClick={addTeam}>Add team</Button>
-              <Button variant="outline" onClick={() => generateTeamOffers()} disabled={!canGenerateOffers}>
-                Generate offers
-              </Button>
-            </div>
-          </div>
-
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Team</TableHead>
-                <TableHead>Budget</TableHead>
-                <TableHead>Willing to pay</TableHead>
-                <TableHead />
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {interestedTeams.map((team, idx) => (
-                <TableRow key={`${team.name}-${idx}`}>
-                  <TableCell>{team.name}</TableCell>
-                  <TableCell>{currencyM(team.budget)}</TableCell>
-                  <TableCell>{currencyM(team.willingToPay)}</TableCell>
-                  <TableCell className="text-right space-x-1">
-                    <Button size="sm" onClick={() => useOffer(team)} disabled={team.willingToPay == null}>Use offer</Button>
-                    <Button size="sm" variant="destructive" onClick={() => removeTeam(idx)}>Remove</Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Transfer log</CardTitle>
-          <CardDescription>Accepted deals only.</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <div>
-            <Button size="sm" variant="outline" onClick={clearLog}>Clear log</Button>
-          </div>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Season</TableHead>
-                <TableHead>Player</TableHead>
-                <TableHead>Selling club</TableHead>
-                <TableHead>Buying club</TableHead>
-                <TableHead>Fee</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {transferLog.map((item, i) => (
-                <TableRow key={`${item.player}-${item.buyingClub}-${i}`}>
-                  <TableCell>{item.season}</TableCell>
-                  <TableCell>{item.player}</TableCell>
-                  <TableCell>{item.sellingClub}</TableCell>
-                  <TableCell>{item.buyingClub}</TableCell>
-                  <TableCell>{currencyM(item.fee)}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
     </div>
   )
 }

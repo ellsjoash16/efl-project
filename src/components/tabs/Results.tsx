@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useGame } from '@/store/gameContext'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -7,11 +7,141 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { moodFromPos, avgTicket } from '@/lib/gameLogic'
-import { TEAM_DEFS } from '@/data'
+import { TEAM_DEFS, NFX } from '@/data'
+import type { Team } from '@/types'
+import { loadDyn, runAiTransfers, type AiTeamRef } from '@/lib/playerState'
+
+// ─── Photo import helpers ─────────────────────────────────────────────────────
+
+const ANTHROPIC_KEY = 'efl-anthropic-key'
+
+function fuzzyMatchTeam(name: string, teams: Team[]): number | null {
+  const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '')
+  const target = norm(name)
+  if (!target) return null
+  const exact = teams.find(t => norm(t.name) === target)
+  if (exact) return exact.id
+  let best: Team | null = null, bestScore = 0
+  for (const team of teams) {
+    const tn = norm(team.name)
+    let score = 0
+    for (let i = 0; i < target.length - 2; i++) {
+      if (tn.includes(target.slice(i, i + 3))) score++
+    }
+    if (score > bestScore) { bestScore = score; best = team }
+  }
+  return bestScore > 1 ? best?.id ?? null : null
+}
+
+function parseLeagueText(text: string, teams: Team[]) {
+  const pat = /([A-Za-z .'&-]+?)\s+(\d+)\s*[-–—]\s*(\d+)\s+([A-Za-z .'&-]+)/g
+  const out: { hi: number; ai: number; hg: number; ag: number }[] = []
+  let m: RegExpExecArray | null
+  while ((m = pat.exec(text)) !== null) {
+    const hi = fuzzyMatchTeam(m[1].trim(), teams)
+    const ai = fuzzyMatchTeam(m[4].trim(), teams)
+    if (hi != null && ai != null && hi !== ai) {
+      out.push({ hi, ai, hg: +m[2], ag: +m[3] })
+    }
+  }
+  return out
+}
+
+async function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve((reader.result as string).split(',')[1])
+    reader.onerror = reject
+    reader.readAsDataURL(file)
+  })
+}
+
+async function callClaudeVision(apiKey: string, b64: string, mt: string): Promise<string> {
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'x-api-key': apiKey, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 512,
+      messages: [{ role: 'user', content: [
+        { type: 'image', source: { type: 'base64', media_type: mt, data: b64 } },
+        { type: 'text', text: 'Extract every football match score from this screenshot. Return ONLY JSON array: [{"home":"Team","homeGoals":2,"awayGoals":1,"away":"Team"}]. Return [] if none found.' },
+      ]}],
+    }),
+  })
+  if (!res.ok) throw new Error(`API ${res.status}`)
+  const d = await res.json()
+  return d.content?.[0]?.text ?? '[]'
+}
 
 export function Results() {
   const { S, setS, scheduleSave } = useGame()
   const [mdIndex, setMdIndex] = useState(Math.min(S.matchday, 21))
+
+  // Photo import
+  const fileRef = useRef<HTMLInputElement>(null)
+  const [apiKey, setApiKey] = useState(() => localStorage.getItem(ANTHROPIC_KEY) ?? '')
+  const [showKey, setShowKey] = useState(false)
+  const [importing, setImporting] = useState(false)
+  const [importError, setImportError] = useState('')
+  const [pasteText, setPasteText] = useState('')
+  const [pending, setPending] = useState<{ hi: number; ai: number; hg: number; ag: number }[]>([])
+
+  function saveKey(k: string) { setApiKey(k); localStorage.setItem(ANTHROPIC_KEY, k) }
+
+  async function handlePhoto(file: File) {
+    setImportError(''); setPending([])
+    if (apiKey) {
+      setImporting(true)
+      try {
+        const b64 = await fileToBase64(file)
+        const mt = (file.type || 'image/jpeg') as 'image/jpeg' | 'image/png' | 'image/webp'
+        const text = await callClaudeVision(apiKey, b64, mt)
+        const jsonMatch = text.match(/\[[\s\S]*\]/)
+        if (jsonMatch) {
+          const raw = JSON.parse(jsonMatch[0]) as { home: string; homeGoals: number; awayGoals: number; away: string }[]
+          const mapped = parseLeagueText(
+            raw.map(r => `${r.home} ${r.homeGoals}-${r.awayGoals} ${r.away}`).join('\n'),
+            S.teams
+          )
+          if (mapped.length) setPending(mapped)
+          else setImportError('No league team names matched. Try text paste.')
+        } else {
+          setImportError('No scores found. Try text paste below.')
+        }
+      } catch (e) {
+        const msg = e instanceof Error ? e.message : ''
+        setImportError(msg.includes('fetch') || msg.includes('CORS')
+          ? 'Browser blocked the API call. Use text paste below.'
+          : `Error: ${msg}`)
+      } finally { setImporting(false) }
+    } else {
+      setImportError('No API key set — use text paste below.')
+    }
+  }
+
+  function applyFromText() {
+    const mapped = parseLeagueText(pasteText, S.teams)
+    if (!mapped.length) { setImportError('No scores found. Format: "Team A 2-1 Team B" per line.'); return }
+    setPending(mapped)
+  }
+
+  function confirmPending() {
+    const done = S.cMDs.has(mdIndex)
+    if (done) { alert('This matchday is already saved. Unlock it first.'); return }
+    setS(prev => {
+      const newFx = prev.mdFx.map((mdfx, mi) => {
+        if (mi !== mdIndex) return mdfx
+        const updated = [...mdfx]
+        pending.forEach((r, pi) => {
+          if (pi < NFX) updated[pi] = { ...updated[pi], hi: r.hi, ai: r.ai, hg: r.hg, ag: r.ag }
+        })
+        return updated
+      })
+      return { ...prev, mdFx: newFx }
+    })
+    setPending([]); setPasteText(''); setImportError('')
+  }
 
   const done = S.cMDs.has(mdIndex)
   const fx = S.mdFx[mdIndex]
@@ -132,7 +262,35 @@ export function Results() {
       const sortedTeams = [...newTeams].sort((a, b) => b.pts - a.pts || (b.gf - b.ga) - (a.gf - a.ga) || b.gf - a.gf)
       sortedTeams.forEach((t, i) => { t.mood = moodFromPos(i + 1, t.form) })
 
-      const next = { ...prev, teams: newTeams, rivalries: newRivals, results: newResults, mdFx: newFx, cMDs: newCMDs, matchday: newMatchday }
+      // ── AI transfer window ──────────────────────────────────────────────
+      // Fires on MD 2 (pre-season only)
+      let aiTransfers: ReturnType<typeof runAiTransfers> | null = null
+      if (newMatchday === 2) {
+        const teamRefs: AiTeamRef[] = prev.teams.map(t => ({
+          id: t.id,
+          name: t.name,
+          budget: t.transfer_budget ?? 0,
+          isHuman: (prev.userTeamIds ?? []).includes(t.id),
+          pts: newTeams.find(nt => nt.id === t.id)?.pts ?? t.pts,
+        }))
+        aiTransfers = runAiTransfers(loadDyn(), teamRefs, prev.season)
+      }
+
+      const next = {
+        ...prev,
+        teams: newTeams,
+        rivalries: newRivals,
+        results: newResults,
+        mdFx: newFx,
+        cMDs: newCMDs,
+        matchday: newMatchday,
+        transferLog: aiTransfers
+          ? [...aiTransfers.transfers, ...(prev.transferLog ?? [])]
+          : prev.transferLog ?? [],
+        newsLog: aiTransfers
+          ? [...aiTransfers.news, ...(prev.newsLog ?? [])]
+          : prev.newsLog ?? [],
+      }
       scheduleSave(next)
       return next
     })
@@ -164,6 +322,57 @@ export function Results() {
 
           <Separator />
 
+          {/* Photo import */}
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 flex-wrap">
+              <input ref={fileRef} type="file" accept="image/*" capture="environment" className="hidden"
+                onChange={e => { const f = e.target.files?.[0]; if (f) handlePhoto(f); e.target.value = '' }} />
+              <Button size="sm" variant="outline" onClick={() => fileRef.current?.click()} disabled={importing || S.cMDs.has(mdIndex)}>
+                {importing ? 'Reading…' : '📷 Import from photo'}
+              </Button>
+              <button className="text-xs text-muted-foreground underline" onClick={() => setShowKey(s => !s)}>
+                {showKey ? 'Hide API key' : 'API key'}
+              </button>
+            </div>
+            {showKey && (
+              <Input type="password" className="text-sm font-mono max-w-sm" placeholder="sk-ant-..."
+                value={apiKey} onChange={e => saveKey(e.target.value)} />
+            )}
+            <div className="flex gap-2 max-w-lg">
+              <input
+                className="flex-1 h-8 rounded-md border border-input bg-background px-3 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                placeholder='Or paste text: "Team A 2-1 Team B" per line'
+                value={pasteText}
+                onChange={e => setPasteText(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && applyFromText()}
+              />
+              <Button size="sm" variant="outline" onClick={applyFromText}>Parse</Button>
+            </div>
+            {importError && <p className="text-xs text-red-500">{importError}</p>}
+            {pending.length > 0 && (
+              <div className="rounded-md border p-3 space-y-1.5 bg-muted/30">
+                <p className="text-xs font-medium">Found {pending.length} result{pending.length > 1 ? 's' : ''} — confirm to fill in scores:</p>
+                {pending.map((r, i) => {
+                  const hn = S.teams.find(t => t.id === r.hi)?.name ?? `Team ${r.hi}`
+                  const an = S.teams.find(t => t.id === r.ai)?.name ?? `Team ${r.ai}`
+                  return (
+                    <p key={i} className="text-sm">
+                      <span className="font-medium">{hn}</span>
+                      <span className="text-muted-foreground mx-1">{r.hg}–{r.ag}</span>
+                      <span className="font-medium">{an}</span>
+                    </p>
+                  )
+                })}
+                <div className="flex gap-2 pt-1">
+                  <Button size="sm" onClick={confirmPending} style={{ background: 'linear-gradient(135deg, #2E4A52 0%, #1a3040 100%)', color: '#fff' }}>Apply scores</Button>
+                  <Button size="sm" variant="outline" onClick={() => setPending([])}>Discard</Button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <Separator />
+
           {/* Fixtures */}
           {done ? (
             <div className="space-y-1">
@@ -189,44 +398,47 @@ export function Results() {
           ) : (
             <div className="space-y-2">
               {fx.map((f, fi) => (
-                <div key={fi} className="flex items-center gap-2 py-2 border-b last:border-0 flex-wrap">
-                  <span className="text-xs text-muted-foreground w-5">{fi + 1}.</span>
-                  {/* Home team */}
-                  <Select value={String(f.hi)} onValueChange={v => updateFixture(fi, 'hi', parseInt(v))}>
-                    <SelectTrigger className="flex-1 min-w-[140px]">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {TEAM_DEFS.map(t => <SelectItem key={t.id} value={String(t.id)}>{t.name}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
-                  <span className="text-muted-foreground text-xs">vs</span>
-                  {/* Away team */}
-                  <Select value={String(f.ai)} onValueChange={v => updateFixture(fi, 'ai', parseInt(v))}>
-                    <SelectTrigger className="flex-1 min-w-[140px]">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {TEAM_DEFS.map(t => <SelectItem key={t.id} value={String(t.id)}>{t.name}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
-                  {/* Score */}
-                  <div className="flex items-center gap-1.5 ml-1">
-                    <Input
-                      type="number" min={0} max={20}
-                      className="w-14 text-center text-base font-semibold tabular-nums"
-                      placeholder="0"
-                      value={f.hg}
-                      onChange={e => updateFixture(fi, 'hg', e.target.value)}
-                    />
-                    <span className="text-muted-foreground font-medium">–</span>
-                    <Input
-                      type="number" min={0} max={20}
-                      className="w-14 text-center text-base font-semibold tabular-nums"
-                      placeholder="0"
-                      value={f.ag}
-                      onChange={e => updateFixture(fi, 'ag', e.target.value)}
-                    />
+                <div key={fi} className="py-2 border-b last:border-0">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-muted-foreground w-5 shrink-0">{fi + 1}.</span>
+                    {/* Teams — stacked on mobile, side by side on sm+ */}
+                    <div className="flex-1 min-w-0 flex flex-col sm:flex-row sm:items-center gap-1.5">
+                      <Select value={String(f.hi)} onValueChange={v => updateFixture(fi, 'hi', parseInt(v))}>
+                        <SelectTrigger className="flex-1">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {TEAM_DEFS.map(t => <SelectItem key={t.id} value={String(t.id)}>{t.name}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                      <span className="text-muted-foreground text-xs hidden sm:block shrink-0">vs</span>
+                      <Select value={String(f.ai)} onValueChange={v => updateFixture(fi, 'ai', parseInt(v))}>
+                        <SelectTrigger className="flex-1">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {TEAM_DEFS.map(t => <SelectItem key={t.id} value={String(t.id)}>{t.name}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    {/* Score */}
+                    <div className="flex items-center gap-1 shrink-0">
+                      <Input
+                        type="number" min={0} max={20}
+                        className="w-12 text-center text-base font-semibold tabular-nums"
+                        placeholder="0"
+                        value={f.hg}
+                        onChange={e => updateFixture(fi, 'hg', e.target.value)}
+                      />
+                      <span className="text-muted-foreground font-medium">–</span>
+                      <Input
+                        type="number" min={0} max={20}
+                        className="w-12 text-center text-base font-semibold tabular-nums"
+                        placeholder="0"
+                        value={f.ag}
+                        onChange={e => updateFixture(fi, 'ag', e.target.value)}
+                      />
+                    </div>
                   </div>
                 </div>
               ))}

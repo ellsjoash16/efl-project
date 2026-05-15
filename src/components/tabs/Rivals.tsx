@@ -53,33 +53,46 @@ export function Rivals() {
           <CardTitle className="text-sm">Rivalries</CardTitle>
           <CardDescription>Edit intensity (1–100) inline.</CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-[1fr_1fr_110px_90px_90px_80px] gap-2 pb-2 mb-1 border-b text-[11px] text-muted-foreground">
-            <span>Club A</span><span>Club B</span><span>Type</span><span>Intensity</span><span>H2H</span><span></span>
-          </div>
+        <CardContent className="space-y-3">
           {S.rivalries.length === 0 && (
-            <p className="text-xs text-muted-foreground py-4">No rivalries yet.</p>
+            <p className="text-xs text-muted-foreground py-2">No rivalries yet.</p>
           )}
-          {S.rivalries.map((r, ri) => (
-            <div key={ri} className="grid grid-cols-[1fr_1fr_110px_90px_90px_80px] gap-2 items-center py-2 border-b last:border-0">
-              <span className="font-medium text-sm">{S.teams[r.a]?.name}</span>
-              <span className="font-medium text-sm">{S.teams[r.b]?.name}</span>
-              <span><Badge variant="rival" className="text-[10px]">{r.type}</Badge></span>
-              <div className="flex items-center gap-1">
-                <input
-                  type="number" min={1} max={100}
-                  className="w-14 h-7 rounded-md border border-input bg-transparent px-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-ring"
-                  value={r.intensity}
-                  onChange={e => updateIntensity(ri, parseInt(e.target.value) || 1)}
-                />
-                <span className="text-[11px] text-muted-foreground">/100</span>
+          {S.rivalries.map((r, ri) => {
+            const teamA = S.teams[r.a]?.name ?? '?'
+            const teamB = S.teams[r.b]?.name ?? '?'
+            const [aW, draws, bW] = r.h2h
+            return (
+              <div key={ri} className="rounded-md border p-3 space-y-2">
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <p className="text-sm font-medium">{teamA} <span className="text-muted-foreground font-normal">vs</span> {teamB}</p>
+                    <Badge variant="rival" className="text-[10px] mt-1">{r.type}</Badge>
+                  </div>
+                  <Button size="sm" variant="outline" className="h-7 text-xs text-red-600 border-red-300 hover:bg-red-50 shrink-0" onClick={() => removeRivalry(ri)}>
+                    Remove
+                  </Button>
+                </div>
+                <div className="flex items-center gap-4 text-xs text-muted-foreground flex-wrap">
+                  <div className="flex items-center gap-1">
+                    <span>Intensity</span>
+                    <input
+                      type="number" min={1} max={100}
+                      className="w-14 h-7 rounded-md border border-input bg-transparent px-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-ring ml-1"
+                      value={r.intensity}
+                      onChange={e => updateIntensity(ri, parseInt(e.target.value) || 1)}
+                    />
+                    <span>/100</span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">H2H: </span>
+                    <span className="font-medium text-foreground">{teamA}</span>
+                    <span className="mx-1 font-semibold text-foreground">{aW}–{draws}–{bW}</span>
+                    <span className="font-medium text-foreground">{teamB}</span>
+                  </div>
+                </div>
               </div>
-              <span className="text-xs">{r.h2h[0]}W–{r.h2h[1]}D–{r.h2h[2]}L</span>
-              <Button size="sm" variant="outline" className="h-7 text-xs text-red-600 border-red-300 hover:bg-red-50" onClick={() => removeRivalry(ri)}>
-                Remove
-              </Button>
-            </div>
-          ))}
+            )
+          })}
         </CardContent>
       </Card>
 

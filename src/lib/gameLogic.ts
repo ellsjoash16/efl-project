@@ -73,6 +73,7 @@ export function mkTeams() {
     matchday_rev: 0,
     stadium_debt: 0,
     wage_bill: (35 + i * 4) * 1e6,
+    wageBudget: (250 + i * 25) * 1000,  // £250k–£525k/week
     transfer_budget: (20 + i * 2.5) * 1e6,
     transfers_in: 0,
     transfers_out: 0,
@@ -101,6 +102,11 @@ export function makeInitialState(): GameState {
       {a:0, b:2, type:"Historical Rivals", intensity:78, h2h:[0,0,0], last:null},
       {a:1, b:8, type:"Title Rivals", intensity:70, h2h:[0,0,0], last:null},
     ],
+    seasonHistory: [],
+    transferLog: [],
+    newsLog: [],
+    cup: null,
+    userTeamIds: [],
   }
 }
 
@@ -125,6 +131,7 @@ export function loadFromStorage(): GameState | null {
     return {
       ...ns,
       cMDs: new Set<number>(Array.isArray(ns.cMDs) ? ns.cMDs : []),
+      seasonHistory: Array.isArray(ns.seasonHistory) ? ns.seasonHistory : [],
       teams: ns.teams.map((t: Team, i: number) => ({
         ...t,
         id: typeof t.id === 'number' ? t.id : i,

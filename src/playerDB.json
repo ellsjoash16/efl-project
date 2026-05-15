@@ -1,0 +1,5052 @@
+[
+  {
+    "id": 1,
+    "name": "W. NDIDI",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "CDM",
+    "age": 29,
+    "nat": "NGA",
+    "importance": 3
+  },
+  {
+    "id": 2,
+    "name": "DIOGO DALOT",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "RB",
+    "age": 27,
+    "nat": "POR",
+    "importance": 3
+  },
+  {
+    "id": 3,
+    "name": "A. ONANA",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "GK",
+    "age": 30,
+    "nat": "CMR",
+    "importance": 4
+  },
+  {
+    "id": 4,
+    "name": "L. DIGNE",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "LB",
+    "age": 32,
+    "nat": "FRA",
+    "importance": 3
+  },
+  {
+    "id": 5,
+    "name": "L. SHAW",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "LB",
+    "age": 30,
+    "nat": "ENG",
+    "importance": 4
+  },
+  {
+    "id": 6,
+    "name": "D. UDOGIE",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "LB",
+    "age": 23,
+    "nat": "ITA",
+    "importance": 3
+  },
+  {
+    "id": 7,
+    "name": "J. VESTERGAARD",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "CB",
+    "age": 33,
+    "nat": "DEN",
+    "importance": 2
+  },
+  {
+    "id": 8,
+    "name": "J. TIMBER",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "RB",
+    "age": 24,
+    "nat": "NED",
+    "importance": 3
+  },
+  {
+    "id": 9,
+    "name": "G. PEREIRO",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "CAM",
+    "age": 30,
+    "nat": "URU",
+    "importance": 2
+  },
+  {
+    "id": 10,
+    "name": "C. COADY",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "CB",
+    "age": 33,
+    "nat": "ENG",
+    "importance": 2
+  },
+  {
+    "id": 11,
+    "name": "A. KINSKÝ",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "GK",
+    "age": 23,
+    "nat": "CZE",
+    "importance": 3
+  },
+  {
+    "id": 12,
+    "name": "O. ÉDOUARD",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "ST",
+    "age": 28,
+    "nat": "FRA",
+    "importance": 2
+  },
+  {
+    "id": 13,
+    "name": "A. IZZO",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "CB",
+    "age": 34,
+    "nat": "ITA",
+    "importance": 2
+  },
+  {
+    "id": 14,
+    "name": "C. CHAMBERS",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "CB",
+    "age": 31,
+    "nat": "ENG",
+    "importance": 2
+  },
+  {
+    "id": 15,
+    "name": "H. WINKS",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "CM",
+    "age": 30,
+    "nat": "ENG",
+    "importance": 2
+  },
+  {
+    "id": 16,
+    "name": "X. SIMONS",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "CAM",
+    "age": 23,
+    "nat": "NED",
+    "importance": 4
+  },
+  {
+    "id": 17,
+    "name": "P. FODEN",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "CAM",
+    "age": 25,
+    "nat": "ENG",
+    "importance": 4
+  },
+  {
+    "id": 18,
+    "name": "I. GUEYE",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "CDM",
+    "age": 36,
+    "nat": "SEN",
+    "importance": 3
+  },
+  {
+    "id": 19,
+    "name": "H. BARNES",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "LW",
+    "age": 28,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 20,
+    "name": "S. GIMÉNEZ",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "ST",
+    "age": 24,
+    "nat": "MEX",
+    "importance": 4
+  },
+  {
+    "id": 21,
+    "name": "D. CALVERT-LEWIN",
+    "teamId": 0,
+    "team": "Bluewitch",
+    "pos": "ST",
+    "age": 29,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 22,
+    "name": "R. KOCH",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "CB",
+    "age": 29,
+    "nat": "GER",
+    "importance": 3
+  },
+  {
+    "id": 23,
+    "name": "D. VLAHOVIĆ",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "ST",
+    "age": 25,
+    "nat": "SRB",
+    "importance": 4
+  },
+  {
+    "id": 24,
+    "name": "M. UGARTE",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "CDM",
+    "age": 25,
+    "nat": "URU",
+    "importance": 3
+  },
+  {
+    "id": 25,
+    "name": "I. ZABARNYI",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "CB",
+    "age": 23,
+    "nat": "UKR",
+    "importance": 2
+  },
+  {
+    "id": 26,
+    "name": "K. OMERUO",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "CB",
+    "age": 32,
+    "nat": "NGA",
+    "importance": 1
+  },
+  {
+    "id": 27,
+    "name": "ANDRÉ GOMES",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "CM",
+    "age": 25,
+    "nat": "POR",
+    "importance": 3
+  },
+  {
+    "id": 28,
+    "name": "JORGE",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "CB",
+    "age": 30,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 29,
+    "name": "BERNARDO SILVA",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "CAM",
+    "age": 31,
+    "nat": "POR",
+    "importance": 5
+  },
+  {
+    "id": 30,
+    "name": "ANDREY SANTOS",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "CM",
+    "age": 21,
+    "nat": "BRA",
+    "importance": 2
+  },
+  {
+    "id": 31,
+    "name": "A. ONANA",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "GK",
+    "age": 30,
+    "nat": "CMR",
+    "importance": 4
+  },
+  {
+    "id": 32,
+    "name": "K. KOULIERAKIS",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "CB",
+    "age": 22,
+    "nat": "GRE",
+    "importance": 2
+  },
+  {
+    "id": 33,
+    "name": "C. CHUKWUEMEKA",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "CM",
+    "age": 22,
+    "nat": "ENG",
+    "importance": 1
+  },
+  {
+    "id": 34,
+    "name": "ESTEVÃO",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "RW",
+    "age": 18,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 35,
+    "name": "LUCAS PAQUETÁ",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "CAM",
+    "age": 28,
+    "nat": "BRA",
+    "importance": 4
+  },
+  {
+    "id": 36,
+    "name": "G. MONTIEL",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "RB",
+    "age": 29,
+    "nat": "ARG",
+    "importance": 3
+  },
+  {
+    "id": 37,
+    "name": "P. HØJBJERG",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "CDM",
+    "age": 30,
+    "nat": "DEN",
+    "importance": 4
+  },
+  {
+    "id": 38,
+    "name": "B. SAKA",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "RW",
+    "age": 24,
+    "nat": "ENG",
+    "importance": 4
+  },
+  {
+    "id": 39,
+    "name": "M. SALAH",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "RW",
+    "age": 33,
+    "nat": "EGY",
+    "importance": 5
+  },
+  {
+    "id": 40,
+    "name": "O. VLAHOVIC",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "ST",
+    "age": 26,
+    "nat": "SRB",
+    "importance": 4
+  },
+  {
+    "id": 41,
+    "name": "H. VOLKOV",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "CM",
+    "age": 26,
+    "nat": "RUS",
+    "importance": 2
+  },
+  {
+    "id": 42,
+    "name": "J. HERNÁNDEZ",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "LW",
+    "age": 27,
+    "nat": "MEX",
+    "importance": 4
+  },
+  {
+    "id": 43,
+    "name": "M. FOFANA",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "CB",
+    "age": 25,
+    "nat": "FRA",
+    "importance": 1
+  },
+  {
+    "id": 44,
+    "name": "Á. BALDÉ",
+    "teamId": 1,
+    "team": "Eighters",
+    "pos": "LB",
+    "age": 31,
+    "nat": "SEN",
+    "importance": 4
+  },
+  {
+    "id": 45,
+    "name": "C. ASSAYAS",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "CM",
+    "age": 26,
+    "nat": "FRA",
+    "importance": 2
+  },
+  {
+    "id": 46,
+    "name": "F. BALLO-TOURÉ",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "LB",
+    "age": 29,
+    "nat": "SEN",
+    "importance": 2
+  },
+  {
+    "id": 47,
+    "name": "VALLEJO",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "CB",
+    "age": 29,
+    "nat": "ESP",
+    "importance": 2
+  },
+  {
+    "id": 48,
+    "name": "NÉLSON SEMEDO",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "RB",
+    "age": 32,
+    "nat": "POR",
+    "importance": 3
+  },
+  {
+    "id": 49,
+    "name": "A. GOODWIN",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "ST",
+    "age": 21,
+    "nat": "ENG",
+    "importance": 1
+  },
+  {
+    "id": 50,
+    "name": "D. HENDERSON",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "GK",
+    "age": 29,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 51,
+    "name": "C. WILEY",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "RB",
+    "age": 21,
+    "nat": "ENG",
+    "importance": 1
+  },
+  {
+    "id": 52,
+    "name": "PACHECO",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "GK",
+    "age": 24,
+    "nat": "POR",
+    "importance": 1
+  },
+  {
+    "id": 53,
+    "name": "PAU TORRES",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "CB",
+    "age": 29,
+    "nat": "ESP",
+    "importance": 4
+  },
+  {
+    "id": 54,
+    "name": "M. AKANJI",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "CB",
+    "age": 30,
+    "nat": "SUI",
+    "importance": 4
+  },
+  {
+    "id": 55,
+    "name": "M. SISSOKO",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "CDM",
+    "age": 36,
+    "nat": "FRA",
+    "importance": 2
+  },
+  {
+    "id": 56,
+    "name": "V. VAN DIJK",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "CB",
+    "age": 34,
+    "nat": "NED",
+    "importance": 5
+  },
+  {
+    "id": 57,
+    "name": "A. MAC ALLISTER",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "CM",
+    "age": 27,
+    "nat": "ARG",
+    "importance": 4
+  },
+  {
+    "id": 58,
+    "name": "A. CRESSWELL",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "LB",
+    "age": 23,
+    "nat": "ENG",
+    "importance": 2
+  },
+  {
+    "id": 59,
+    "name": "K. MAINOO",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "CM",
+    "age": 21,
+    "nat": "ENG",
+    "importance": 2
+  },
+  {
+    "id": 60,
+    "name": "K. MITOMA",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "LW",
+    "age": 28,
+    "nat": "JPN",
+    "importance": 3
+  },
+  {
+    "id": 61,
+    "name": "R. BENTANCUR",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "CM",
+    "age": 28,
+    "nat": "URU",
+    "importance": 4
+  },
+  {
+    "id": 62,
+    "name": "M. ØDEGAARD",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "CAM",
+    "age": 27,
+    "nat": "NOR",
+    "importance": 5
+  },
+  {
+    "id": 63,
+    "name": "DANIEL PODENCE",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "RW",
+    "age": 31,
+    "nat": "POR",
+    "importance": 2
+  },
+  {
+    "id": 64,
+    "name": "T. ANISSINA",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "CM",
+    "age": 26,
+    "nat": "RUS",
+    "importance": 1
+  },
+  {
+    "id": 65,
+    "name": "MUNIR",
+    "teamId": 2,
+    "team": "Eversley",
+    "pos": "ST",
+    "age": 36,
+    "nat": "MAR",
+    "importance": 2
+  },
+  {
+    "id": 66,
+    "name": "B. LENO",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "GK",
+    "age": 34,
+    "nat": "GER",
+    "importance": 4
+  },
+  {
+    "id": 67,
+    "name": "DIEGO CARLOS",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "CB",
+    "age": 33,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 68,
+    "name": "B. BRERETON",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "ST",
+    "age": 26,
+    "nat": "CHI",
+    "importance": 2
+  },
+  {
+    "id": 69,
+    "name": "L. DUNK",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "CB",
+    "age": 34,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 70,
+    "name": "H. CHOUDHURY",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "CDM",
+    "age": 28,
+    "nat": "ENG",
+    "importance": 2
+  },
+  {
+    "id": 71,
+    "name": "WENDEL",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "CM",
+    "age": 32,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 72,
+    "name": "PEDRO PORRO",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "RB",
+    "age": 26,
+    "nat": "ESP",
+    "importance": 4
+  },
+  {
+    "id": 73,
+    "name": "I. RADU",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "GK",
+    "age": 28,
+    "nat": "ROU",
+    "importance": 2
+  },
+  {
+    "id": 74,
+    "name": "C. BASSEY",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "CB",
+    "age": 26,
+    "nat": "NGA",
+    "importance": 2
+  },
+  {
+    "id": 75,
+    "name": "S. IHSAN",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "CAM",
+    "age": 28,
+    "nat": "TUR",
+    "importance": 3
+  },
+  {
+    "id": 76,
+    "name": "L. MARTÍNEZ",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "ST",
+    "age": 28,
+    "nat": "ARG",
+    "importance": 5
+  },
+  {
+    "id": 77,
+    "name": "C. NWACHUKWU",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "CB",
+    "age": 20,
+    "nat": "NGA",
+    "importance": 2
+  },
+  {
+    "id": 78,
+    "name": "K. TETE",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "RB",
+    "age": 30,
+    "nat": "NED",
+    "importance": 3
+  },
+  {
+    "id": 79,
+    "name": "R. BARKLEY",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "CAM",
+    "age": 32,
+    "nat": "ENG",
+    "importance": 2
+  },
+  {
+    "id": 80,
+    "name": "M. GUENDOUZI",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "CM",
+    "age": 27,
+    "nat": "FRA",
+    "importance": 3
+  },
+  {
+    "id": 81,
+    "name": "S. SENSI",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "CM",
+    "age": 30,
+    "nat": "ITA",
+    "importance": 3
+  },
+  {
+    "id": 82,
+    "name": "W. CYPRIEN",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "CM",
+    "age": 31,
+    "nat": "FRA",
+    "importance": 2
+  },
+  {
+    "id": 83,
+    "name": "T. HESSE",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "CM",
+    "age": 32,
+    "nat": "GER",
+    "importance": 5
+  },
+  {
+    "id": 84,
+    "name": "C. WOOD",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "ST",
+    "age": 34,
+    "nat": "NZL",
+    "importance": 2
+  },
+  {
+    "id": 85,
+    "name": "L. TROSSARD",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "LW",
+    "age": 31,
+    "nat": "BEL",
+    "importance": 3
+  },
+  {
+    "id": 86,
+    "name": "O. WATKINS",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "ST",
+    "age": 30,
+    "nat": "ENG",
+    "importance": 4
+  },
+  {
+    "id": 87,
+    "name": "J. AYEW",
+    "teamId": 3,
+    "team": "Foxborough",
+    "pos": "RW",
+    "age": 34,
+    "nat": "GHA",
+    "importance": 2
+  },
+  {
+    "id": 88,
+    "name": "DAVID RAYA",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "GK",
+    "age": 30,
+    "nat": "ESP",
+    "importance": 3
+  },
+  {
+    "id": 89,
+    "name": "J. GOMEZ",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "CB",
+    "age": 28,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 90,
+    "name": "M. TARGETT",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "LB",
+    "age": 30,
+    "nat": "ENG",
+    "importance": 2
+  },
+  {
+    "id": 91,
+    "name": "A. ARMSTRONG",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "ST",
+    "age": 29,
+    "nat": "ENG",
+    "importance": 2
+  },
+  {
+    "id": 92,
+    "name": "I. MAATSEN",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "LB",
+    "age": 24,
+    "nat": "NED",
+    "importance": 2
+  },
+  {
+    "id": 93,
+    "name": "J. EVANS",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "CB",
+    "age": 38,
+    "nat": "NIR",
+    "importance": 2
+  },
+  {
+    "id": 94,
+    "name": "N. JACKSON",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "ST",
+    "age": 24,
+    "nat": "GAM",
+    "importance": 3
+  },
+  {
+    "id": 95,
+    "name": "R. MANNING",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "LB",
+    "age": 29,
+    "nat": "IRL",
+    "importance": 2
+  },
+  {
+    "id": 96,
+    "name": "T. CAIRNEY",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "CM",
+    "age": 35,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 97,
+    "name": "RUI SILVA",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "GK",
+    "age": 32,
+    "nat": "POR",
+    "importance": 3
+  },
+  {
+    "id": 98,
+    "name": "B. VERBIČ",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "LW",
+    "age": 32,
+    "nat": "SVN",
+    "importance": 2
+  },
+  {
+    "id": 99,
+    "name": "V. COUFAL",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "RB",
+    "age": 33,
+    "nat": "CZE",
+    "importance": 3
+  },
+  {
+    "id": 100,
+    "name": "M. MUSACCHIO",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "CB",
+    "age": 35,
+    "nat": "ITA",
+    "importance": 1
+  },
+  {
+    "id": 101,
+    "name": "N. DOMÍNGUEZ",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "CAM",
+    "age": 30,
+    "nat": "ARG",
+    "importance": 2
+  },
+  {
+    "id": 102,
+    "name": "Y. TIELEMANS",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "CM",
+    "age": 28,
+    "nat": "BEL",
+    "importance": 3
+  },
+  {
+    "id": 103,
+    "name": "M. GYMSKIN",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "CB",
+    "age": 26,
+    "nat": "",
+    "importance": 1
+  },
+  {
+    "id": 104,
+    "name": "MATHIAS LAGE",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "ST",
+    "age": 29,
+    "nat": "POR",
+    "importance": 2
+  },
+  {
+    "id": 105,
+    "name": "GABRI VEIGA",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "CAM",
+    "age": 23,
+    "nat": "ESP",
+    "importance": 3
+  },
+  {
+    "id": 106,
+    "name": "E. LE FÉE",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "CM",
+    "age": 26,
+    "nat": "FRA",
+    "importance": 3
+  },
+  {
+    "id": 107,
+    "name": "J. MADDISON",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "CAM",
+    "age": 29,
+    "nat": "ENG",
+    "importance": 4
+  },
+  {
+    "id": 108,
+    "name": "M. DJENEPO",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "LW",
+    "age": 27,
+    "nat": "MLI",
+    "importance": 2
+  },
+  {
+    "id": 109,
+    "name": "E. HAALAND",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "ST",
+    "age": 25,
+    "nat": "NOR",
+    "importance": 5
+  },
+  {
+    "id": 110,
+    "name": "A. ELANGA",
+    "teamId": 4,
+    "team": "Lanxdon",
+    "pos": "RW",
+    "age": 23,
+    "nat": "SWE",
+    "importance": 2
+  },
+  {
+    "id": 111,
+    "name": "G. KAMARA",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "CDM",
+    "age": 30,
+    "nat": "FIN",
+    "importance": 2
+  },
+  {
+    "id": 112,
+    "name": "MATHEUS CUNHA",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "ST",
+    "age": 26,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 113,
+    "name": "EDERSON",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "GK",
+    "age": 32,
+    "nat": "BRA",
+    "importance": 5
+  },
+  {
+    "id": 114,
+    "name": "K. TRIPPIER",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "RB",
+    "age": 35,
+    "nat": "ENG",
+    "importance": 4
+  },
+  {
+    "id": 115,
+    "name": "D. RICE",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "CDM",
+    "age": 27,
+    "nat": "ENG",
+    "importance": 4
+  },
+  {
+    "id": 116,
+    "name": "M. DOHERTY",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "RB",
+    "age": 34,
+    "nat": "IRL",
+    "importance": 2
+  },
+  {
+    "id": 117,
+    "name": "PABLO FORNALS",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "CAM",
+    "age": 30,
+    "nat": "ESP",
+    "importance": 3
+  },
+  {
+    "id": 118,
+    "name": "R. PERRAUD",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "LB",
+    "age": 28,
+    "nat": "FRA",
+    "importance": 2
+  },
+  {
+    "id": 119,
+    "name": "K. WALKER",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "RB",
+    "age": 35,
+    "nat": "ENG",
+    "importance": 4
+  },
+  {
+    "id": 120,
+    "name": "T. ADARABIOYO",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "CB",
+    "age": 28,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 121,
+    "name": "N. REDMOND",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "LW",
+    "age": 32,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 122,
+    "name": "D. SOLANKE",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "ST",
+    "age": 28,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 123,
+    "name": "R. JIMÉNEZ",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "ST",
+    "age": 37,
+    "nat": "MEX",
+    "importance": 1
+  },
+  {
+    "id": 124,
+    "name": "M. LONGSTAFF",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "CM",
+    "age": 26,
+    "nat": "ENG",
+    "importance": 1
+  },
+  {
+    "id": 125,
+    "name": "J. RAMSEY",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "CAM",
+    "age": 24,
+    "nat": "WAL",
+    "importance": 3
+  },
+  {
+    "id": 126,
+    "name": "A. RAMSEY",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "CM",
+    "age": 23,
+    "nat": "ENG",
+    "importance": 2
+  },
+  {
+    "id": 127,
+    "name": "D. SPENCE",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "RB",
+    "age": 25,
+    "nat": "ENG",
+    "importance": 2
+  },
+  {
+    "id": 128,
+    "name": "O. ZINCHENKO",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "LB",
+    "age": 29,
+    "nat": "UKR",
+    "importance": 3
+  },
+  {
+    "id": 129,
+    "name": "R. SESSEGNON",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "LB",
+    "age": 25,
+    "nat": "ENG",
+    "importance": 2
+  },
+  {
+    "id": 130,
+    "name": "A. AREOLA",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "GK",
+    "age": 33,
+    "nat": "FRA",
+    "importance": 3
+  },
+  {
+    "id": 131,
+    "name": "K. HAVERTZ",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "CAM",
+    "age": 26,
+    "nat": "GER",
+    "importance": 4
+  },
+  {
+    "id": 132,
+    "name": "J. DOKU",
+    "teamId": 5,
+    "team": "Niners",
+    "pos": "LW",
+    "age": 23,
+    "nat": "BEL",
+    "importance": 3
+  },
+  {
+    "id": 133,
+    "name": "M. CASH",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "RB",
+    "age": 28,
+    "nat": "POL",
+    "importance": 3
+  },
+  {
+    "id": 134,
+    "name": "L. THOMAS",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "LB",
+    "age": 27,
+    "nat": "ENG",
+    "importance": 1
+  },
+  {
+    "id": 135,
+    "name": "ROBER",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "RW",
+    "age": 25,
+    "nat": "ESP",
+    "importance": 1
+  },
+  {
+    "id": 136,
+    "name": "BRUNO GUIMARÃES",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "CDM",
+    "age": 30,
+    "nat": "BRA",
+    "importance": 2
+  },
+  {
+    "id": 137,
+    "name": "L. UGOCHUKWU",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "CDM",
+    "age": 22,
+    "nat": "FRA",
+    "importance": 2
+  },
+  {
+    "id": 138,
+    "name": "N. POPE",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "GK",
+    "age": 34,
+    "nat": "ENG",
+    "importance": 4
+  },
+  {
+    "id": 139,
+    "name": "C. BALEBA",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "CDM",
+    "age": 22,
+    "nat": "CMR",
+    "importance": 1
+  },
+  {
+    "id": 140,
+    "name": "D. BURN",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "CB",
+    "age": 33,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 141,
+    "name": "W. SALIBA",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "CB",
+    "age": 25,
+    "nat": "FRA",
+    "importance": 4
+  },
+  {
+    "id": 142,
+    "name": "E. N'DICKA",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "CB",
+    "age": 26,
+    "nat": "FRA",
+    "importance": 3
+  },
+  {
+    "id": 143,
+    "name": "R. DRÂGUSIN",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "CB",
+    "age": 23,
+    "nat": "ROU",
+    "importance": 3
+  },
+  {
+    "id": 144,
+    "name": "R. LOFTUS-CHEEK",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "CM",
+    "age": 30,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 145,
+    "name": "ALISSON",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "GK",
+    "age": 33,
+    "nat": "BRA",
+    "importance": 5
+  },
+  {
+    "id": 146,
+    "name": "A. GORDON",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "LW",
+    "age": 25,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 147,
+    "name": "N. MAZRAOUI",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "RB",
+    "age": 28,
+    "nat": "MAR",
+    "importance": 3
+  },
+  {
+    "id": 148,
+    "name": "R. GRAVENBERCH",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "CM",
+    "age": 23,
+    "nat": "NED",
+    "importance": 3
+  },
+  {
+    "id": 149,
+    "name": "O. SKIPP",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "CDM",
+    "age": 25,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 150,
+    "name": "MATHEUS NUNES",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "CM",
+    "age": 27,
+    "nat": "POR",
+    "importance": 3
+  },
+  {
+    "id": 151,
+    "name": "E. FERGUSON",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "ST",
+    "age": 21,
+    "nat": "SCO",
+    "importance": 2
+  },
+  {
+    "id": 152,
+    "name": "V. GYÖKERES",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "ST",
+    "age": 27,
+    "nat": "SWE",
+    "importance": 4
+  },
+  {
+    "id": 153,
+    "name": "M. OLISE",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "RW",
+    "age": 24,
+    "nat": "FRA",
+    "importance": 3
+  },
+  {
+    "id": 154,
+    "name": "J. ZIRKZEE",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "ST",
+    "age": 24,
+    "nat": "NED",
+    "importance": 2
+  },
+  {
+    "id": 155,
+    "name": "J. JARA",
+    "teamId": 6,
+    "team": "Norbridge Town",
+    "pos": "RB",
+    "age": 37,
+    "nat": "CHI",
+    "importance": 1
+  },
+  {
+    "id": 156,
+    "name": "V. MYKOLENKO",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "LB",
+    "age": 26,
+    "nat": "UKR",
+    "importance": 3
+  },
+  {
+    "id": 157,
+    "name": "K. TSIMIKAS",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "LB",
+    "age": 29,
+    "nat": "GRE",
+    "importance": 3
+  },
+  {
+    "id": 158,
+    "name": "M. BOADU",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "ST",
+    "age": 25,
+    "nat": "NED",
+    "importance": 2
+  },
+  {
+    "id": 159,
+    "name": "C. LUKEBA",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "CB",
+    "age": 23,
+    "nat": "FRA",
+    "importance": 3
+  },
+  {
+    "id": 160,
+    "name": "RÚBEN NEVES",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "CDM",
+    "age": 29,
+    "nat": "POR",
+    "importance": 4
+  },
+  {
+    "id": 161,
+    "name": "F. BENKOVIĆ",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "CB",
+    "age": 28,
+    "nat": "CRO",
+    "importance": 2
+  },
+  {
+    "id": 162,
+    "name": "J. WARD-PROWSE",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "CM",
+    "age": 31,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 163,
+    "name": "M. MOUNT",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "CAM",
+    "age": 27,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 164,
+    "name": "O. KABAK",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "CB",
+    "age": 26,
+    "nat": "TUR",
+    "importance": 2
+  },
+  {
+    "id": 165,
+    "name": "R. HOLDING",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "CB",
+    "age": 30,
+    "nat": "ENG",
+    "importance": 2
+  },
+  {
+    "id": 166,
+    "name": "SANTI MINA",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "ST",
+    "age": 31,
+    "nat": "ESP",
+    "importance": 3
+  },
+  {
+    "id": 167,
+    "name": "J. PICKFORD",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "GK",
+    "age": 32,
+    "nat": "ENG",
+    "importance": 4
+  },
+  {
+    "id": 168,
+    "name": "O. BAUMANN",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "GK",
+    "age": 35,
+    "nat": "GER",
+    "importance": 3
+  },
+  {
+    "id": 169,
+    "name": "J. ARAUJO",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "CB",
+    "age": 24,
+    "nat": "BRA",
+    "importance": 2
+  },
+  {
+    "id": 170,
+    "name": "J. FLECK",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "CM",
+    "age": 34,
+    "nat": "SCO",
+    "importance": 2
+  },
+  {
+    "id": 171,
+    "name": "L. BLAS",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "LW",
+    "age": 28,
+    "nat": "ESP",
+    "importance": 3
+  },
+  {
+    "id": 172,
+    "name": "P. BILLING",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "CM",
+    "age": 29,
+    "nat": "DEN",
+    "importance": 3
+  },
+  {
+    "id": 173,
+    "name": "L. BAILEY",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "LW",
+    "age": 28,
+    "nat": "JAM",
+    "importance": 3
+  },
+  {
+    "id": 174,
+    "name": "Q. PROMES",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "LW",
+    "age": 34,
+    "nat": "NED",
+    "importance": 2
+  },
+  {
+    "id": 175,
+    "name": "GABRIEL PEC",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "LW",
+    "age": 25,
+    "nat": "BRA",
+    "importance": 2
+  },
+  {
+    "id": 176,
+    "name": "S. VILLA",
+    "teamId": 7,
+    "team": "Oakridge",
+    "pos": "CM",
+    "age": 21,
+    "nat": "ESP",
+    "importance": 2
+  },
+  {
+    "id": 177,
+    "name": "M. ESTÈVE",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "CB",
+    "age": 22,
+    "nat": "FRA",
+    "importance": 2
+  },
+  {
+    "id": 178,
+    "name": "E. ANDRADA",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "GK",
+    "age": 31,
+    "nat": "ARG",
+    "importance": 1
+  },
+  {
+    "id": 179,
+    "name": "N. MILENKOVIĆ",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "CB",
+    "age": 27,
+    "nat": "SRB",
+    "importance": 3
+  },
+  {
+    "id": 180,
+    "name": "RODRIGO BECÃO",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "CB",
+    "age": 25,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 181,
+    "name": "REGUILÓN",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "LB",
+    "age": 19,
+    "nat": "ESP",
+    "importance": 1
+  },
+  {
+    "id": 182,
+    "name": "MORATO",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "CB",
+    "age": 24,
+    "nat": "POR",
+    "importance": 3
+  },
+  {
+    "id": 183,
+    "name": "I. GROSSETESTE",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "CB",
+    "age": 26,
+    "nat": "",
+    "importance": 2
+  },
+  {
+    "id": 184,
+    "name": "B. CHRISENE",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "LB",
+    "age": 22,
+    "nat": "ANT",
+    "importance": 1
+  },
+  {
+    "id": 185,
+    "name": "J. FRIMPONG",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "RB",
+    "age": 25,
+    "nat": "NED",
+    "importance": 4
+  },
+  {
+    "id": 186,
+    "name": "JOSÉ SÁ",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "GK",
+    "age": 33,
+    "nat": "POR",
+    "importance": 4
+  },
+  {
+    "id": 187,
+    "name": "M. GUEHI",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "CB",
+    "age": 24,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 188,
+    "name": "C. PALMER",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "CAM",
+    "age": 23,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 189,
+    "name": "A. IWOBI",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "CM",
+    "age": 29,
+    "nat": "NGA",
+    "importance": 3
+  },
+  {
+    "id": 190,
+    "name": "M. CAICEDO",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "CDM",
+    "age": 24,
+    "nat": "ECU",
+    "importance": 3
+  },
+  {
+    "id": 191,
+    "name": "E. SMITH ROWE",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "CAM",
+    "age": 25,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 192,
+    "name": "JOELINTON",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "CM",
+    "age": 29,
+    "nat": "BRA",
+    "importance": 4
+  },
+  {
+    "id": 193,
+    "name": "A. DOUCOURÉ",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "CM",
+    "age": 25,
+    "nat": "FRA",
+    "importance": 3
+  },
+  {
+    "id": 194,
+    "name": "I. SARR",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "RW",
+    "age": 28,
+    "nat": "SEN",
+    "importance": 3
+  },
+  {
+    "id": 195,
+    "name": "ADAMA TRAORÉ",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "RW",
+    "age": 29,
+    "nat": "ESP",
+    "importance": 3
+  },
+  {
+    "id": 196,
+    "name": "D. KULUSEVSKI",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "RW",
+    "age": 25,
+    "nat": "SWE",
+    "importance": 4
+  },
+  {
+    "id": 197,
+    "name": "T. DAVIES",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "CB",
+    "age": 22,
+    "nat": "WAL",
+    "importance": 1
+  },
+  {
+    "id": 198,
+    "name": "M. RASHFORD",
+    "teamId": 8,
+    "team": "Oakridge United",
+    "pos": "LW",
+    "age": 28,
+    "nat": "ENG",
+    "importance": 4
+  },
+  {
+    "id": 199,
+    "name": "E. MARTÍNEZ",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "GK",
+    "age": 33,
+    "nat": "ARG",
+    "importance": 5
+  },
+  {
+    "id": 200,
+    "name": "T. PARTEY",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "CDM",
+    "age": 32,
+    "nat": "GHA",
+    "importance": 4
+  },
+  {
+    "id": 201,
+    "name": "A. OGBONNA",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "CB",
+    "age": 37,
+    "nat": "ITA",
+    "importance": 2
+  },
+  {
+    "id": 202,
+    "name": "E. FERNÁNDEZ",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "CM",
+    "age": 25,
+    "nat": "ARG",
+    "importance": 4
+  },
+  {
+    "id": 203,
+    "name": "J. VELTMAN",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "RB",
+    "age": 34,
+    "nat": "NED",
+    "importance": 3
+  },
+  {
+    "id": 204,
+    "name": "I. TONEY",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "ST",
+    "age": 30,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 205,
+    "name": "J. STRAND LARSEN",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "ST",
+    "age": 26,
+    "nat": "NOR",
+    "importance": 2
+  },
+  {
+    "id": 206,
+    "name": "MARTINELLI",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "LW",
+    "age": 24,
+    "nat": "BRA",
+    "importance": 4
+  },
+  {
+    "id": 207,
+    "name": "R. SÁNCHEZ",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "GK",
+    "age": 28,
+    "nat": "COL",
+    "importance": 4
+  },
+  {
+    "id": 208,
+    "name": "M. WIEFFER",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "CDM",
+    "age": 26,
+    "nat": "NED",
+    "importance": 3
+  },
+  {
+    "id": 209,
+    "name": "T. CHALOBAH",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "CB",
+    "age": 26,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 210,
+    "name": "M. LEMINA",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "CDM",
+    "age": 32,
+    "nat": "GAB",
+    "importance": 3
+  },
+  {
+    "id": 211,
+    "name": "M. KILMAN",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "CB",
+    "age": 28,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 212,
+    "name": "M. GUSTO",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "RB",
+    "age": 22,
+    "nat": "FRA",
+    "importance": 3
+  },
+  {
+    "id": 213,
+    "name": "I. SULEMANA",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "RW",
+    "age": 22,
+    "nat": "GHA",
+    "importance": 2
+  },
+  {
+    "id": 214,
+    "name": "J. MATIP",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "CB",
+    "age": 34,
+    "nat": "CMR",
+    "importance": 3
+  },
+  {
+    "id": 215,
+    "name": "R. FRASER",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "RW",
+    "age": 32,
+    "nat": "SCO",
+    "importance": 2
+  },
+  {
+    "id": 216,
+    "name": "A. ROBERTSON",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "LB",
+    "age": 32,
+    "nat": "SCO",
+    "importance": 4
+  },
+  {
+    "id": 217,
+    "name": "L. COLWILL",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "CB",
+    "age": 23,
+    "nat": "ENG",
+    "importance": 2
+  },
+  {
+    "id": 218,
+    "name": "G. RUTTER",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "ST",
+    "age": 24,
+    "nat": "FRA",
+    "importance": 2
+  },
+  {
+    "id": 219,
+    "name": "C. GALLAGHER",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "CM",
+    "age": 26,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 220,
+    "name": "J. CULLEN",
+    "teamId": 9,
+    "team": "Oldminster",
+    "pos": "CDM",
+    "age": 30,
+    "nat": "IRL",
+    "importance": 3
+  },
+  {
+    "id": 221,
+    "name": "M. VAN DE VEN",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "CB",
+    "age": 25,
+    "nat": "NED",
+    "importance": 3
+  },
+  {
+    "id": 222,
+    "name": "E. EZE",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "CAM",
+    "age": 27,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 223,
+    "name": "L. OPENDA",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "ST",
+    "age": 26,
+    "nat": "BEL",
+    "importance": 4
+  },
+  {
+    "id": 224,
+    "name": "J. CLARKE-SALTER",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "CB",
+    "age": 28,
+    "nat": "ENG",
+    "importance": 2
+  },
+  {
+    "id": 225,
+    "name": "D. JEBBISON",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "ST",
+    "age": 22,
+    "nat": "ENG",
+    "importance": 1
+  },
+  {
+    "id": 226,
+    "name": "J. ROBINSON",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "LB",
+    "age": 24,
+    "nat": "ENG",
+    "importance": 1
+  },
+  {
+    "id": 227,
+    "name": "C. HUDSON-ODOI",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "RW",
+    "age": 25,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 228,
+    "name": "MIKEL MERINO",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "CDM",
+    "age": 29,
+    "nat": "ESP",
+    "importance": 4
+  },
+  {
+    "id": 229,
+    "name": "RÚBEN DIAS",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "CB",
+    "age": 28,
+    "nat": "POR",
+    "importance": 4
+  },
+  {
+    "id": 230,
+    "name": "C. ROMERO",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "CB",
+    "age": 27,
+    "nat": "ARG",
+    "importance": 4
+  },
+  {
+    "id": 231,
+    "name": "DANILO",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "RB",
+    "age": 34,
+    "nat": "BRA",
+    "importance": 2
+  },
+  {
+    "id": 232,
+    "name": "SÁVINHO",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "RW",
+    "age": 20,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 233,
+    "name": "K. YILDIZ",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "LW",
+    "age": 19,
+    "nat": "TUR",
+    "importance": 3
+  },
+  {
+    "id": 234,
+    "name": "B. WHITE",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "RB",
+    "age": 28,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 235,
+    "name": "T. ALEXANDER-ARNOLD",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "RB",
+    "age": 27,
+    "nat": "ENG",
+    "importance": 4
+  },
+  {
+    "id": 236,
+    "name": "A. GUNN",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "GK",
+    "age": 30,
+    "nat": "ENG",
+    "importance": 2
+  },
+  {
+    "id": 237,
+    "name": "RODRI",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "CDM",
+    "age": 25,
+    "nat": "ESP",
+    "importance": 3
+  },
+  {
+    "id": 238,
+    "name": "LEE KANG-IN",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "CAM",
+    "age": 24,
+    "nat": "KOR",
+    "importance": 3
+  },
+  {
+    "id": 239,
+    "name": "PEDRINHO",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "RW",
+    "age": 23,
+    "nat": "BRA",
+    "importance": 1
+  },
+  {
+    "id": 240,
+    "name": "I. BORIS",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "CB",
+    "age": 36,
+    "nat": "",
+    "importance": 4
+  },
+  {
+    "id": 241,
+    "name": "G. AZEMA",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "CAM",
+    "age": 26,
+    "nat": "",
+    "importance": 2
+  },
+  {
+    "id": 242,
+    "name": "R. KOLO MUANI",
+    "teamId": 10,
+    "team": "Portmere Wanderers",
+    "pos": "ST",
+    "age": 27,
+    "nat": "FRA",
+    "importance": 4
+  },
+  {
+    "id": 243,
+    "name": "A. WAN-BISSAKA",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "RB",
+    "age": 28,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 244,
+    "name": "C. ÜNDER",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "RW",
+    "age": 28,
+    "nat": "TUR",
+    "importance": 3
+  },
+  {
+    "id": 245,
+    "name": "E. ÜNAL",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "ST",
+    "age": 27,
+    "nat": "TUR",
+    "importance": 3
+  },
+  {
+    "id": 246,
+    "name": "M. KEANE",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "CB",
+    "age": 33,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 247,
+    "name": "SUSO",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "RW",
+    "age": 32,
+    "nat": "ESP",
+    "importance": 3
+  },
+  {
+    "id": 248,
+    "name": "T. WERNER",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "LW",
+    "age": 30,
+    "nat": "GER",
+    "importance": 3
+  },
+  {
+    "id": 249,
+    "name": "R. JAMES",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "RB",
+    "age": 32,
+    "nat": "ENG",
+    "importance": 1
+  },
+  {
+    "id": 250,
+    "name": "T. SOUČEK",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "CM",
+    "age": 31,
+    "nat": "CZE",
+    "importance": 3
+  },
+  {
+    "id": 251,
+    "name": "JOÃO PALHINHA",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "CDM",
+    "age": 30,
+    "nat": "POR",
+    "importance": 4
+  },
+  {
+    "id": 252,
+    "name": "Y. BISSOUMA",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "CDM",
+    "age": 29,
+    "nat": "MLI",
+    "importance": 3
+  },
+  {
+    "id": 253,
+    "name": "T. KAMINSKI",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "GK",
+    "age": 33,
+    "nat": "BEL",
+    "importance": 2
+  },
+  {
+    "id": 254,
+    "name": "S. BOTMAN",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "CB",
+    "age": 26,
+    "nat": "NED",
+    "importance": 4
+  },
+  {
+    "id": 255,
+    "name": "J. BRANTHWAITE",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "CB",
+    "age": 23,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 256,
+    "name": "J. WILLOCK",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "CM",
+    "age": 26,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 257,
+    "name": "S. LONGSTAFF",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "CM",
+    "age": 28,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 258,
+    "name": "A. GUERRERO",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "CM",
+    "age": 35,
+    "nat": "ESP",
+    "importance": 2
+  },
+  {
+    "id": 259,
+    "name": "BRUNO FERNANDES",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "CAM",
+    "age": 31,
+    "nat": "POR",
+    "importance": 4
+  },
+  {
+    "id": 260,
+    "name": "A. FLINT",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "CB",
+    "age": 36,
+    "nat": "ENG",
+    "importance": 1
+  },
+  {
+    "id": 261,
+    "name": "R. CHERKI",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "CAM",
+    "age": 22,
+    "nat": "FRA",
+    "importance": 2
+  },
+  {
+    "id": 262,
+    "name": "PAULINHO",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "ST",
+    "age": 31,
+    "nat": "BRA",
+    "importance": 2
+  },
+  {
+    "id": 263,
+    "name": "CAIO HENRIQUE",
+    "teamId": 11,
+    "team": "Rivergate City",
+    "pos": "LB",
+    "age": 28,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 264,
+    "name": "K. CASTEELS",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "GK",
+    "age": 32,
+    "nat": "BEL",
+    "importance": 3
+  },
+  {
+    "id": 265,
+    "name": "Y. KONÉ",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "CM",
+    "age": 21,
+    "nat": "MLI",
+    "importance": 3
+  },
+  {
+    "id": 266,
+    "name": "S. MUSTAFI",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "CB",
+    "age": 32,
+    "nat": "GER",
+    "importance": 2
+  },
+  {
+    "id": 267,
+    "name": "LAMINE YAMAL",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "RW",
+    "age": 17,
+    "nat": "ESP",
+    "importance": 5
+  },
+  {
+    "id": 268,
+    "name": "P. ZIELINSKI",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "CM",
+    "age": 30,
+    "nat": "POL",
+    "importance": 4
+  },
+  {
+    "id": 269,
+    "name": "MIGUELÓN",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "CDM",
+    "age": 28,
+    "nat": "ESP",
+    "importance": 2
+  },
+  {
+    "id": 270,
+    "name": "VITOR REIS",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "CB",
+    "age": 19,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 271,
+    "name": "EMERSON",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "RB",
+    "age": 25,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 272,
+    "name": "FERRO",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "CB",
+    "age": 27,
+    "nat": "ESP",
+    "importance": 2
+  },
+  {
+    "id": 273,
+    "name": "W. BENÍTEZ",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "GK",
+    "age": 29,
+    "nat": "ARG",
+    "importance": 2
+  },
+  {
+    "id": 274,
+    "name": "P. DYBALA",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "CAM",
+    "age": 31,
+    "nat": "ARG",
+    "importance": 5
+  },
+  {
+    "id": 275,
+    "name": "J. GVARDIOL",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "LB",
+    "age": 22,
+    "nat": "CRO",
+    "importance": 4
+  },
+  {
+    "id": 276,
+    "name": "K. THURAM-ULIEN",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "CM",
+    "age": 27,
+    "nat": "FRA",
+    "importance": 3
+  },
+  {
+    "id": 277,
+    "name": "EVANDER",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "CM",
+    "age": 25,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 278,
+    "name": "S. MILINKOVIĆ-SAVIĆ",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "CM",
+    "age": 29,
+    "nat": "SRB",
+    "importance": 4
+  },
+  {
+    "id": 279,
+    "name": "L. TORREIRA",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "CDM",
+    "age": 28,
+    "nat": "URU",
+    "importance": 3
+  },
+  {
+    "id": 280,
+    "name": "P. ROSARIO",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "CM",
+    "age": 24,
+    "nat": "ESP",
+    "importance": 2
+  },
+  {
+    "id": 281,
+    "name": "ANSU FATI",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "LW",
+    "age": 22,
+    "nat": "ESP",
+    "importance": 4
+  },
+  {
+    "id": 282,
+    "name": "O. BOBB",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "RW",
+    "age": 22,
+    "nat": "NOR",
+    "importance": 3
+  },
+  {
+    "id": 283,
+    "name": "S. NAKAJIMA",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "LW",
+    "age": 29,
+    "nat": "JPN",
+    "importance": 3
+  },
+  {
+    "id": 284,
+    "name": "W. ZAÏRE-EMERY",
+    "teamId": 12,
+    "team": "FC Valdetorre",
+    "pos": "CM",
+    "age": 18,
+    "nat": "FRA",
+    "importance": 4
+  },
+  {
+    "id": 285,
+    "name": "T. ALMADA",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "CAM",
+    "age": 23,
+    "nat": "ARG",
+    "importance": 3
+  },
+  {
+    "id": 286,
+    "name": "UNAI SIMÓN",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "GK",
+    "age": 27,
+    "nat": "ESP",
+    "importance": 4
+  },
+  {
+    "id": 287,
+    "name": "A. TCHOUAMÉNI",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "CDM",
+    "age": 24,
+    "nat": "FRA",
+    "importance": 4
+  },
+  {
+    "id": 288,
+    "name": "L. KLOSTERMANN",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "RB",
+    "age": 28,
+    "nat": "GER",
+    "importance": 3
+  },
+  {
+    "id": 289,
+    "name": "N. STARK",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "CB",
+    "age": 25,
+    "nat": "GER",
+    "importance": 3
+  },
+  {
+    "id": 290,
+    "name": "U. SPAJIĆ",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "CB",
+    "age": 24,
+    "nat": "SRB",
+    "importance": 3
+  },
+  {
+    "id": 291,
+    "name": "G. VICARIO",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "GK",
+    "age": 27,
+    "nat": "ITA",
+    "importance": 3
+  },
+  {
+    "id": 292,
+    "name": "D. SÁNCHEZ",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "CB",
+    "age": 24,
+    "nat": "ESP",
+    "importance": 2
+  },
+  {
+    "id": 293,
+    "name": "J. BELLINGHAM",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "CAM",
+    "age": 21,
+    "nat": "ENG",
+    "importance": 5
+  },
+  {
+    "id": 294,
+    "name": "K. DEMIRBAY",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "CM",
+    "age": 30,
+    "nat": "GER",
+    "importance": 3
+  },
+  {
+    "id": 295,
+    "name": "D. PRAET",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "CM",
+    "age": 30,
+    "nat": "BEL",
+    "importance": 3
+  },
+  {
+    "id": 296,
+    "name": "BREMER",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "CB",
+    "age": 27,
+    "nat": "BRA",
+    "importance": 4
+  },
+  {
+    "id": 297,
+    "name": "RICARDO PEREIRA",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "RB",
+    "age": 30,
+    "nat": "POR",
+    "importance": 3
+  },
+  {
+    "id": 298,
+    "name": "N. BARELLA",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "CM",
+    "age": 27,
+    "nat": "ITA",
+    "importance": 4
+  },
+  {
+    "id": 299,
+    "name": "JONNY CASTRO",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "LB",
+    "age": 30,
+    "nat": "ESP",
+    "importance": 2
+  },
+  {
+    "id": 300,
+    "name": "N. FEKIR",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "CAM",
+    "age": 31,
+    "nat": "FRA",
+    "importance": 3
+  },
+  {
+    "id": 301,
+    "name": "I. PUSSETTO",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "RW",
+    "age": 28,
+    "nat": "ARG",
+    "importance": 2
+  },
+  {
+    "id": 302,
+    "name": "A. LEHN",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "RW",
+    "age": 24,
+    "nat": "GER",
+    "importance": 2
+  },
+  {
+    "id": 303,
+    "name": "M. PHILIPP",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "LW",
+    "age": 30,
+    "nat": "GER",
+    "importance": 2
+  },
+  {
+    "id": 304,
+    "name": "N. SLITI",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "LW",
+    "age": 31,
+    "nat": "TUN",
+    "importance": 2
+  },
+  {
+    "id": 305,
+    "name": "Y. EN-NESYRI",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "ST",
+    "age": 27,
+    "nat": "MAR",
+    "importance": 4
+  },
+  {
+    "id": 306,
+    "name": "J. MATETA",
+    "teamId": 13,
+    "team": "A.C. Aurea",
+    "pos": "ST",
+    "age": 26,
+    "nat": "FRA",
+    "importance": 3
+  },
+  {
+    "id": 307,
+    "name": "G. KOBEL",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "GK",
+    "age": 26,
+    "nat": "SUI",
+    "importance": 4
+  },
+  {
+    "id": 308,
+    "name": "N. ELVEDI",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "CB",
+    "age": 28,
+    "nat": "SUI",
+    "importance": 3
+  },
+  {
+    "id": 309,
+    "name": "M. DIAKHABY",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "CB",
+    "age": 27,
+    "nat": "FRA",
+    "importance": 2
+  },
+  {
+    "id": 310,
+    "name": "N. MAKSIMOVIĆ",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "CB",
+    "age": 32,
+    "nat": "SRB",
+    "importance": 2
+  },
+  {
+    "id": 311,
+    "name": "GAVÀ",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "LB",
+    "age": 24,
+    "nat": "ESP",
+    "importance": 2
+  },
+  {
+    "id": 312,
+    "name": "A. WHARTON",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "CM",
+    "age": 20,
+    "nat": "SCO",
+    "importance": 3
+  },
+  {
+    "id": 313,
+    "name": "J. PAVLENKA",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "GK",
+    "age": 32,
+    "nat": "CZE",
+    "importance": 2
+  },
+  {
+    "id": 314,
+    "name": "H. HATEBOER",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "RB",
+    "age": 30,
+    "nat": "NED",
+    "importance": 3
+  },
+  {
+    "id": 315,
+    "name": "FLORENTINO LUÍS",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "CDM",
+    "age": 24,
+    "nat": "POR",
+    "importance": 3
+  },
+  {
+    "id": 316,
+    "name": "IGOR JESUS",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "ST",
+    "age": 22,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 317,
+    "name": "V. BARCO",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "LW",
+    "age": 21,
+    "nat": "ARG",
+    "importance": 3
+  },
+  {
+    "id": 318,
+    "name": "WESLEY",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "ST",
+    "age": 28,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 319,
+    "name": "B. HEYNEN",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "CM",
+    "age": 29,
+    "nat": "BEL",
+    "importance": 2
+  },
+  {
+    "id": 320,
+    "name": "D. SOW",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "CM",
+    "age": 26,
+    "nat": "SUI",
+    "importance": 3
+  },
+  {
+    "id": 321,
+    "name": "E. CAMAVINGA",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "CM",
+    "age": 21,
+    "nat": "FRA",
+    "importance": 4
+  },
+  {
+    "id": 322,
+    "name": "VITINHA",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "CM",
+    "age": 24,
+    "nat": "POR",
+    "importance": 4
+  },
+  {
+    "id": 323,
+    "name": "F. THAUVIN",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "RW",
+    "age": 31,
+    "nat": "FRA",
+    "importance": 3
+  },
+  {
+    "id": 324,
+    "name": "FRANCISCO CONCEIÇÃO",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "RW",
+    "age": 21,
+    "nat": "POR",
+    "importance": 4
+  },
+  {
+    "id": 325,
+    "name": "EVANILSON",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "ST",
+    "age": 24,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 326,
+    "name": "HWANG HEE-CHAN",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "RW",
+    "age": 28,
+    "nat": "KOR",
+    "importance": 3
+  },
+  {
+    "id": 327,
+    "name": "ANDRÉ SILVA",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "ST",
+    "age": 28,
+    "nat": "POR",
+    "importance": 3
+  },
+  {
+    "id": 328,
+    "name": "J. KING",
+    "teamId": 14,
+    "team": "AD Cerrosal",
+    "pos": "ST",
+    "age": 32,
+    "nat": "NOR",
+    "importance": 3
+  },
+  {
+    "id": 329,
+    "name": "M. NEUER",
+    "teamId": 15,
+    "team": "SV Dunkelried",
+    "pos": "GK",
+    "age": 38,
+    "nat": "GER",
+    "importance": 4
+  },
+  {
+    "id": 330,
+    "name": "H. ITO",
+    "teamId": 15,
+    "team": "SV Dunkelried",
+    "pos": "RB",
+    "age": 25,
+    "nat": "JPN",
+    "importance": 3
+  },
+  {
+    "id": 331,
+    "name": "A. ROMAGNOLI",
+    "teamId": 15,
+    "team": "SV Dunkelried",
+    "pos": "CB",
+    "age": 29,
+    "nat": "ITA",
+    "importance": 3
+  },
+  {
+    "id": 332,
+    "name": "J. KIMMICH",
+    "teamId": 15,
+    "team": "SV Dunkelried",
+    "pos": "CM",
+    "age": 29,
+    "nat": "GER",
+    "importance": 5
+  },
+  {
+    "id": 333,
+    "name": "K. MBABU",
+    "teamId": 15,
+    "team": "SV Dunkelried",
+    "pos": "RB",
+    "age": 31,
+    "nat": "SUI",
+    "importance": 2
+  },
+  {
+    "id": 334,
+    "name": "K. LAIMER",
+    "teamId": 15,
+    "team": "SV Dunkelried",
+    "pos": "CM",
+    "age": 27,
+    "nat": "AUT",
+    "importance": 4
+  },
+  {
+    "id": 335,
+    "name": "E. MIKE",
+    "teamId": 15,
+    "team": "SV Dunkelried",
+    "pos": "CDM",
+    "age": 22,
+    "nat": "NGA",
+    "importance": 3
+  },
+  {
+    "id": 336,
+    "name": "N. PEPÉ",
+    "teamId": 15,
+    "team": "SV Dunkelried",
+    "pos": "LW",
+    "age": 29,
+    "nat": "CIV",
+    "importance": 3
+  },
+  {
+    "id": 337,
+    "name": "B. BARCOLA",
+    "teamId": 15,
+    "team": "SV Dunkelried",
+    "pos": "LW",
+    "age": 22,
+    "nat": "FRA",
+    "importance": 4
+  },
+  {
+    "id": 338,
+    "name": "J. MUSIALA",
+    "teamId": 15,
+    "team": "SV Dunkelried",
+    "pos": "CAM",
+    "age": 21,
+    "nat": "GER",
+    "importance": 5
+  },
+  {
+    "id": 339,
+    "name": "M. DIABY",
+    "teamId": 15,
+    "team": "SV Dunkelried",
+    "pos": "LW",
+    "age": 25,
+    "nat": "FRA",
+    "importance": 3
+  },
+  {
+    "id": 340,
+    "name": "A. MERET",
+    "teamId": 15,
+    "team": "SV Dunkelried",
+    "pos": "GK",
+    "age": 27,
+    "nat": "ITA",
+    "importance": 3
+  },
+  {
+    "id": 341,
+    "name": "N. VALENTINI",
+    "teamId": 15,
+    "team": "SV Dunkelried",
+    "pos": "CB",
+    "age": 24,
+    "nat": "ARG",
+    "importance": 3
+  },
+  {
+    "id": 342,
+    "name": "JOAN JORDAN",
+    "teamId": 15,
+    "team": "SV Dunkelried",
+    "pos": "CM",
+    "age": 30,
+    "nat": "ESP",
+    "importance": 3
+  },
+  {
+    "id": 343,
+    "name": "C. TOLISSO",
+    "teamId": 15,
+    "team": "SV Dunkelried",
+    "pos": "CM",
+    "age": 30,
+    "nat": "FRA",
+    "importance": 3
+  },
+  {
+    "id": 344,
+    "name": "M. VLAP",
+    "teamId": 15,
+    "team": "SV Dunkelried",
+    "pos": "CM",
+    "age": 28,
+    "nat": "NED",
+    "importance": 2
+  },
+  {
+    "id": 345,
+    "name": "T. KUBO",
+    "teamId": 15,
+    "team": "SV Dunkelried",
+    "pos": "CAM",
+    "age": 23,
+    "nat": "JPN",
+    "importance": 4
+  },
+  {
+    "id": 346,
+    "name": "DABI",
+    "teamId": 15,
+    "team": "SV Dunkelried",
+    "pos": "ST",
+    "age": 23,
+    "nat": "NGA",
+    "importance": 2
+  },
+  {
+    "id": 347,
+    "name": "K. ADEYEMI",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "LW",
+    "age": 22,
+    "nat": "GER",
+    "importance": 4
+  },
+  {
+    "id": 348,
+    "name": "N. SCHLOTTERBECK",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "CB",
+    "age": 24,
+    "nat": "GER",
+    "importance": 4
+  },
+  {
+    "id": 349,
+    "name": "A. ARAÚJO",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "CB",
+    "age": 24,
+    "nat": "POR",
+    "importance": 3
+  },
+  {
+    "id": 350,
+    "name": "JUAN BERNAT",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "LB",
+    "age": 31,
+    "nat": "ESP",
+    "importance": 3
+  },
+  {
+    "id": 351,
+    "name": "A. HAKIMI",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "RB",
+    "age": 25,
+    "nat": "MAR",
+    "importance": 5
+  },
+  {
+    "id": 352,
+    "name": "J. RYERSON",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "RB",
+    "age": 26,
+    "nat": "USA",
+    "importance": 3
+  },
+  {
+    "id": 353,
+    "name": "F. POBEGA",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "CM",
+    "age": 25,
+    "nat": "ITA",
+    "importance": 3
+  },
+  {
+    "id": 354,
+    "name": "J. ZOET",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "GK",
+    "age": 33,
+    "nat": "NED",
+    "importance": 2
+  },
+  {
+    "id": 355,
+    "name": "FABIÁN RUIZ",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "CM",
+    "age": 27,
+    "nat": "ESP",
+    "importance": 4
+  },
+  {
+    "id": 356,
+    "name": "M. DI GREGORIO",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "GK",
+    "age": 26,
+    "nat": "ITA",
+    "importance": 3
+  },
+  {
+    "id": 357,
+    "name": "F. DE JONG",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "CDM",
+    "age": 27,
+    "nat": "NED",
+    "importance": 5
+  },
+  {
+    "id": 358,
+    "name": "D. SVENSSON",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "LB",
+    "age": 29,
+    "nat": "SWE",
+    "importance": 2
+  },
+  {
+    "id": 359,
+    "name": "M. THIAW",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "CB",
+    "age": 23,
+    "nat": "GER",
+    "importance": 3
+  },
+  {
+    "id": 360,
+    "name": "L. RENSEBAINI",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "LB",
+    "age": 29,
+    "nat": "ALG",
+    "importance": 3
+  },
+  {
+    "id": 361,
+    "name": "DANI OLMO",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "CAM",
+    "age": 26,
+    "nat": "ESP",
+    "importance": 4
+  },
+  {
+    "id": 362,
+    "name": "ILAIX MORIBA",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "CM",
+    "age": 22,
+    "nat": "GUI",
+    "importance": 3
+  },
+  {
+    "id": 363,
+    "name": "ÓSCAR RODRÍGUEZ",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "CAM",
+    "age": 26,
+    "nat": "ESP",
+    "importance": 3
+  },
+  {
+    "id": 364,
+    "name": "S. SCHRIJVERS",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "CAM",
+    "age": 28,
+    "nat": "BEL",
+    "importance": 2
+  },
+  {
+    "id": 365,
+    "name": "D. BARBONA",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "CM",
+    "age": 22,
+    "nat": "CHI",
+    "importance": 2
+  },
+  {
+    "id": 366,
+    "name": "K. LINETTY",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "CM",
+    "age": 30,
+    "nat": "POL",
+    "importance": 2
+  },
+  {
+    "id": 367,
+    "name": "K. MBAPPÉ",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "ST",
+    "age": 26,
+    "nat": "FRA",
+    "importance": 5
+  },
+  {
+    "id": 368,
+    "name": "J. BAMBA",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "LW",
+    "age": 25,
+    "nat": "TUN",
+    "importance": 3
+  },
+  {
+    "id": 369,
+    "name": "B. RAMAN",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "ST",
+    "age": 30,
+    "nat": "BEL",
+    "importance": 2
+  },
+  {
+    "id": 370,
+    "name": "DAVID NERES",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "RW",
+    "age": 28,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 371,
+    "name": "M. RENARD",
+    "teamId": 16,
+    "team": "SD Nebelhorn",
+    "pos": "LW",
+    "age": 23,
+    "nat": "BEL",
+    "importance": 2
+  },
+  {
+    "id": 372,
+    "name": "P. RETSOS",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "CB",
+    "age": 26,
+    "nat": "GRE",
+    "importance": 2
+  },
+  {
+    "id": 373,
+    "name": "O. BERARDI",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "CB",
+    "age": 36,
+    "nat": "ITA",
+    "importance": 2
+  },
+  {
+    "id": 374,
+    "name": "A. LUNIN",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "GK",
+    "age": 25,
+    "nat": "UKR",
+    "importance": 3
+  },
+  {
+    "id": 375,
+    "name": "P. SCHICK",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "ST",
+    "age": 29,
+    "nat": "CZE",
+    "importance": 4
+  },
+  {
+    "id": 376,
+    "name": "M. DEMIRAL",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "CB",
+    "age": 26,
+    "nat": "TUR",
+    "importance": 3
+  },
+  {
+    "id": 377,
+    "name": "A. BUONGIORNO",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "CB",
+    "age": 25,
+    "nat": "ITA",
+    "importance": 4
+  },
+  {
+    "id": 378,
+    "name": "L. OCAMPOS",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "LW",
+    "age": 30,
+    "nat": "ARG",
+    "importance": 3
+  },
+  {
+    "id": 379,
+    "name": "O. DEMBÉLÉ",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "RW",
+    "age": 27,
+    "nat": "FRA",
+    "importance": 5
+  },
+  {
+    "id": 380,
+    "name": "A. FLORENZI",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "RB",
+    "age": 33,
+    "nat": "ITA",
+    "importance": 2
+  },
+  {
+    "id": 381,
+    "name": "D. UPAMECANO",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "CB",
+    "age": 25,
+    "nat": "FRA",
+    "importance": 4
+  },
+  {
+    "id": 382,
+    "name": "J. GYMSKIN",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "CDM",
+    "age": 26,
+    "nat": "SWE",
+    "importance": 2
+  },
+  {
+    "id": 383,
+    "name": "KEPA",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "GK",
+    "age": 30,
+    "nat": "ESP",
+    "importance": 3
+  },
+  {
+    "id": 384,
+    "name": "C. RAMÍREZ",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "CM",
+    "age": 28,
+    "nat": "URU",
+    "importance": 2
+  },
+  {
+    "id": 385,
+    "name": "A. CAMBIASO",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "LB",
+    "age": 20,
+    "nat": "ITA",
+    "importance": 4
+  },
+  {
+    "id": 386,
+    "name": "OIHAN SANCET",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "CM",
+    "age": 24,
+    "nat": "ESP",
+    "importance": 3
+  },
+  {
+    "id": 387,
+    "name": "F. MIRETTI",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "CM",
+    "age": 21,
+    "nat": "ITA",
+    "importance": 3
+  },
+  {
+    "id": 388,
+    "name": "K. DIATTA",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "LW",
+    "age": 24,
+    "nat": "SEN",
+    "importance": 3
+  },
+  {
+    "id": 389,
+    "name": "J. REINE-ADÉLAÏDE",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "LW",
+    "age": 26,
+    "nat": "FRA",
+    "importance": 3
+  },
+  {
+    "id": 390,
+    "name": "J. BELLINGHAM",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "CAM",
+    "age": 21,
+    "nat": "ENG",
+    "importance": 5
+  },
+  {
+    "id": 391,
+    "name": "ARTHUR",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "CM",
+    "age": 28,
+    "nat": "BRA",
+    "importance": 2
+  },
+  {
+    "id": 392,
+    "name": "PEDRI",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "CM",
+    "age": 22,
+    "nat": "ESP",
+    "importance": 5
+  },
+  {
+    "id": 393,
+    "name": "PEPÉ",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "LW",
+    "age": 31,
+    "nat": "POR",
+    "importance": 3
+  },
+  {
+    "id": 394,
+    "name": "ANTONY",
+    "teamId": 17,
+    "team": "RFK Sturmbach",
+    "pos": "RW",
+    "age": 24,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 395,
+    "name": "L. SANÉ",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "LW",
+    "age": 28,
+    "nat": "GER",
+    "importance": 4
+  },
+  {
+    "id": 396,
+    "name": "J. MUSSO",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "GK",
+    "age": 30,
+    "nat": "ARG",
+    "importance": 3
+  },
+  {
+    "id": 397,
+    "name": "A. GABRIELLONI",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "ST",
+    "age": 29,
+    "nat": "ARG",
+    "importance": 2
+  },
+  {
+    "id": 398,
+    "name": "M. LOVATO",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "CB",
+    "age": 24,
+    "nat": "ITA",
+    "importance": 3
+  },
+  {
+    "id": 399,
+    "name": "M. WÖBER",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "CB",
+    "age": 25,
+    "nat": "AUT",
+    "importance": 3
+  },
+  {
+    "id": 400,
+    "name": "F. WIRTZ",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "CAM",
+    "age": 21,
+    "nat": "GER",
+    "importance": 5
+  },
+  {
+    "id": 401,
+    "name": "L. PELLEGRINI",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "CM",
+    "age": 28,
+    "nat": "ITA",
+    "importance": 4
+  },
+  {
+    "id": 402,
+    "name": "GAVI",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "CM",
+    "age": 20,
+    "nat": "ESP",
+    "importance": 5
+  },
+  {
+    "id": 403,
+    "name": "DIOGO COSTA",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "GK",
+    "age": 24,
+    "nat": "POR",
+    "importance": 4
+  },
+  {
+    "id": 404,
+    "name": "M. LOPEZ",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "CB",
+    "age": 26,
+    "nat": "ESP",
+    "importance": 2
+  },
+  {
+    "id": 405,
+    "name": "ANDRE",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "CB",
+    "age": 23,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 406,
+    "name": "MATÍAS VIÑA",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "LB",
+    "age": 26,
+    "nat": "URU",
+    "importance": 3
+  },
+  {
+    "id": 407,
+    "name": "D. JURÁSEK",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "LB",
+    "age": 22,
+    "nat": "CZE",
+    "importance": 3
+  },
+  {
+    "id": 408,
+    "name": "M. KEAN",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "ST",
+    "age": 24,
+    "nat": "ITA",
+    "importance": 3
+  },
+  {
+    "id": 409,
+    "name": "DANI VIVIAN",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "CB",
+    "age": 24,
+    "nat": "ESP",
+    "importance": 3
+  },
+  {
+    "id": 410,
+    "name": "SAMUEL LINO",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "LW",
+    "age": 24,
+    "nat": "POR",
+    "importance": 3
+  },
+  {
+    "id": 411,
+    "name": "L. JOVIĆ",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "ST",
+    "age": 26,
+    "nat": "SRB",
+    "importance": 3
+  },
+  {
+    "id": 412,
+    "name": "B. KAMARA",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "CM",
+    "age": 24,
+    "nat": "FRA",
+    "importance": 3
+  },
+  {
+    "id": 413,
+    "name": "ANTÓNIO SILVA",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "CB",
+    "age": 21,
+    "nat": "POR",
+    "importance": 4
+  },
+  {
+    "id": 414,
+    "name": "H. AOUAR",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "CAM",
+    "age": 26,
+    "nat": "ALG",
+    "importance": 3
+  },
+  {
+    "id": 415,
+    "name": "WESLEY",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "ST",
+    "age": 22,
+    "nat": "BEL",
+    "importance": 3
+  },
+  {
+    "id": 416,
+    "name": "M. MATOS",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "CM",
+    "age": 23,
+    "nat": "POR",
+    "importance": 2
+  },
+  {
+    "id": 417,
+    "name": "S. DILU",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "ST",
+    "age": 24,
+    "nat": "ANG",
+    "importance": 2
+  },
+  {
+    "id": 418,
+    "name": "T. HAZARD",
+    "teamId": 18,
+    "team": "SC Vipera",
+    "pos": "LW",
+    "age": 30,
+    "nat": "BEL",
+    "importance": 3
+  },
+  {
+    "id": 419,
+    "name": "G. DONNARUMMA",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "GK",
+    "age": 26,
+    "nat": "ITA",
+    "importance": 5
+  },
+  {
+    "id": 420,
+    "name": "MARQUINHOS",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "CB",
+    "age": 30,
+    "nat": "BRA",
+    "importance": 5
+  },
+  {
+    "id": 421,
+    "name": "L. HALL",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "LB",
+    "age": 21,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 422,
+    "name": "GELSON MARTINS",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "RW",
+    "age": 28,
+    "nat": "POR",
+    "importance": 3
+  },
+  {
+    "id": 423,
+    "name": "ERIC GARCIA",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "CB",
+    "age": 23,
+    "nat": "ESP",
+    "importance": 3
+  },
+  {
+    "id": 424,
+    "name": "NUNO MENDES",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "LB",
+    "age": 22,
+    "nat": "POR",
+    "importance": 4
+  },
+  {
+    "id": 425,
+    "name": "IVAN MARTIN",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "CM",
+    "age": 25,
+    "nat": "ESP",
+    "importance": 3
+  },
+  {
+    "id": 426,
+    "name": "M. ARAMBARRI",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "CDM",
+    "age": 29,
+    "nat": "URU",
+    "importance": 3
+  },
+  {
+    "id": 427,
+    "name": "D. DOUÉ",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "CAM",
+    "age": 19,
+    "nat": "FRA",
+    "importance": 4
+  },
+  {
+    "id": 428,
+    "name": "K. KVARATSKHELIA",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "LW",
+    "age": 23,
+    "nat": "GEO",
+    "importance": 5
+  },
+  {
+    "id": 429,
+    "name": "NATAN",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "CB",
+    "age": 22,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 430,
+    "name": "ÉDER MILITÃO",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "CB",
+    "age": 26,
+    "nat": "BRA",
+    "importance": 4
+  },
+  {
+    "id": 431,
+    "name": "D. RENSCH",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "RB",
+    "age": 22,
+    "nat": "NED",
+    "importance": 3
+  },
+  {
+    "id": 432,
+    "name": "T. LIVRAMENTO",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "RB",
+    "age": 22,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 433,
+    "name": "A. GÜLER",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "CAM",
+    "age": 19,
+    "nat": "TUR",
+    "importance": 4
+  },
+  {
+    "id": 434,
+    "name": "T. REIJNDERS",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "CM",
+    "age": 25,
+    "nat": "NED",
+    "importance": 4
+  },
+  {
+    "id": 435,
+    "name": "GABRIEL PIRES",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "CM",
+    "age": 29,
+    "nat": "BRA",
+    "importance": 2
+  },
+  {
+    "id": 436,
+    "name": "V. OSIMHEN",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "ST",
+    "age": 26,
+    "nat": "NGA",
+    "importance": 5
+  },
+  {
+    "id": 437,
+    "name": "ARTUR",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "CM",
+    "age": 22,
+    "nat": "BRA",
+    "importance": 2
+  },
+  {
+    "id": 438,
+    "name": "F. MOUMBAGNA",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "ST",
+    "age": 24,
+    "nat": "CMR",
+    "importance": 3
+  },
+  {
+    "id": 439,
+    "name": "M. TEL",
+    "teamId": 19,
+    "team": "AS Rougefer",
+    "pos": "ST",
+    "age": 19,
+    "nat": "FRA",
+    "importance": 3
+  },
+  {
+    "id": 440,
+    "name": "R. KENT",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "RW",
+    "age": 26,
+    "nat": "ENG",
+    "importance": 3
+  },
+  {
+    "id": 441,
+    "name": "T. STRAKOSHA",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "GK",
+    "age": 34,
+    "nat": "ALB",
+    "importance": 2
+  },
+  {
+    "id": 442,
+    "name": "D. JAMES",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "RB",
+    "age": 27,
+    "nat": "WAL",
+    "importance": 3
+  },
+  {
+    "id": 443,
+    "name": "M. MAIGNAN",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "GK",
+    "age": 28,
+    "nat": "FRA",
+    "importance": 5
+  },
+  {
+    "id": 444,
+    "name": "M. CORNET",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "LW",
+    "age": 27,
+    "nat": "CIV",
+    "importance": 3
+  },
+  {
+    "id": 445,
+    "name": "B. ROUVEL",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "CM",
+    "age": 23,
+    "nat": "FRA",
+    "importance": 2
+  },
+  {
+    "id": 446,
+    "name": "B. DAVIES",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "LB",
+    "age": 31,
+    "nat": "WAL",
+    "importance": 3
+  },
+  {
+    "id": 447,
+    "name": "P. CUTRONE",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "ST",
+    "age": 27,
+    "nat": "ITA",
+    "importance": 2
+  },
+  {
+    "id": 448,
+    "name": "A. MORELOS",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "ST",
+    "age": 28,
+    "nat": "COL",
+    "importance": 3
+  },
+  {
+    "id": 449,
+    "name": "K. MALCUIT",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "RB",
+    "age": 31,
+    "nat": "FRA",
+    "importance": 2
+  },
+  {
+    "id": 450,
+    "name": "F. VALVERDE",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "CM",
+    "age": 26,
+    "nat": "URU",
+    "importance": 5
+  },
+  {
+    "id": 451,
+    "name": "RAPHINHA",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "RW",
+    "age": 27,
+    "nat": "BRA",
+    "importance": 5
+  },
+  {
+    "id": 452,
+    "name": "A. SOUMAORO",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "CB",
+    "age": 28,
+    "nat": "FRA",
+    "importance": 2
+  },
+  {
+    "id": 453,
+    "name": "ÁLVARO DJALO",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "LW",
+    "age": 23,
+    "nat": "POR",
+    "importance": 3
+  },
+  {
+    "id": 454,
+    "name": "VINÍCIUS JUNIOR",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "LW",
+    "age": 24,
+    "nat": "BRA",
+    "importance": 5
+  },
+  {
+    "id": 455,
+    "name": "M. HINTEREGGER",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "CB",
+    "age": 31,
+    "nat": "AUT",
+    "importance": 2
+  },
+  {
+    "id": 456,
+    "name": "S. UMTITI",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "CB",
+    "age": 30,
+    "nat": "FRA",
+    "importance": 2
+  },
+  {
+    "id": 457,
+    "name": "N. AKÉ",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "CB",
+    "age": 29,
+    "nat": "NED",
+    "importance": 4
+  },
+  {
+    "id": 458,
+    "name": "B. PAVARD",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "CB",
+    "age": 27,
+    "nat": "FRA",
+    "importance": 4
+  },
+  {
+    "id": 459,
+    "name": "R. PIRIS DA MOTTA",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "RB",
+    "age": 24,
+    "nat": "PAR",
+    "importance": 2
+  },
+  {
+    "id": 460,
+    "name": "R. ZOBNIN",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "CM",
+    "age": 30,
+    "nat": "RUS",
+    "importance": 3
+  },
+  {
+    "id": 461,
+    "name": "FRED",
+    "teamId": 20,
+    "team": "FC Aschgrund",
+    "pos": "CM",
+    "age": 31,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 462,
+    "name": "K. TRAPP",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "GK",
+    "age": 34,
+    "nat": "GER",
+    "importance": 3
+  },
+  {
+    "id": 463,
+    "name": "P. DÍAZ",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "CB",
+    "age": 28,
+    "nat": "COL",
+    "importance": 4
+  },
+  {
+    "id": 464,
+    "name": "T. ABRAHAM",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "ST",
+    "age": 27,
+    "nat": "ENG",
+    "importance": 4
+  },
+  {
+    "id": 465,
+    "name": "T. CHANDLER",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "RB",
+    "age": 34,
+    "nat": "USA",
+    "importance": 2
+  },
+  {
+    "id": 466,
+    "name": "E. SKHIRI",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "CDM",
+    "age": 29,
+    "nat": "TUN",
+    "importance": 3
+  },
+  {
+    "id": 467,
+    "name": "JUNINHO CAPIXABA",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "LB",
+    "age": 27,
+    "nat": "BRA",
+    "importance": 2
+  },
+  {
+    "id": 468,
+    "name": "D. GRANOV",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "CB",
+    "age": 24,
+    "nat": "MKD",
+    "importance": 2
+  },
+  {
+    "id": 469,
+    "name": "E. HYSAJ",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "LB",
+    "age": 30,
+    "nat": "ALB",
+    "importance": 2
+  },
+  {
+    "id": 470,
+    "name": "DENIS SUÁREZ",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "CM",
+    "age": 30,
+    "nat": "ESP",
+    "importance": 3
+  },
+  {
+    "id": 471,
+    "name": "LUIZ FELIPE",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "CB",
+    "age": 30,
+    "nat": "ITA",
+    "importance": 3
+  },
+  {
+    "id": 472,
+    "name": "H. EKITIKE",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "ST",
+    "age": 22,
+    "nat": "FRA",
+    "importance": 4
+  },
+  {
+    "id": 473,
+    "name": "B. DRAGOWSKI",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "GK",
+    "age": 26,
+    "nat": "POL",
+    "importance": 2
+  },
+  {
+    "id": 474,
+    "name": "JOÃO PEDRO",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "ST",
+    "age": 22,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 475,
+    "name": "F. TOMORI",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "CB",
+    "age": 26,
+    "nat": "ENG",
+    "importance": 4
+  },
+  {
+    "id": 476,
+    "name": "A. SEMENYO",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "RW",
+    "age": 24,
+    "nat": "GHA",
+    "importance": 3
+  },
+  {
+    "id": 477,
+    "name": "T. BALDANZI",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "CAM",
+    "age": 21,
+    "nat": "ITA",
+    "importance": 3
+  },
+  {
+    "id": 478,
+    "name": "S. MCTOMINAY",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "CM",
+    "age": 27,
+    "nat": "SCO",
+    "importance": 4
+  },
+  {
+    "id": 479,
+    "name": "GERSON",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "CM",
+    "age": 27,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 480,
+    "name": "CLAUDINHO",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "CAM",
+    "age": 27,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 481,
+    "name": "M. LOCATELLI",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "CDM",
+    "age": 27,
+    "nat": "ITA",
+    "importance": 3
+  },
+  {
+    "id": 482,
+    "name": "J. FRANCH",
+    "teamId": 21,
+    "team": "1. Sturmbech",
+    "pos": "GK",
+    "age": 30,
+    "nat": "USA",
+    "importance": 2
+  },
+  {
+    "id": 483,
+    "name": "A. NÜBEL",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "GK",
+    "age": 27,
+    "nat": "GER",
+    "importance": 3
+  },
+  {
+    "id": 484,
+    "name": "E. MATAZO",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "CDM",
+    "age": 22,
+    "nat": "BEL",
+    "importance": 3
+  },
+  {
+    "id": 485,
+    "name": "PAU LÓPEZ",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "GK",
+    "age": 29,
+    "nat": "ESP",
+    "importance": 3
+  },
+  {
+    "id": 486,
+    "name": "ABNER VINICIUS",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "LB",
+    "age": 22,
+    "nat": "BRA",
+    "importance": 3
+  },
+  {
+    "id": 487,
+    "name": "M. HJULMAND",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "CDM",
+    "age": 27,
+    "nat": "DEN",
+    "importance": 4
+  },
+  {
+    "id": 488,
+    "name": "M. GINTER",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "CB",
+    "age": 31,
+    "nat": "GER",
+    "importance": 3
+  },
+  {
+    "id": 489,
+    "name": "D. RAUM",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "LB",
+    "age": 25,
+    "nat": "GER",
+    "importance": 4
+  },
+  {
+    "id": 490,
+    "name": "M. SANSON",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "CM",
+    "age": 30,
+    "nat": "FRA",
+    "importance": 2
+  },
+  {
+    "id": 491,
+    "name": "JOÃO NEVES",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "CM",
+    "age": 19,
+    "nat": "POR",
+    "importance": 4
+  },
+  {
+    "id": 492,
+    "name": "M. KAYODE",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "RW",
+    "age": 22,
+    "nat": "NGA",
+    "importance": 3
+  },
+  {
+    "id": 493,
+    "name": "BRUNO GOMES",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "CM",
+    "age": 22,
+    "nat": "POR",
+    "importance": 2
+  },
+  {
+    "id": 494,
+    "name": "E. ELMAS",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "CM",
+    "age": 25,
+    "nat": "MKD",
+    "importance": 3
+  },
+  {
+    "id": 495,
+    "name": "M. NASTASIĆ",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "CB",
+    "age": 31,
+    "nat": "SRB",
+    "importance": 2
+  },
+  {
+    "id": 496,
+    "name": "B. SARR",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "RB",
+    "age": 26,
+    "nat": "SEN",
+    "importance": 3
+  },
+  {
+    "id": 497,
+    "name": "P. HINCAPIÉ",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "CB",
+    "age": 23,
+    "nat": "ECU",
+    "importance": 3
+  },
+  {
+    "id": 498,
+    "name": "E. BOVE",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "CM",
+    "age": 22,
+    "nat": "ITA",
+    "importance": 3
+  },
+  {
+    "id": 499,
+    "name": "E. ANDERSSON",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "CAM",
+    "age": 28,
+    "nat": "SWE",
+    "importance": 3
+  },
+  {
+    "id": 500,
+    "name": "TRINCÃO",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "RW",
+    "age": 24,
+    "nat": "POR",
+    "importance": 3
+  },
+  {
+    "id": 501,
+    "name": "M. THURAM",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "ST",
+    "age": 27,
+    "nat": "FRA",
+    "importance": 4
+  },
+  {
+    "id": 502,
+    "name": "B. ZARAGOZA",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "LW",
+    "age": 25,
+    "nat": "ESP",
+    "importance": 3
+  },
+  {
+    "id": 503,
+    "name": "ENDRICK",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "ST",
+    "age": 18,
+    "nat": "BRA",
+    "importance": 4
+  },
+  {
+    "id": 504,
+    "name": "A. CANOBBIO",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "RW",
+    "age": 26,
+    "nat": "URU",
+    "importance": 3
+  },
+  {
+    "id": 505,
+    "name": "Á. BARREAL",
+    "teamId": 22,
+    "team": "Borussia Grauberg",
+    "pos": "RW",
+    "age": 27,
+    "nat": "ARG",
+    "importance": 3
+  }
+]
